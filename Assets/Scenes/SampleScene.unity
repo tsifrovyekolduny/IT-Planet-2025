@@ -396,10 +396,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoomSpeed: 5
   targetOrthoSize: 3
-  releaseSpeed: 3
+  releaseSpeed: 5
   interactableLayer:
     serializedVersion: 2
     m_Bits: 4294967295
+  maxVerticalMovement: 15
+  swipeSensitivity: 2
+  swipeSmoothness: 5
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
