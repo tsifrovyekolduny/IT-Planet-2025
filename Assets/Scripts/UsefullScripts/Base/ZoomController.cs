@@ -1,18 +1,29 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ZoomController : MonoBehaviour
 {
-    [Header("Zoom Settings")]
+    [Header("Настройки приближения")]
+
+    [Rename("Скорость приближения")]
     public float zoomSpeed = 5f;
+    [Rename("Степень приближения")]
     public float targetOrthoSize = 3f;
+    [Rename("Скорость отдаления")]
     public float releaseSpeed = 5f;
+    [Rename("Рабочие слои")]
+    [Tooltip("Скрипт будет работать на элементах на выбранном слое")]
     public LayerMask interactableLayer;
 
-    [Header("Camera Reference")]
+    [Header("Настройка камеры")]
+    [Rename("Камера")]
     public Camera targetCamera;
 
-    [Header("Behavior Mode")]
+    [Header("Настройки поведения камеры")]
+    [Rename("Режим двойного нажатия")]
+    [Tooltip("Если настройка включена, то отдаление будет происходить при втором нажатии")]
     public bool useDoubleTapMode = false;
+    [Rename("Запрет свайпа при приближении")]
     public bool disableSwipeDuringZoom = true;
 
     // Защищенные поля для наследования

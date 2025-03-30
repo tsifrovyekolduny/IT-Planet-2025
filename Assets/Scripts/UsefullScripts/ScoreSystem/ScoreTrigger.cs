@@ -4,13 +4,17 @@ using UnityEngine.Events;
 public class ScoreTrigger : MonoBehaviour
 {
     [Header("Настройки")]
-    [Tooltip("Давать ли очки при приближении к этому объекту")]
+    [Rename("Очки за объект")]
+    [Tooltip("Давать ли очки при взаимодействии с объектом")]
     public bool giveScoreOnZoom = true;
-    [Tooltip("Сколько очков давать")]
+
+    [Rename("Количество очков")]
+    [Tooltip("Сколько очков давать при взаимодействии с объектом")]
     public int scoreValue = 1;
 
     [Header("События")]
-    public UnityEvent onScoreGiven; // Для визуальных эффектов
+    [Tooltip("Вызов дополнительных событий при начислении очков")]
+    public UnityEvent onScoreGiven;
 
     private bool scoreGiven = false;
 

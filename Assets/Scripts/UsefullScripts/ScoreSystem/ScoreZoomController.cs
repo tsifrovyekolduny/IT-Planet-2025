@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class ScoreZoomController : ZoomController
 {
-    [Header("Score Settings")]
+    [Header("Настройки очков")]
+    [Rename("Система очков")]
     public bool enableScoreSystem = true;
     private bool scoreGiven = false;
 
