@@ -38,16 +38,16 @@ public class DialogueSystem : MonoBehaviour
     void CreateMessage(DialogueLine line)
     {
         Label message = new Label(line.text);
-        message.AddToClassList("message");
+        // message.AddToClassList("message");
         message.AddToClassList(line.role == "Роль1" ? "message-role1" : "message-role2");
 
         messagesContainer.Add(message);
-        ScrollToBottom();
+        // ScrollToBottom();
 
         // Анимация появления
-        message.schedule.Execute(() => {
-            message.AddToClassList("message-visible");
-        }).StartingIn(10); // Небольшая задержка для корректного применения стилей
+        //message.schedule.Execute(() => {
+        //    message.AddToClassList("message-visible");
+        //}).StartingIn(10); // Небольшая задержка для корректного применения стилей
     }
 
     void ScrollToBottom()
