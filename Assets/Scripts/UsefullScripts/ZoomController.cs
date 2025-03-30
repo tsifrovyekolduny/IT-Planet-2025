@@ -13,25 +13,24 @@ public class ZoomController : MonoBehaviour
 
     [Header("Behavior Mode")]
     public bool useDoubleTapMode = false;
+    public bool disableSwipeDuringZoom = true;
 
-    private bool disableSwipeDuringZoom = true;
+    // Защищенные поля для наследования
+    protected float defaultOrthoSize;
+    protected Vector3 preZoomPosition;
+    protected float preZoomOrthoSize;
+    protected bool isZooming = false;
+    protected Vector3 zoomTargetPosition;
+    protected float returnProgress = 0f;
+    protected bool isReturning = false;
+    protected SwipeController swipeController;
+    protected GameObject lastZoomedObject;
+    protected Vector3 returnStartPosition;
+    protected float returnStartOrthoSize;
+    protected float lastTapTime;
+    protected const float doubleTapThreshold = 0.5f;
 
-    // Приватные переменные
-    private float defaultOrthoSize;
-    private Vector3 preZoomPosition;
-    private float preZoomOrthoSize;
-    private bool isZooming = false;
-    private Vector3 zoomTargetPosition;
-    private float returnProgress = 0f;
-    private bool isReturning = false;
-    private SwipeController swipeController;
-    private GameObject lastZoomedObject;
-    private Vector3 returnStartPosition;
-    private float returnStartOrthoSize;
-    private float lastTapTime;
-    private const float doubleTapThreshold = 0.5f;
-
-    private void Start()
+    protected virtual void Start()
     {
         if (targetCamera == null)
             targetCamera = Camera.main;
@@ -40,14 +39,14 @@ public class ZoomController : MonoBehaviour
         swipeController = GetComponent<SwipeController>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         HandleInput();
         ProcessZoom();
         ProcessReturn();
     }
 
-    private void HandleInput()
+    protected virtual void HandleInput()
     {
         if (useDoubleTapMode)
         {
@@ -59,13 +58,11 @@ public class ZoomController : MonoBehaviour
         }
     }
 
-    private void HandleDoubleTapInput()
+    protected virtual void HandleDoubleTapInput()
     {
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
-            Vector2 inputPos = Input.mousePosition;
-            if (Input.touchCount > 0) inputPos = Input.GetTouch(0).position;
-
+            Vector2 inputPos = GetInputPosition();
             Ray ray = targetCamera.ScreenPointToRay(inputPos);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, interactableLayer);
 
@@ -73,47 +70,47 @@ public class ZoomController : MonoBehaviour
             {
                 if (isZooming)
                 {
-                    // Если уже в режиме зума - возвращаем камеру
                     EndZoom();
                 }
                 else
                 {
-                    // Если не в режиме зума - приближаем
                     StartZoom(hit.point, hit.collider.gameObject);
                 }
                 lastTapTime = Time.time;
             }
             else if (isZooming)
             {
-                // Нажатие вне объекта - возврат
                 EndZoom();
             }
         }
     }
 
-    private void HandleStandardInput()
+    protected virtual void HandleStandardInput()
     {
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
-            Vector2 inputPos = Input.mousePosition;
-            if (Input.touchCount > 0) inputPos = Input.GetTouch(0).position;
-
+            Vector2 inputPos = GetInputPosition();
             Ray ray = targetCamera.ScreenPointToRay(inputPos);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, interactableLayer);
 
             if (hit.collider != null && !isZooming)
             {
-                StartZoom(hit.point, hit.collider.gameObject); // Заменяем TryStartZoom на StartZoom
+                StartZoom(hit.point, hit.collider.gameObject);
             }
         }
         else if ((Input.GetMouseButtonUp(0) ||
-                 (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)) && isZooming)
+                (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)) && isZooming)
         {
             EndZoom();
         }
     }
 
-    private void StartZoom(Vector3 worldPosition, GameObject targetObject)
+    protected virtual Vector2 GetInputPosition()
+    {
+        return Input.touchCount > 0 ? Input.GetTouch(0).position : (Vector2)Input.mousePosition;
+    }
+
+    protected virtual void StartZoom(Vector3 worldPosition, GameObject targetObject)
     {
         preZoomPosition = targetCamera.transform.position;
         preZoomOrthoSize = targetCamera.orthographicSize;
@@ -129,7 +126,7 @@ public class ZoomController : MonoBehaviour
         }
     }
 
-    private void EndZoom()
+    protected virtual void EndZoom()
     {
         if (!isZooming) return;
 
@@ -140,7 +137,7 @@ public class ZoomController : MonoBehaviour
         returnStartOrthoSize = targetCamera.orthographicSize;
     }
 
-    private void ProcessZoom()
+    protected virtual void ProcessZoom()
     {
         if (!isZooming) return;
 
@@ -157,14 +154,13 @@ public class ZoomController : MonoBehaviour
         );
     }
 
-    private void ProcessReturn()
+    protected virtual void ProcessReturn()
     {
         if (!isReturning) return;
 
         returnProgress += releaseSpeed * Time.deltaTime;
         float t = Mathf.Clamp01(returnProgress);
 
-        // Создаем целевую позицию с учетом свайпа
         Vector3 swipeAdjustedPosition = preZoomPosition;
         if (swipeController != null && !disableSwipeDuringZoom)
         {
