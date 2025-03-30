@@ -1,30 +1,34 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-using TMPro;
-//using DG.Tweening; // Для анимаций (нужен Asset DOTween)
+using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 public class DialogueSystem : MonoBehaviour
 {
-    public GameObject messagePrefab;
-    public Transform contentParent;
-    public Button nextButton;
+    [SerializeField] private UIDocument uiDocument;
+    [SerializeField] private TextAsset scriptFile;
 
+    private VisualElement root;
+    private VisualElement messagesContainer;
+    private Button nextButton;
     private DialogueParser parser;
     private int currentLine = 0;
 
     void Start()
     {
-        parser = GetComponent<DialogueParser>();
-        nextButton.onClick.AddListener(ShowNextLine);
+        parser = gameObject.AddComponent<DialogueParser>();
+        parser.scriptFile = scriptFile;
+        parser.ParseScript();
+
+        root = uiDocument.rootVisualElement;
+        messagesContainer = root.Q<VisualElement>("messages-container");
+        nextButton = root.Q<Button>("next-button");
+
+        nextButton.clicked += ShowNextLine;
     }
 
     void ShowNextLine()
     {
-        if (currentLine >= parser.dialogueLines.Count)
-        {
-            return;
-        };
+        if (currentLine >= parser.dialogueLines.Count) return;
 
         DialogueLine line = parser.dialogueLines[currentLine];
         CreateMessage(line);
@@ -33,35 +37,22 @@ public class DialogueSystem : MonoBehaviour
 
     void CreateMessage(DialogueLine line)
     {
-        GameObject newMessage = Instantiate(messagePrefab, contentParent);
-        TMP_Text messageText = newMessage.GetComponentInChildren<TextMeshProUGUI>();
-        messageText.text = line.text;
+        Label message = new Label(line.text);
+        message.AddToClassList("message");
+        message.AddToClassList(line.role == "Роль1" ? "message-role1" : "message-role2");
 
-        // Настройка позиции и цвета в зависимости от роли
-        RectTransform rect = newMessage.GetComponent<RectTransform>();
-        Image bg = newMessage.GetComponent<Image>();
+        messagesContainer.Add(message);
+        ScrollToBottom();
 
-        //if (line.role == "Роль1")
-        //{
-        //    rect.pivot = new Vector2(1, 0);
-        //    rect.anchorMin = rect.anchorMax = new Vector2(1, 0);
-        //    bg.color = new Color(0.2f, 0.6f, 1f); // Синий
-        //}
-        //else
-        //{
-        //    rect.pivot = new Vector2(0, 0);
-        //    rect.anchorMin = rect.anchorMax = new Vector2(0, 0);
-        //    bg.color = new Color(0.3f, 0.8f, 0.4f); // Зелёный
-        //}
+        // Анимация появления
+        message.schedule.Execute(() => {
+            message.AddToClassList("message-visible");
+        }).StartingIn(10); // Небольшая задержка для корректного применения стилей
+    }
 
-        // Анимация
-        newMessage.transform.localScale = Vector3.zero;
-        //newMessage.transform.DOScale(1, 0.3f).SetEase(Ease.OutBack);
-
-        // Автопрокрутка
-        Canvas.ForceUpdateCanvases();
-        contentParent.GetComponent<VerticalLayoutGroup>().CalculateLayoutInputVertical();
-        contentParent.GetComponent<ContentSizeFitter>().SetLayoutVertical();
-        //contentParent.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
+    void ScrollToBottom()
+    {
+        ScrollView scrollView = root.Q<ScrollView>();
+        scrollView.scrollOffset = new Vector2(0, scrollView.contentContainer.worldBound.height);
     }
 }

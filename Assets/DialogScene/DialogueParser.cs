@@ -11,7 +11,7 @@ public class DialogueParser : MonoBehaviour
         ParseScript();
     }
 
-    void ParseScript()
+    public void ParseScript()
     {
         string[] lines = scriptFile.text.Split('\n');
         foreach (string line in lines)
