@@ -4,12 +4,7 @@ using UnityEngine;
 public class DialogueParser : MonoBehaviour
 {
     public TextAsset scriptFile;
-    public List<DialogueLine> dialogueLines = new List<DialogueLine>();
-
-    void Start()
-    {
-        ParseScript();
-    }
+    public List<DialogueLine> dialogueLines = new List<DialogueLine>();    
 
     public void ParseScript()
     {
