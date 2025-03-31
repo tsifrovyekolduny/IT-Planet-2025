@@ -50,11 +50,15 @@ public class DialogueSystem : MonoBehaviour
             button.text = "Перейти к игре";
             // button.AddToClassList("scene-button");
             button.clicked += () => SceneManager.LoadScene(line.text);
+
+            messagesContainer.Add(button);
         }
         else
         {
+            string role = line.role == "Роль1" ? "role1" : "role2";
 
-            messageRoot.AddToClassList(line.role == "Роль1" ? "message-role1" : "message-role2");
+
+            messageRoot.AddToClassList($"message-{role}");
 
             // Заполнение данных
             VisualElement avatar = messageRoot.Q<VisualElement>("avatar");
@@ -65,10 +69,12 @@ public class DialogueSystem : MonoBehaviour
             nameLabel.text = line.role;
             textLabel.text = line.text;
 
+            textLabel.AddToClassList($"body-text-{role}");
+
             messagesContainer.Add(messageRoot);
 
         }
-        // ScrollToBottom();
+        ScrollToBottom();
 
         // Анимация появления
         //message.schedule.Execute(() => {
