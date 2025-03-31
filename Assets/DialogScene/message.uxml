@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/DialogScene/dialog.uss?fileID=7433441132597879392&amp;guid=74140c8b1a9d75540a9cedb46f7c5fd6&amp;type=3#dialog" />
-    <ui:VisualElement name="template" style="flex-grow: 1; justify-content: center; align-content: auto; align-items: stretch; align-self: auto;">
-        <ui:VisualElement style="flex-grow: 1; width: 30%;">
-            <ui:VisualElement name="avatar" style="flex-grow: 1; -unity-background-image-tint-color: rgb(188, 188, 188); background-color: rgb(255, 0, 0); flex-wrap: wrap; width: auto; height: 1px; max-height: 60px;" />
-            <ui:Label text="Label" name="title" style="height: auto;" />
+    <ui:VisualElement name="template" class="message-role1" style="flex-grow: 1;">
+        <ui:VisualElement style="flex-grow: 1; width: auto; align-items: flex-start; align-self: flex-start;">
+            <ui:VisualElement name="avatar" style="flex-grow: 1; -unity-background-image-tint-color: rgb(188, 188, 188); background-color: rgb(255, 0, 0); flex-wrap: wrap; width: 60px; height: 60px; -unity-background-scale-mode: scale-and-crop; background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=4154780841294389669&amp;guid=e27f434b127a6664fb14ecd96006ac09&amp;type=3#arrow-down&quot;); background-position-x: center 0; background-position-y: top 0;" />
+            <ui:Label text="Label" name="title" style="height: auto; width: auto;" />
         </ui:VisualElement>
-        <ui:Label text="Label" name="body" style="width: 70%;" />
+        <ui:Label text="Label" name="body" style="width: auto; align-items: flex-start; flex-grow: 100;" />
     </ui:VisualElement>
 </ui:UXML>

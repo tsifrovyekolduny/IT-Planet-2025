@@ -1,5 +1,20 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/DialogScene/dialog.uss?fileID=7433441132597879392&amp;guid=74140c8b1a9d75540a9cedb46f7c5fd6&amp;type=3#dialog" />
-    <ui:VisualElement name="messages-container" class="messages-container" style="flex-grow: 1; height: 349px;" />
-    <ui:Button text="Button" name="next-button" />
+    <ui:ScrollView vertical-scroller-visibility="AlwaysVisible" style="height: 70%;">
+        <ui:VisualElement name="messages-container" style="flex-grow: 1; justify-content: flex-end; height: 100%;">
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+            <ui:Label text="Label" />
+        </ui:VisualElement>
+    </ui:ScrollView>
+    <ui:Button text="Button" name="next-button" style="height: 30%;" />
 </ui:UXML>

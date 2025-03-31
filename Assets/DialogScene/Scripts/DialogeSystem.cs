@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -43,18 +44,30 @@ public class DialogueSystem : MonoBehaviour
         TemplateContainer messageElement = messageTemplate.Instantiate();
         VisualElement messageRoot = messageElement.Q<VisualElement>("template");        
         
-        messageRoot.AddToClassList(line.role == "Роль1" ? "message-role1" : "message-role2");
+        if(line.role == "Сцена")
+        {
+            Button button = new Button();
+            button.text = "Перейти к игре";
+            // button.AddToClassList("scene-button");
+            button.clicked += () => SceneManager.LoadScene(line.text);
+        }
+        else
+        {
 
-        // Заполнение данных
-        VisualElement avatar = messageRoot.Q<VisualElement>("avatar");
-        Label nameLabel = messageRoot.Q<Label>("title");
-        Label textLabel = messageRoot.Q<Label>("body");
-        
-        avatar.style.backgroundImage = line.role == "Роль1" ? sholarSprite : teacherSprite; // Подставляем аватар
-        nameLabel.text = line.role;
-        textLabel.text = line.text;
+            messageRoot.AddToClassList(line.role == "Роль1" ? "message-role1" : "message-role2");
 
-        messagesContainer.Add(messageRoot);
+            // Заполнение данных
+            VisualElement avatar = messageRoot.Q<VisualElement>("avatar");
+            Label nameLabel = messageRoot.Q<Label>("title");
+            Label textLabel = messageRoot.Q<Label>("body");
+
+            avatar.style.backgroundImage = line.role == "Роль1" ? sholarSprite : teacherSprite; // Подставляем аватар
+            nameLabel.text = line.role;
+            textLabel.text = line.text;
+
+            messagesContainer.Add(messageRoot);
+
+        }
         // ScrollToBottom();
 
         // Анимация появления

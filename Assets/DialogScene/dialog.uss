@@ -13,4 +13,16 @@
 
 .message-role2 {
     flex-direction: row-reverse;
+    -unity-text-align: upper-right;
+    justify-content: flex-start;
+    align-self: stretch;
+    align-items: flex-start;
+    align-content: auto;
+}
+
+.messages-scroll {
+    flex-grow: 1;
+    margin-bottom: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
