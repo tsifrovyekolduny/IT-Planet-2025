@@ -3,27 +3,42 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using System;
-using UnityEngine;
 using Unity.VisualScripting;
-using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 public class LevelsMenu : MonoBehaviour
 {
-    [Serializable]    
-    
+    [SerializeField] private LevelScript[] _levelScripts;
+    public UIDocument LevelUI;
+
+    private VisualElement root;
+    private VisualElement levelsHolder;
+
+    [Serializable]
     private class LevelScript
     {
         public string LevelName;
         public TextAsset Script;
     }
 
-    [SerializeField] private LevelScript[] _levelScripts;    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        root = LevelUI.rootVisualElement;
+        levelsHolder = root.Q("levels-holder");
+        InitButtonsToLevels();
+    }
+
+    void InitButtonsToLevels()
+    {
+        foreach(var levelScript in _levelScripts)
+        {
+            Button button = new Button();
+            button.text = levelScript.LevelName;
+            button.clicked += () => LoadLecture("dialog");
+            levelsHolder.Add(button);
+        }
     }
 
     // Update is called once per frame
@@ -32,7 +47,7 @@ public class LevelsMenu : MonoBehaviour
         
     }
 
-    void LoadLecture(string sceneName, string scriptName)
+    void LoadLecture(string sceneName)
     {
         // Сохраняем имя скрипта для диалоговой сцены
         SceneManager.LoadScene(sceneName);
