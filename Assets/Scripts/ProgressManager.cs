@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
-using System;
-using Unity.VisualScripting;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class ProgressManager : Singletone<ProgressManager>
 {
     private static ProgressData _progress;
+    private static string SavePath => Path.Combine(Application.persistentDataPath, "progress.dat");
     private const string SaveKey = "GameProgress";
 
     // Загружаем данные при старте
@@ -14,21 +14,27 @@ public class ProgressManager : Singletone<ProgressManager>
     {
         LoadProgress();
         base.Start();
+        Debug.Log($"ProgressManager is running, current data is: {_progress}");
     }
 
     public void SaveProgress()
     {
-        string json = JsonUtility.ToJson(_progress);
-        PlayerPrefs.SetString(SaveKey, json);
-        PlayerPrefs.Save();
+        BinaryFormatter formatter = new BinaryFormatter();
+        using (FileStream stream = new FileStream(SavePath, FileMode.Create))
+        {
+            formatter.Serialize(stream, _progress);
+        }
     }
 
     public void LoadProgress()
     {
-        if (PlayerPrefs.HasKey(SaveKey))
+        if (File.Exists(SavePath))
         {
-            string json = PlayerPrefs.GetString(SaveKey);
-            _progress = JsonUtility.FromJson<ProgressData>(json);
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream stream = new FileStream(SavePath, FileMode.Open))
+            {
+                _progress = (ProgressData)formatter.Deserialize(stream);
+            }
         }
         else
         {
