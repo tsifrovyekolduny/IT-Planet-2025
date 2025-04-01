@@ -525,7 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiDocument: {fileID: 860182284}
-  scriptFile: {fileID: 4900000, guid: 4fd607b5391cab743897ea85ae4ecfb5, type: 3}
+  scriptFile: {fileID: 0}
   messageTemplate: {fileID: 9197481963319205126, guid: aab69f9d7a0446245bf191b071e62cde, type: 3}
   teacherSprite: {fileID: 2800000, guid: d0adfadf66ebc5f4eb53a937cdaaa5f2, type: 3}
   sholarSprite: {fileID: 2800000, guid: 37357a82b64df284eae6989763057b4b, type: 3}

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System;
+using Unity.VisualScripting;
 
 public class ProgressManager : Singletone<ProgressManager>
 {
@@ -9,9 +10,10 @@ public class ProgressManager : Singletone<ProgressManager>
     private const string SaveKey = "GameProgress";
 
     // Загружаем данные при старте
-    ProgressManager()
+    protected override void Start()
     {
         LoadProgress();
+        base.Start();
     }
 
     public void SaveProgress()
@@ -61,12 +63,12 @@ public class ProgressManager : Singletone<ProgressManager>
 
 
 
-[Serializable]
+[System.Serializable]
 public class ProgressData
 {
     public Dictionary<string, DirectionProgress> directions = new Dictionary<string, DirectionProgress>();
 
-    [Serializable]
+    [System.Serializable]
     public class DirectionProgress
     {
         public int currentLine; // Текущий уровень (Y)

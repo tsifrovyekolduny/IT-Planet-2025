@@ -10,6 +10,7 @@ public class LevelsMenu : MonoBehaviour
 {
     [SerializeField] private LevelScript[] _levelScripts;
     public UIDocument LevelUI;
+    public string DirectionStringId;
 
     private VisualElement root;
     private VisualElement levelsHolder;
@@ -21,22 +22,28 @@ public class LevelsMenu : MonoBehaviour
         public TextAsset Script;
     }
 
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        GameManager.Instance.SetDirectionId(DirectionStringId);
         root = LevelUI.rootVisualElement;
         levelsHolder = root.Q("levels-holder");
         InitButtonsToLevels();
+
+        // for test
+        GameManager.Instance.SaveProgress(3, "Example");
     }
 
     void InitButtonsToLevels()
     {
-        foreach(var levelScript in _levelScripts)
+        root.Q<Button>("continue-btn").clicked += () => GameManager.Instance.SetLoadedLevel();
+
+        foreach (var levelScript in _levelScripts)
         {
             Button button = new Button();
             button.text = levelScript.LevelName;
-            button.clicked += () => LoadLecture("dialog");
+            button.clicked += () => LoadLecture(levelScript.Script, 0);
             levelsHolder.Add(button);
         }
     }
@@ -44,13 +51,13 @@ public class LevelsMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void LoadLecture(string sceneName)
+    void LoadLecture(TextAsset scriptFile, int line)
     {
         // Сохраняем имя скрипта для диалоговой сцены
-        SceneManager.LoadScene(sceneName);
+        GameManager.Instance.SetLevel(scriptFile, line);
     }
 }
 

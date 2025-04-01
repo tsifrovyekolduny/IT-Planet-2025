@@ -20,6 +20,10 @@ public class DialogueSystem : MonoBehaviour
     void Start()
     {
         parser = gameObject.AddComponent<DialogueParser>();
+        if (scriptFile == null) {
+            scriptFile = GameManager.Instance.GetLevel().Item1;
+            currentLine = GameManager.Instance.GetLevel().Item2;
+        }
         parser.scriptFile = scriptFile;
         parser.ParseScript();
 
@@ -39,6 +43,12 @@ public class DialogueSystem : MonoBehaviour
         currentLine++;
     }
 
+    void GoOnGame(string gameScene)
+    {
+        SceneManager.LoadScene(gameScene);
+        GameManager.Instance.SaveProgress(currentLine, parser.scriptFile.name);
+    }
+
     void CreateMessage(DialogueLine line)
     {
         TemplateContainer messageElement = messageTemplate.Instantiate();
@@ -49,7 +59,7 @@ public class DialogueSystem : MonoBehaviour
             Button button = new Button();
             button.text = "Перейти к игре";
             // button.AddToClassList("scene-button");
-            button.clicked += () => SceneManager.LoadScene(line.text);
+            button.clicked += () => GoOnGame(line.text);
 
             messagesContainer.Add(button);
         }
