@@ -5,15 +5,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
+using System.Linq;
 
 public class LevelsMenu : MonoBehaviour
 {
-    [SerializeField] private LevelScript[] _levelScripts;
+    [SerializeField] private List<LevelScript> _levelScripts;
     public UIDocument LevelUI;
+    public VisualTreeAsset LevelTemplate;
     public string DirectionStringId;
 
     private VisualElement root;
     private VisualElement levelsHolder;
+    private ProgressBar progressBar;
 
     [Serializable]
     private class LevelScript
@@ -26,25 +29,71 @@ public class LevelsMenu : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameManager.Instance.SetDirectionId(DirectionStringId);
-        root = LevelUI.rootVisualElement;
-        levelsHolder = root.Q("levels-holder");
-        InitButtonsToLevels();
-
-        // for test
-        GameManager.Instance.SaveProgress(3, "Example");
+        InitializeUI();
+        RefreshLevelsDisplay();
+        GameManager.Instance.SetDirectionId(DirectionStringId);        
     }
 
-    void InitButtonsToLevels()
+    void InitializeUI()
     {
-        root.Q<Button>("continue-btn").clicked += () => GameManager.Instance.SetLoadedLevel();
+        root = LevelUI.rootVisualElement;
+        levelsHolder = root.Q<VisualElement>("levels-holder");
+        progressBar = root.Q<ProgressBar>("progress-bar");
 
-        foreach (var levelScript in _levelScripts)
+        root.Q<Button>("back-btn").clicked += () => SceneManager.LoadScene("Hub");
+        root.Q<Button>("continue-btn").clicked += () => GameManager.Instance.SetLoadedLevel();
+    }
+
+    void RefreshLevelsDisplay()
+    {
+        levelsHolder.Clear();
+
+        // Получаем текущий прогресс
+        var (_, scriptName) = ProgressManager.Instance.GetDirectionProgress(DirectionStringId);
+
+        LevelScript currentLevelScript = _levelScripts.Where(d => d.Script.name == scriptName).First();
+        int currentLevel = _levelScripts.IndexOf(currentLevelScript);
+
+        float progressValue = (float)currentLevel / _levelScripts.Count;
+        progressBar.value = progressValue * 100;
+        progressBar.title = $"Прогресс: {Mathf.Round(progressValue * 100)}%";
+
+        // Создаем кнопки уровней
+        for (int i = 0; i < _levelScripts.Count; i++)
         {
-            Button button = new Button();
-            button.text = levelScript.LevelName;
-            button.clicked += () => LoadLecture(levelScript.Script, 0);
-            levelsHolder.Add(button);
+            var level = _levelScripts[i];
+            TemplateContainer levelElement = LevelTemplate.Instantiate();
+
+            // Находим элементы в шаблоне
+            Button statusButton = levelElement.Q<Button>("status-button");
+            Label nameLabel = levelElement.Q<Label>("name-label");
+            Label descriptionLabel = levelElement.Q<Label>("description-label");
+
+            // Заполняем данные
+            nameLabel.text = level.LevelName;
+            // descriptionLabel.text = level.description; пока нет описания
+
+            // Определяем статус уровня
+            if (i < currentLevel)
+            {
+                statusButton.text = "Пройдено";
+                statusButton.AddToClassList("completed");
+                statusButton.clicked += () => LoadLevel(level.Script, 0);
+            }
+            else if (i == currentLevel)
+            {
+                statusButton.text = "Начать";
+                statusButton.AddToClassList("current");
+                statusButton.clicked += () => LoadLevel(level.Script, 0);
+            }
+            else
+            {
+                statusButton.text = "Не пройдено";
+                statusButton.AddToClassList("locked");
+                statusButton.SetEnabled(false);
+            }
+
+            levelsHolder.Add(levelElement);
         }
     }
 
@@ -54,7 +103,7 @@ public class LevelsMenu : MonoBehaviour
 
     }
 
-    void LoadLecture(TextAsset scriptFile, int line)
+    void LoadLevel(TextAsset scriptFile, int line)
     {
         // Сохраняем имя скрипта для диалоговой сцены
         GameManager.Instance.SetLevel(scriptFile, line);

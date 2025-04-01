@@ -397,6 +397,7 @@ MonoBehaviour:
   - LevelName: "\u0422\u0435\u0441\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435"
     Script: {fileID: 4900000, guid: 2a60c9e3466ddc440bc8b031fb357573, type: 3}
   LevelUI: {fileID: 1054882705}
+  LevelTemplate: {fileID: 9197481963319205126, guid: 4a4af4580627f3d458b58c1811336009, type: 3}
   DirectionStringId: PI
 --- !u!4 &1538085147
 Transform:

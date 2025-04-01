@@ -4,18 +4,17 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class ProgressManager : Singletone<ProgressManager>
-{
-    [SerializeField]
-    private static ProgressData _progress;
-    private static string SavePath => Path.Combine(Application.persistentDataPath, "progress.dat");
+{    
+    private ProgressData _progress;
+    private string SavePath => Path.Combine(Application.persistentDataPath, "progress.dat");
     private const string SaveKey = "GameProgress";
 
     // Загружаем данные при старте
-    protected override void Start()
+    void Start()
     {
         LoadProgress();
-        base.Start();
         Debug.Log($"ProgressManager is running, current data is: {_progress}");
+        Debug.Log($"PM is: {ProgressManager.Instance.didStart}");
     }
 
     public void SaveProgress()
@@ -60,6 +59,7 @@ public class ProgressManager : Singletone<ProgressManager>
     // Получаем текущий прогресс
     public (int level, string script) GetDirectionProgress(string directionId)
     {
+        LoadProgress();        
         if (_progress.directions.TryGetValue(directionId, out var progress))
         {
             return (progress.currentLine, progress.currentScript);

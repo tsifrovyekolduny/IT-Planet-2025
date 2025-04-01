@@ -1,4 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:ProgressBar value="22" title="my-progress" name="progress-bar" />
+    <engine:Button text="Назад в Хаб" name="back-btn" />
     <engine:Button text="Продолжить" name="continue-btn" />
     <engine:ScrollView style="background-color: rgba(143, 73, 154, 0.69);">
         <engine:VisualElement name="levels-holder" style="flex-grow: 1;" />
