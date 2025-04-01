@@ -45,19 +45,22 @@ public class GameManager : Singletone<GameManager>
         CurrentDirrectionId = directionId;
     }
 
-    public void CompleteLevel(string scriptName)
+    public void CompleteSettedLevel()
     {
-        int nextLevelIndex = Int32.Parse(scriptName.Substring(0, 2));
+        int nextLevelIndex = Int32.Parse(ScriptFile.name.Substring(0, 2)) + 1;
+        string nextLevelName = nextLevelIndex.ToString().PadLeft(2, '0');
         try
         {
             // Проверка, есть ли такой файл в принципе
-            var scriptFile = GetScriptByName(nextLevelIndex.ToString());
-            SaveProgress(0, nextLevelIndex.ToString());
+            var scriptFile = GetScriptByName(nextLevelName);
+            SaveProgress(0, nextLevelName);
+            SetLevel(scriptFile, 0);
         }
         catch
         {
             Debug.LogWarning($"All levels on {CurrentDirrectionId} cleared");
-        }
+            SceneManager.LoadScene($"{CurrentDirrectionId}LevelsScene");
+        }        
     }    
 
     public void SaveProgress(int line, string scriptName)
@@ -65,9 +68,14 @@ public class GameManager : Singletone<GameManager>
         (_, string loadedScriptName) = ProgressManager.Instance.GetDirectionProgress(CurrentDirrectionId);
 
         int loadedLevelIndex = Int32.Parse(loadedScriptName.Substring(0, 2));
-        int currentLevelIndex = Int32.Parse(loadedScriptName.Substring(0, 2));
+        int currentLevelIndex = Int32.Parse(scriptName.Substring(0, 2));
 
-        if(currentLevelIndex > loadedLevelIndex)
+        if(currentLevelIndex == loadedLevelIndex)
+        {
+            Debug.Log($"{scriptName}'s ${line} line changed");
+            ProgressManager.Instance.UpdateDirectionProgress(CurrentDirrectionId, line, scriptName);
+        }
+        else if(currentLevelIndex > loadedLevelIndex)
         {
             Debug.Log($"{scriptName} on ${line} progress saved");
             ProgressManager.Instance.UpdateDirectionProgress(CurrentDirrectionId, line, scriptName);
