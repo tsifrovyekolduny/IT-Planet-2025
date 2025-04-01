@@ -22,6 +22,10 @@ public class GameManager : Singletone<GameManager>
     public void SetLoadedLevel()
     {        
         var items = ProgressManager.Instance.GetDirectionProgress(CurrentDirrectionId);
+        if(items.script ==  null)
+        {
+            return;
+        }
         int line = items.level;
         string scriptFilePath = items.script;
 

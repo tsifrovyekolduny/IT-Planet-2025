@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class ProgressManager : Singletone<ProgressManager>
 {
+    [SerializeField]
     private static ProgressData _progress;
     private static string SavePath => Path.Combine(Application.persistentDataPath, "progress.dat");
     private const string SaveKey = "GameProgress";

@@ -22,16 +22,33 @@ public class DialogueSystem : MonoBehaviour
         parser = gameObject.AddComponent<DialogueParser>();
         if (scriptFile == null) {
             scriptFile = GameManager.Instance.GetLevel().Item1;
-            currentLine = GameManager.Instance.GetLevel().Item2;
+            currentLine = GameManager.Instance.GetLevel().Item2;            
         }
         parser.scriptFile = scriptFile;
-        parser.ParseScript();
+        parser.ParseScript();        
 
+        // init UI
         root = uiDocument.rootVisualElement;
         messagesContainer = root.Q<VisualElement>("messages-container");        
         nextButton = root.Q<Button>("next-button");
-
         nextButton.clicked += ShowNextLine;
+
+        // if loaded
+        if (currentLine != 0)
+        {
+            RollToLine(currentLine);
+        }
+    }
+
+    private void RollToLine(int endLine)
+    {
+        int lineIndex = 0;
+        while (lineIndex < endLine)
+        {
+            DialogueLine line = parser.dialogueLines[lineIndex];
+            CreateMessage(line);
+            ++lineIndex;
+        }
     }
 
     void ShowNextLine()
