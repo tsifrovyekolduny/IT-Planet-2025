@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,13 +29,15 @@ public class GameManager : Singletone<GameManager>
         }
         int line = items.level;
         string scriptFilePath = items.script;
-
         Debug.Log($"Level loading: {scriptFilePath} on {line}");
-
+        SetLevel(GetScriptByName(scriptFilePath), line);
+    }
+    private TextAsset GetScriptByName(string scriptFilePath)
+    {
         string filePath = $"LevelScripts/{CurrentDirrectionId}/" + scriptFilePath;
         TextAsset scriptFile = Resources.Load<TextAsset>(filePath);
 
-        SetLevel(scriptFile, line);
+        return scriptFile;
     }
 
     public void SetDirectionId(string directionId)
@@ -42,10 +45,39 @@ public class GameManager : Singletone<GameManager>
         CurrentDirrectionId = directionId;
     }
 
+    public void CompleteLevel(string scriptName)
+    {
+        int nextLevelIndex = Int32.Parse(scriptName.Substring(0, 2));
+        try
+        {
+            // Проверка, есть ли такой файл в принципе
+            var scriptFile = GetScriptByName(nextLevelIndex.ToString());
+            SaveProgress(0, nextLevelIndex.ToString());
+        }
+        catch
+        {
+            Debug.LogWarning($"All levels on {CurrentDirrectionId} cleared");
+        }
+    }    
+
     public void SaveProgress(int line, string scriptName)
     {
-        Debug.Log($"{scriptName} on ${line} progress saved");
-        ProgressManager.Instance.UpdateDirectionProgress(CurrentDirrectionId, line, scriptName);
+        (_, string loadedScriptName) = ProgressManager.Instance.GetDirectionProgress(CurrentDirrectionId);
+
+        int loadedLevelIndex = Int32.Parse(loadedScriptName.Substring(0, 2));
+        int currentLevelIndex = Int32.Parse(loadedScriptName.Substring(0, 2));
+
+        if(currentLevelIndex > loadedLevelIndex)
+        {
+            Debug.Log($"{scriptName} on ${line} progress saved");
+            ProgressManager.Instance.UpdateDirectionProgress(CurrentDirrectionId, line, scriptName);
+        }
+        else 
+        {
+            Debug.Log($"{scriptName} not saved, because saved higher level");
+        }
+
+        
     }
 
     // Update is called once per frame

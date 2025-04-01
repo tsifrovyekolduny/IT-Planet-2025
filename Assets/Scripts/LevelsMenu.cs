@@ -29,6 +29,7 @@ public class LevelsMenu : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        ProgressManager.Instance.UpdateDirectionProgress(DirectionStringId, 0, "01");
         InitializeUI();
         RefreshLevelsDisplay();
         GameManager.Instance.SetDirectionId(DirectionStringId);        

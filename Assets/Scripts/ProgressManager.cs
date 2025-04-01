@@ -64,7 +64,7 @@ public class ProgressManager : Singletone<ProgressManager>
         {
             return (progress.currentLine, progress.currentScript);
         }
-        return (0, null); // Начальное состояние
+        return (0, "00"); // Начальное состояние
     }
 }
 
