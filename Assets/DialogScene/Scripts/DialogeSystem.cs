@@ -2,6 +2,8 @@
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Linq;
+using System;
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private Texture2D sholarSprite;
 
     private VisualElement root;
-    private VisualElement messagesContainer;    
+    private VisualElement messagesContainer;
     private Button nextButton;
     private DialogueParser parser;
     private int currentLine = 0;
@@ -22,16 +24,17 @@ public class DialogueSystem : MonoBehaviour
     void Start()
     {
         parser = gameObject.AddComponent<DialogueParser>();
-        if (scriptFile == null) {
+        if (scriptFile == null)
+        {
             scriptFile = GameManager.Instance.GetLevel().Item1;
-            currentLine = GameManager.Instance.GetLevel().Item2;            
+            currentLine = GameManager.Instance.GetLevel().Item2;
         }
         parser.scriptFile = scriptFile;
-        parser.ParseScript();        
+        parser.ParseScript();
 
         // init UI
         root = uiDocument.rootVisualElement;
-        messagesContainer = root.Q<VisualElement>("messages-container");        
+        messagesContainer = root.Q<VisualElement>("messages-container");
         nextButton = root.Q<Button>("next-button");
         nextButton.clicked += ShowNextLine;
 
@@ -71,9 +74,9 @@ public class DialogueSystem : MonoBehaviour
     void CreateMessage(DialogueLine line)
     {
         TemplateContainer messageElement = messageTemplate.Instantiate();
-        VisualElement messageRoot = messageElement.Q<VisualElement>("template");        
-        
-        if(line.role == "Сцена")
+        VisualElement messageRoot = messageElement.Q<VisualElement>("template");
+
+        if (line.role == "Сцена")
         {
             Button button = new Button();
             button.text = "Перейти к игре";
@@ -114,6 +117,11 @@ public class DialogueSystem : MonoBehaviour
     void ScrollToBottom()
     {
         ScrollView scrollView = root.Q<ScrollView>();
-        scrollView.scrollOffset = new Vector2(0, scrollView.contentContainer.worldBound.height);
+        var lastElem = messagesContainer.Children().Last();
+
+        float downValue = scrollView.verticalScroller.highValue + lastElem.style.height.value.value;
+
+        scrollView.verticalScroller.value = scrollView.verticalScroller.highValue > 0 ?
+                                             downValue : 0;
     }
 }
