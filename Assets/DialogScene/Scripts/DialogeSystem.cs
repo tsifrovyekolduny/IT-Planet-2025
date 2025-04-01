@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class DialogueSystem : MonoBehaviour
 {
+    const string ROLE_1 = "П";
+    const string ROLE_2 = "Т";
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private TextAsset scriptFile;
     [SerializeField] private VisualTreeAsset messageTemplate;
@@ -82,7 +84,7 @@ public class DialogueSystem : MonoBehaviour
         }
         else
         {
-            string role = line.role == "Роль1" ? "role1" : "role2";
+            string role = line.role == ROLE_1 ? "role1" : "role2";
 
 
             messageRoot.AddToClassList($"message-{role}");
@@ -92,7 +94,7 @@ public class DialogueSystem : MonoBehaviour
             Label nameLabel = messageRoot.Q<Label>("title");
             Label textLabel = messageRoot.Q<Label>("body");
 
-            avatar.style.backgroundImage = line.role == "Роль1" ? sholarSprite : teacherSprite; // Подставляем аватар
+            avatar.style.backgroundImage = line.role == ROLE_1 ? teacherSprite : sholarSprite; // Подставляем аватар
             nameLabel.text = line.role;
             textLabel.text = line.text;
 
