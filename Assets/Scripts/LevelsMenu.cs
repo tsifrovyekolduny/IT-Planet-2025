@@ -45,7 +45,7 @@ public class LevelsMenu : MonoBehaviour
         levelsHolder = root.Q<VisualElement>("levels-holder");
         progressBar = root.Q<ProgressBar>("progress-bar");
 
-        root.Q<Button>("back-btn").clicked += () => SceneManager.LoadScene("Hub");
+        root.Q<Button>("back-btn").clicked += () => SceneManager.LoadScene("DirectionsHub");
         root.Q<Label>("hub-name").text = GameManager.Instance.CurrentDirection.Name;
         root.Q<Button>("continue-btn").clicked += () => GameManager.Instance.SetLoadedLevel();
     }
@@ -55,11 +55,19 @@ public class LevelsMenu : MonoBehaviour
         levelsHolder.Clear();
 
         // Получаем текущий прогресс
-        var (_, scriptName) = ProgressManager.Instance.GetDirectionProgress(GameManager.Instance.CurrentDirection.name);
+        var (savedLine, scriptName) = ProgressManager.Instance.GetDirectionProgress(GameManager.Instance.CurrentDirection.name);
         LevelScript currentLevelScript = _levelScripts.Where(d => d.Script.name == scriptName).First();
         int currentLevel = _levelScripts.IndexOf(currentLevelScript);
+        int scriptEndlineCount = currentLevelScript.Script.text.Split('\n').Length;
 
-        float progressValue = (float)currentLevel / _levelScripts.Count;
+        float firstPart = currentLevel;
+        if (_levelScripts[0].LevelName == "00")
+        {
+            firstPart += 1;
+        }
+        float secondPart = savedLine / scriptEndlineCount;
+
+        float progressValue = (firstPart + secondPart) / _levelScripts.Count;        
         progressBar.value = progressValue * 100;
         progressBar.title = $"Прогресс: {Mathf.Round(progressValue * 100)}%";
 
