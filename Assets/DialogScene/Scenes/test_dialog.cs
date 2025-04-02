@@ -1,7 +1,13 @@
 using UnityEngine;
 
-public class test_dialog : MonoBehaviour
+public class test_dialog : MonoBehaviour, IMiniGame
 {
+    private bool _isClicked = false;
+    public bool CheckForComplete()
+    {
+        return _isClicked;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,7 +19,7 @@ public class test_dialog : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            GameManager.Instance.CompleteSettedLevel();
+            _isClicked = true;
             Debug.Log("game complete");
         }
     }

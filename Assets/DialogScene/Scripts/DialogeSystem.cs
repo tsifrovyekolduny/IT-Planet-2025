@@ -41,16 +41,24 @@ public class DialogueSystem : MonoBehaviour
         parser.ParseScript();
 
         // init UI
-        root = uiDocument.rootVisualElement;
-        messagesContainer = root.Q<VisualElement>("messages-container");
-        nextButton = root.Q<Button>("next-button");
-        nextButton.clicked += HandleNextButtonClick;
+        InitializeUI();
 
         // if loaded
         if (currentLine != 0)
         {
             RollToLine(currentLine);
         }
+    }
+
+    private void InitializeUI()
+    {
+        root = uiDocument.rootVisualElement;
+        messagesContainer = root.Q<VisualElement>("messages-container");
+        nextButton = root.Q<Button>("next-button");
+        nextButton.clicked += HandleNextButtonClick;
+
+        Button backButton = root.Q<Button>("back-to-levels-btn");
+        backButton.clicked += () => GameManager.Instance.ToLevelsHub();
     }
 
     private void RollToLine(int endLine)

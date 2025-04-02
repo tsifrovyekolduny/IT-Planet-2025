@@ -1,5 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/dialog.uss?fileID=7433441132597879392&amp;guid=74140c8b1a9d75540a9cedb46f7c5fd6&amp;type=3#dialog" />
+    <ui:Button text="Назад на уровни" name="back-to-levels-btn" />
     <ui:ScrollView vertical-scroller-visibility="Hidden" style="height: 90%;">
         <ui:VisualElement name="messages-container" style="flex-grow: 1; justify-content: flex-end; height: 100%;" />
     </ui:ScrollView>

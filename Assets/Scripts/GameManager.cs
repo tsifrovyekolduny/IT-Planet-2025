@@ -10,7 +10,17 @@ public class GameManager : Singletone<GameManager>
     private int Line { get; set; }
     [SerializeField]
     private string CurrentDirrectionId;
-    
+
+    [SerializeField]
+    private string _previousScene;
+
+    public void Start()
+    {
+        // При загрузке новой сцены
+        SceneManager.sceneLoaded += (scene, mode) => {
+            _previousScene = SceneManager.GetActiveScene().name;
+        };
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SetLevel(TextAsset scriptLevel, int line)
     {
@@ -59,9 +69,19 @@ public class GameManager : Singletone<GameManager>
         catch
         {
             Debug.LogWarning($"All levels on {CurrentDirrectionId} cleared");
-            SceneManager.LoadScene($"{CurrentDirrectionId}LevelsScene");
+            ToLevelsHub();
         }        
-    }    
+    }
+
+    public void ToLevelsHub()
+    {
+        SceneManager.LoadScene($"{CurrentDirrectionId}LevelsScene");
+    }
+
+    public void BackToPreviousScene()
+    {
+        SceneManager.LoadScene(_previousScene);
+    }
 
     public void SaveProgress(int line, string scriptName)
     {
