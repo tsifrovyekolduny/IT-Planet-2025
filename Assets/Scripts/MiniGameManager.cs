@@ -53,7 +53,7 @@ public class MiniGameManager : MonoBehaviour
         hintButton.clicked += () => ShowHint();
         _hintText = HintPanel.rootVisualElement.Q<Label>("hint-text");        
         _completeButton.clicked += () => GameManager.Instance.CompleteSettedLevel();
-        backButton.clicked += () => GameManager.Instance.BackToPreviousScene();
+        backButton.clicked += () => GameManager.Instance.SetLoadedLevel();
     }
 
     private void ShowHint()

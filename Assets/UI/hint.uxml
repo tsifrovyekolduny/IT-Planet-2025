@@ -1,5 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement style="flex-grow: 1; -unity-text-align: upper-left; align-self: auto; justify-content: flex-end;">
+    <engine:VisualElement style="flex-grow: 1; -unity-text-align: upper-left; align-self: auto; justify-content: flex-end; position: absolute; bottom: 0; right: 0; left: 0;">
         <engine:Label text="Label" name="hint-text" style="-unity-text-align: upper-center; flex-direction: column;" />
     </engine:VisualElement>
 </engine:UXML>

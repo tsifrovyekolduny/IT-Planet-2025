@@ -28,7 +28,7 @@ public class LevelsMenu : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {        
+    {
         InitializeUI();
         RefreshLevelsDisplay();
         GameManager.Instance.SetDirectionId(DirectionStringId);        
@@ -50,7 +50,6 @@ public class LevelsMenu : MonoBehaviour
 
         // Получаем текущий прогресс
         var (_, scriptName) = ProgressManager.Instance.GetDirectionProgress(DirectionStringId);
-
         LevelScript currentLevelScript = _levelScripts.Where(d => d.Script.name == scriptName).First();
         int currentLevel = _levelScripts.IndexOf(currentLevelScript);
 
