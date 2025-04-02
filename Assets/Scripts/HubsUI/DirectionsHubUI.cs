@@ -6,9 +6,8 @@ using UnityEngine.UIElements;
 public class DirectionHubUI : CommonHubUI
 {
     private List<Direction> _directions = new List<Direction>();
-    public VisualTreeAsset HubElementUI;
 
-    private void Start()
+    public override void Start()
     {
         _directions = GameManager.Instance.CurrentDepartment.Directions;
         base.Start();
@@ -31,13 +30,17 @@ public class DirectionHubUI : CommonHubUI
     public override void InitHubElements()
     {
         foreach (var direction in _directions) {
-            InitHubElement(direction.name, direction.Icon, direction);
+            InitHubElement(direction.Name, direction.Icon, direction);
         }
     }
 
     public override void InitBackButtonClick()
     {
         hubContainerRoot.Q<Button>("back-btn").clicked += () => SceneManager.LoadScene("DepartmentsHub");
-        throw new System.NotImplementedException();
+    }
+
+    public override void InitHubName()
+    {
+        hubContainerRoot.Q<Label>("hub-name").text = GameManager.Instance.CurrentDepartment.Name;
     }
 }

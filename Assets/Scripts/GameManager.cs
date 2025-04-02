@@ -37,7 +37,7 @@ public class GameManager : Singletone<GameManager>
 
     public void SetLoadedLevel()
     {        
-        var items = ProgressManager.Instance.GetDirectionProgress(CurrentDirrectionId);
+        var items = ProgressManager.Instance.GetDirectionProgress(CurrentDirection.name);
         if(items.script ==  null)
         {
             return;
@@ -49,16 +49,11 @@ public class GameManager : Singletone<GameManager>
     }
     private TextAsset GetScriptByName(string scriptFilePath)
     {
-        string filePath = $"LevelScripts/{CurrentDirrectionId}/" + scriptFilePath;
+        string filePath = $"LevelScripts/{CurrentDirection.name}/" + scriptFilePath;
         TextAsset scriptFile = Resources.Load<TextAsset>(filePath);
 
         return scriptFile;
-    }
-
-    public void SetDirectionId(string directionId)
-    {
-        CurrentDirrectionId = directionId;
-    }
+    }    
 
     public void CompleteSettedLevel()
     {
@@ -73,7 +68,7 @@ public class GameManager : Singletone<GameManager>
         }
         catch
         {
-            Debug.LogWarning($"All levels on {CurrentDirrectionId} cleared");
+            Debug.LogWarning($"All levels on {CurrentDirection.name} cleared");
             ToLevelsHub();
         }        
     }
@@ -90,7 +85,7 @@ public class GameManager : Singletone<GameManager>
 
     public void SaveProgress(int line, string scriptName)
     {
-        (_, string loadedScriptName) = ProgressManager.Instance.GetDirectionProgress(CurrentDirrectionId);
+        (_, string loadedScriptName) = ProgressManager.Instance.GetDirectionProgress(CurrentDirection.name);
 
         int loadedLevelIndex = Int32.Parse(loadedScriptName.Substring(0, 2));
         int currentLevelIndex = Int32.Parse(scriptName.Substring(0, 2));
@@ -98,12 +93,12 @@ public class GameManager : Singletone<GameManager>
         if(currentLevelIndex == loadedLevelIndex)
         {
             Debug.Log($"{scriptName}'s ${line} line changed");
-            ProgressManager.Instance.UpdateDirectionProgress(CurrentDirrectionId, line, scriptName);
+            ProgressManager.Instance.UpdateDirectionProgress(CurrentDirection.name, line, scriptName);
         }
         else if(currentLevelIndex > loadedLevelIndex)
         {
             Debug.Log($"{scriptName} on ${line} progress saved");
-            ProgressManager.Instance.UpdateDirectionProgress(CurrentDirrectionId, line, scriptName);
+            ProgressManager.Instance.UpdateDirectionProgress(CurrentDirection.name, line, scriptName);
         }
         else 
         {

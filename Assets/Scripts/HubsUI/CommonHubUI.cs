@@ -11,14 +11,26 @@ public abstract class CommonHubUI : MonoBehaviour
     public UIDocument HubUI;
     
     protected VisualElement hubContainerRoot;
+    protected VisualElement hubContainer;
 
     public virtual void Start()
     {
+        InitUI();        
+    }
+
+    void InitUI()
+    {
+        hubContainerRoot = HubUI.rootVisualElement;
+        hubContainer = hubContainerRoot.Q<VisualElement>("hub-container");
 
         InitHubElements();
+        InitHubName();
         InitBackButtonVisibility();
         InitBackButtonClick();
     }
+
+    // TODO не разобрался как это лучше сделать
+    public abstract void InitHubName();
 
     public abstract void InitBackButtonClick ();
     public void InitBackButtonVisibility()
@@ -45,7 +57,7 @@ public abstract class CommonHubUI : MonoBehaviour
 
         MakeLinkButton(link, arg);
 
-        hubContainerRoot.Add(hubRoot);
+        hubContainer.Add(hubRoot);
     }
 
     protected abstract void MakeLinkButton(Button link, object arg);

@@ -14,6 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/DialogScene/Scenes/dialog.unity
     guid: 28dbede0e8906ec468208e6c2e2c5810
+  - enabled: 1
+    path: Assets/Scenes/Hubs/DepartmentsHub.unity
+    guid: 84b6199fb444c1241a8855914511da82
+  - enabled: 1
+    path: Assets/Scenes/Hubs/DirectionsHub.unity
+    guid: 8d8ad526aaea69e488565bd85755d007
+  - enabled: 1
+    path: Assets/Scenes/Hubs/LevelsScene.unity
+    guid: 18d31c1643704bf45bc17b99f3ad450a
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 9a55c30a284b7f846a0903296964fb1b, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

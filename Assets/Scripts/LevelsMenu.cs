@@ -12,7 +12,6 @@ public class LevelsMenu : MonoBehaviour
     [SerializeField] private List<LevelScript> _levelScripts;
     public UIDocument LevelUI;
     public VisualTreeAsset LevelTemplate;
-    public string DirectionStringId;
 
     private VisualElement root;
     private VisualElement levelsHolder;
@@ -29,9 +28,15 @@ public class LevelsMenu : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        InitLevelScripts();
         InitializeUI();
         RefreshLevelsDisplay();
-        GameManager.Instance.SetDirectionId(DirectionStringId);        
+    }
+
+    void InitLevelScripts()
+    {
+        Direction direction = GameManager.Instance.CurrentDirection;
+        _levelScripts = direction.Levels;    
     }
 
     void InitializeUI()
@@ -41,6 +46,7 @@ public class LevelsMenu : MonoBehaviour
         progressBar = root.Q<ProgressBar>("progress-bar");
 
         root.Q<Button>("back-btn").clicked += () => SceneManager.LoadScene("Hub");
+        root.Q<Label>("hub-name").text = GameManager.Instance.CurrentDirection.Name;
         root.Q<Button>("continue-btn").clicked += () => GameManager.Instance.SetLoadedLevel();
     }
 
@@ -49,7 +55,7 @@ public class LevelsMenu : MonoBehaviour
         levelsHolder.Clear();
 
         // Получаем текущий прогресс
-        var (_, scriptName) = ProgressManager.Instance.GetDirectionProgress(DirectionStringId);
+        var (_, scriptName) = ProgressManager.Instance.GetDirectionProgress(GameManager.Instance.CurrentDirection.name);
         LevelScript currentLevelScript = _levelScripts.Where(d => d.Script.name == scriptName).First();
         int currentLevel = _levelScripts.IndexOf(currentLevelScript);
 

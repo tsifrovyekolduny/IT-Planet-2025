@@ -5,13 +5,7 @@ using UnityEngine.UIElements;
 
 public class DepartmentsHubUI : CommonHubUI
 {
-    [SerializeField] private UIDocument _uiDoc;
     [SerializeField] private List<Department> _departments;
-
-    void Start()
-    {
-        base.Start();
-    }
 
     void GoOnDepartment(Department department)
     {
@@ -39,5 +33,10 @@ public class DepartmentsHubUI : CommonHubUI
     public override void InitBackButtonClick()
     {
         return;
+    }
+
+    public override void InitHubName()
+    {
+        hubContainerRoot.Q<Label>("hub-name").text = "Институт Цифры";
     }
 }
