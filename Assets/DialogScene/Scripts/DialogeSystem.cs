@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using System;
+using System.Collections;
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -14,12 +15,19 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private VisualTreeAsset messageTemplate;
     [SerializeField] private Texture2D teacherSprite;
     [SerializeField] private Texture2D sholarSprite;
+    [SerializeField] private float typingSpeed = 0.3f;
 
     private VisualElement root;
     private VisualElement messagesContainer;
     private Button nextButton;
     private DialogueParser parser;
     private int currentLine = 0;
+
+    // Все необходимое для печатания анимации
+    private Coroutine typingCoroutine;
+    private bool isTyping = false;
+    private Label currentTextLabel;
+    private string currentFullText;
 
     void Start()
     {
@@ -36,7 +44,7 @@ public class DialogueSystem : MonoBehaviour
         root = uiDocument.rootVisualElement;
         messagesContainer = root.Q<VisualElement>("messages-container");
         nextButton = root.Q<Button>("next-button");
-        nextButton.clicked += ShowNextLine;
+        nextButton.clicked += HandleNextButtonClick;
 
         // if loaded
         if (currentLine != 0)
@@ -51,8 +59,23 @@ public class DialogueSystem : MonoBehaviour
         while (lineIndex < endLine)
         {
             DialogueLine line = parser.dialogueLines[lineIndex];
-            CreateMessage(line);
+            CreateMessage(line, false);
             ++lineIndex;
+        }
+    }
+
+    void HandleNextButtonClick()
+    {
+        if (isTyping)
+        {
+            StopCoroutine(typingCoroutine);
+            isTyping = false;
+            currentTextLabel.text = currentFullText;
+        }
+        else
+        {
+            // Переходим к следующей реплике
+            ShowNextLine();
         }
     }
 
@@ -61,7 +84,7 @@ public class DialogueSystem : MonoBehaviour
         if (currentLine >= parser.dialogueLines.Count) return;
 
         DialogueLine line = parser.dialogueLines[currentLine];
-        CreateMessage(line);
+        CreateMessage(line, true);
         currentLine++;
     }
 
@@ -71,57 +94,104 @@ public class DialogueSystem : MonoBehaviour
         GameManager.Instance.SaveProgress(currentLine, parser.scriptFile.name);
     }
 
-    void CreateMessage(DialogueLine line)
+    void CreateMessage(DialogueLine line, bool animate)
     {
         TemplateContainer messageElement = messageTemplate.Instantiate();
         VisualElement messageRoot = messageElement.Q<VisualElement>("template");
 
         if (line.role == "Сцена")
         {
-            Button button = new Button();
-            button.text = "Перейти к игре";
-            // button.AddToClassList("scene-button");
-            button.clicked += () => GoOnGame(line.text);
+            CreateGameTransitionButton(line.text);
+            return;
+        }
+        
+        string role = line.role == ROLE_1 ? "role1" : "role2";
 
-            messagesContainer.Add(button);
+
+        messageRoot.AddToClassList($"message-{role}");
+
+        // Заполнение данных
+        VisualElement avatar = messageRoot.Q<VisualElement>("avatar");
+        Label nameLabel = messageRoot.Q<Label>("title");
+        Label textLabel = messageRoot.Q<Label>("body");
+
+        avatar.style.backgroundImage = line.role == ROLE_1 ? teacherSprite : sholarSprite; // Подставляем аватар
+        nameLabel.text = line.role;
+        textLabel.text = line.text;
+
+        textLabel.AddToClassList($"body-text-{role}");
+
+        messagesContainer.Add(messageRoot);
+
+        if (animate)
+        {
+            // Запускаем анимацию печатания
+            currentTextLabel = textLabel;
+            currentFullText = line.text;
+            typingCoroutine = StartCoroutine(TypeText(line.text, textLabel));
         }
         else
         {
-            string role = line.role == ROLE_1 ? "role1" : "role2";
-
-
-            messageRoot.AddToClassList($"message-{role}");
-
-            // Заполнение данных
-            VisualElement avatar = messageRoot.Q<VisualElement>("avatar");
-            Label nameLabel = messageRoot.Q<Label>("title");
-            Label textLabel = messageRoot.Q<Label>("body");
-
-            avatar.style.backgroundImage = line.role == ROLE_1 ? teacherSprite : sholarSprite; // Подставляем аватар
-            nameLabel.text = line.role;
             textLabel.text = line.text;
-
-            textLabel.AddToClassList($"body-text-{role}");
-
-            messagesContainer.Add(messageRoot);
-
         }
-        ScrollToBottom();
 
-        // Анимация появления
-        //message.schedule.Execute(() => {
-        //    message.AddToClassList("message-visible");
-        //}).StartingIn(10); // Небольшая задержка для корректного применения стилей
+        StartCoroutine(SmoothScrollToBottom());        
     }
 
-    void ScrollToBottom()
+    void CreateGameTransitionButton(string gameScene)
     {
-        ScrollView scrollView = root.Q<ScrollView>();
-        var lastElem = messagesContainer.Children().Last();
-
-        float downValue = scrollView.verticalScroller.highValue + lastElem.style.height.value.value;
-
-        scrollView.verticalScroller.value = scrollView.verticalScroller.highValue > 0 ?
-                                             downValue : 0;
+        Button button = new Button();
+        button.text = "Перейти к игре";
+        button.clicked += () => GoOnGame(gameScene);
+        messagesContainer.Add(button);
+        StartCoroutine(SmoothScrollToBottom());
     }
+
+    IEnumerator TypeText(string text, Label label)
+    {
+        isTyping = true;
+        label.text = "";
+
+        foreach (char letter in text.ToCharArray())
+        {
+            label.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        isTyping = false;
+    }
+    IEnumerator SmoothScrollToBottom()
+    {
+        yield return new WaitForEndOfFrame();
+
+        ScrollView scrollView = root.Q<ScrollView>();
+        if (scrollView == null) yield break;
+
+        // Получаем актуальные размеры
+        float contentHeight = messagesContainer.layout.height;
+        float viewportHeight = scrollView.contentViewport.layout.height;
+
+        // Рассчитываем максимально возможное значение скролла
+        float maxScrollValue = Mathf.Max(0, contentHeight - viewportHeight);
+
+        // Если контент помещается во вьюпорт - не скроллим
+        if (maxScrollValue <= 0) yield break;
+
+        float startValue = scrollView.verticalScroller.value;
+        float targetValue = maxScrollValue; // Используем расчетное значение вместо highValue
+        float duration = 0.3f;
+        float elapsed = 0f;
+
+        // Плавный скролл с учетом ограничений
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float newValue = Mathf.Lerp(startValue, targetValue, elapsed / duration);
+            scrollView.verticalScroller.value = Mathf.Min(newValue, maxScrollValue);
+            yield return null;
+        }
+
+        // Фиксируем конечное положение
+        scrollView.verticalScroller.value = targetValue;
+    }    
 }

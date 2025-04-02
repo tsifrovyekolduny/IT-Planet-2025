@@ -119,6 +119,56 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &204847020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 204847022}
+  - component: {fileID: 204847021}
+  m_Layer: 0
+  m_Name: DialogueManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &204847021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204847020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8463e574a08a3bd459a7a311abf95dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 860182284}
+  scriptFile: {fileID: 0}
+  messageTemplate: {fileID: 9197481963319205126, guid: aab69f9d7a0446245bf191b071e62cde, type: 3}
+  teacherSprite: {fileID: 2800000, guid: d0adfadf66ebc5f4eb53a937cdaaa5f2, type: 3}
+  sholarSprite: {fileID: 2800000, guid: 37357a82b64df284eae6989763057b4b, type: 3}
+  typingSpeed: 1
+--- !u!4 &204847022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204847020}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &244121918
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +520,6 @@ GameObject:
   m_Component:
   - component: {fileID: 860182285}
   - component: {fileID: 860182284}
-  - component: {fileID: 860182286}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -512,23 +561,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &860182286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860182283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8463e574a08a3bd459a7a311abf95dcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiDocument: {fileID: 860182284}
-  scriptFile: {fileID: 0}
-  messageTemplate: {fileID: 9197481963319205126, guid: aab69f9d7a0446245bf191b071e62cde, type: 3}
-  teacherSprite: {fileID: 2800000, guid: d0adfadf66ebc5f4eb53a937cdaaa5f2, type: 3}
-  sholarSprite: {fileID: 2800000, guid: 37357a82b64df284eae6989763057b4b, type: 3}
 --- !u!1 &1139746981
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +899,7 @@ MonoBehaviour:
   messageTemplate: {fileID: 0}
   teacherSprite: {fileID: 0}
   sholarSprite: {fileID: 0}
+  typingSpeed: 0.3
 --- !u!114 &1891672060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1060,3 +1093,4 @@ SceneRoots:
   - {fileID: 1139746985}
   - {fileID: 244121921}
   - {fileID: 860182285}
+  - {fileID: 204847022}
