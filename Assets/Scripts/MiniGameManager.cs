@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,8 +10,9 @@ public class MiniGameManager : MonoBehaviour
     public UIDocument HintPanel;
     [SerializeField, SerializeReference]    
     public float HintLifeTime = 10f;
-    public string[] Hints;
+    public List<string> Hints;
 
+    private IEnumerator<string> _hintsEnum;
     private Button _completeButton;
     private IMiniGame _miniGame;
     private Label _hintText;
@@ -28,6 +30,7 @@ public class MiniGameManager : MonoBehaviour
         {
             Debug.LogError("Добавь IMiniGame локальному игровому менеджеру");
         }
+        _hintsEnum = Hints.GetEnumerator();
         InitializeUI();
     }
 
@@ -54,11 +57,18 @@ public class MiniGameManager : MonoBehaviour
         _hintText = HintPanel.rootVisualElement.Q<Label>("hint-text");        
         _completeButton.clicked += () => GameManager.Instance.CompleteSettedLevel();
         backButton.clicked += () => GameManager.Instance.SetLoadedLevel();
+
+        HintPanel.rootVisualElement.visible = false;
     }
 
     private void ShowHint()
-    {      
-        string hint = Hints[0]; // todo рандомный выбор        
+    {
+        _hintsEnum.MoveNext();
+        string hint = _hintsEnum.Current;
+        if(hint == Hints.Last())
+        {
+            _hintsEnum.Reset();
+        }
 
         _hintText.text = hint;
         HintPanel.rootVisualElement.visible = true;
@@ -74,7 +84,6 @@ public class MiniGameManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         HintPanel.rootVisualElement.visible = false;
         _hintCoroutine = null;
-    }    
-
-    
+    }
+       
 }
