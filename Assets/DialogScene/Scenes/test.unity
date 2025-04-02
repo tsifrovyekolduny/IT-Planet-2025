@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 60545108}
   - component: {fileID: 60545107}
   m_Layer: 5
-  m_Name: GameMenu
+  m_Name: UI-GameMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 913929383}
   - component: {fileID: 913929382}
   m_Layer: 5
-  m_Name: Hint
+  m_Name: UI-Hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -19,7 +19,7 @@ public class LevelsMenu : MonoBehaviour
     private ProgressBar progressBar;
 
     [Serializable]
-    private class LevelScript
+    public class LevelScript
     {
         public string LevelName;
         public TextAsset Script;

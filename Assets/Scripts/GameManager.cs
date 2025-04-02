@@ -8,9 +8,14 @@ public class GameManager : Singletone<GameManager>
     private TextAsset ScriptFile { get; set; }
     [SerializeField]
     private int Line { get; set; }
-    [SerializeField]
-    private string CurrentDirrectionId;
 
+    // TODO так информацию между сценами переносить - лютый кринж
+    // [SerializeField]
+    // private string CurrentDirectionId;
+    // [SerializeField] 
+    // private string CurrentDirectionName;
+    public Direction CurrentDirection;
+    public Department CurrentDepartment;
     [SerializeField]
     private string _previousScene;
 
@@ -75,7 +80,7 @@ public class GameManager : Singletone<GameManager>
 
     public void ToLevelsHub()
     {
-        SceneManager.LoadScene($"{CurrentDirrectionId}LevelsScene");
+        SceneManager.LoadScene("LevelsScene");
     }
 
     public void BackToPreviousScene()
