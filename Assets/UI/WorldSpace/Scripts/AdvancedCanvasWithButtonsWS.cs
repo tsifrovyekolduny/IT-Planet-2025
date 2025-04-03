@@ -30,8 +30,7 @@ public class WithButtons : AdvancedTMPElement
         LinkButtons();
 
         if (_startHidden)
-        {
-            _isHidden = _startHidden;
+        {            
             _textHider.ToggleVisibility(false, true);
             SetButtonsVisibility(false, true);
         }
