@@ -56,7 +56,6 @@ public class SwipeController : MonoBehaviour
             {
                 float deltaY = (touch.position.y - touchStartPos.y) * swipeSensitivity;
 
-                // Реверс направления при необходимости
                 if (reverseControls) deltaY *= -1;
 
                 targetVerticalOffset = Mathf.Clamp(verticalOffset + deltaY, -maxVerticalMovement, maxVerticalMovement);
@@ -73,7 +72,6 @@ public class SwipeController : MonoBehaviour
             {
                 float deltaY = (Input.mousePosition.y - touchStartPos.y) * swipeSensitivity;
 
-                // Реверс направления при необходимости
                 if (reverseControls) deltaY *= -1;
 
                 targetVerticalOffset = Mathf.Clamp(verticalOffset + deltaY, -maxVerticalMovement, maxVerticalMovement);

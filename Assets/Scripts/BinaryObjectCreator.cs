@@ -2,7 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.UI;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class BinaryChoiceSystem : MonoBehaviour
 {
@@ -25,19 +28,20 @@ public class BinaryChoiceSystem : MonoBehaviour
     public string defaultAnswerText = "?";
     public bool shuffleAnswers = true;
 
-    [Header("Text Settings")]
-    public bool useTextMeshPro = true;
+    [Header("TMP Text Settings")]
+    [Tooltip("Base text size (0.01-0.5 for mobile)")]
+    [Range(0.01f, 0.5f)] public float textSize = 0.1f;
+    [Tooltip("Text area width in world units")]
+    public float textAreaWidth = 1.5f;
     public Color textColor = Color.white;
-    public float textSize = 0.5f;
     public Vector3 textOffset = new Vector3(0, 0, -0.1f);
     public FontStyles textStyle = FontStyles.Bold;
     public TextAlignmentOptions textAlignment = TextAlignmentOptions.Center;
 
-    [Header("Text Wrapping Settings")]
-    public float textAreaWidth = 2f;
+    [Header("Auto Size Settings")]
     public bool autoSizeText = true;
-    public float minFontSize = 0.3f;
-    public float maxFontSize = 0.7f;
+    [Range(0.01f, 0.3f)] public float minFontSize = 0.08f;
+    [Range(0.1f, 0.8f)] public float maxFontSize = 0.3f;
     public float lineSpacing = 0.5f;
 
     [Header("Spacing Settings")]
@@ -56,6 +60,7 @@ public class BinaryChoiceSystem : MonoBehaviour
     public float newPairDelay = 0.5f;
     public AnimationCurve spawnCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
+    private const float TMP_SCALE_FACTOR = 0.01f;
     private List<ChoicePair> activePairs = new List<ChoicePair>();
     private Transform currentActivePair;
     private bool isInteractable = true;
@@ -73,14 +78,10 @@ public class BinaryChoiceSystem : MonoBehaviour
 
     private void LoadFontResources()
     {
-        if (useTextMeshPro)
+        tmpFontAsset = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
+        if (tmpFontAsset == null)
         {
-            tmpFontAsset = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
-            if (tmpFontAsset == null)
-            {
-                Debug.LogWarning("TMP font not found. Falling back to TextMesh.");
-                useTextMeshPro = false;
-            }
+            Debug.LogError("TMP font not found! Please import TMP Essentials");
         }
     }
 
@@ -138,7 +139,6 @@ public class BinaryChoiceSystem : MonoBehaviour
         if (answersExhausted) return;
 
         ChoicePair newPair = new ChoicePair();
-
         GameObject container = new GameObject($"Pair_{activePairs.Count}");
         container.transform.position = centerPosition;
         newPair.pairContainer = container.transform;
@@ -146,22 +146,19 @@ public class BinaryChoiceSystem : MonoBehaviour
         string correctText = GetAnswerText(true);
         string incorrectText = GetAnswerText(false);
 
+        bool isCorrectOnLeft = Random.Range(0, 2) == 0;
+
         newPair.leftObject = CreateChoiceObject(
             container.transform,
             Vector3.left * horizontalDistance * 0.5f,
-            correctText,
-            true);
+            isCorrectOnLeft ? correctText : incorrectText,
+            isCorrectOnLeft);
 
         newPair.rightObject = CreateChoiceObject(
             container.transform,
             Vector3.right * horizontalDistance * 0.5f,
-            incorrectText,
-            false);
-
-        if (Random.Range(0, 2) == 0)
-        {
-            (newPair.leftObject, newPair.rightObject) = (newPair.rightObject, newPair.leftObject);
-        }
+            isCorrectOnLeft ? incorrectText : correctText,
+            !isCorrectOnLeft);
 
         activePairs.Add(newPair);
         currentActivePair = container.transform;
@@ -181,7 +178,7 @@ public class BinaryChoiceSystem : MonoBehaviour
         Renderer rend = obj.GetComponent<Renderer>();
         if (rend != null) rend.material.color = neutralColor;
 
-        CreateTextComponent(obj, text);
+        CreateTMPText(obj, text);
 
         var clickHandler = obj.AddComponent<ChoiceObjectClick>();
         clickHandler.parentSystem = this;
@@ -190,124 +187,43 @@ public class BinaryChoiceSystem : MonoBehaviour
         return obj;
     }
 
-    private void CreateTextComponent(GameObject parent, string text)
-    {
-        if (useTextMeshPro)
-        {
-            CreateTMPText(parent, text);
-        }
-        else
-        {
-            CreateRegularText(parent, text);
-        }
-    }
-
     private void CreateTMPText(GameObject parent, string text)
     {
         GameObject textObj = new GameObject("TMP_Text");
         textObj.transform.SetParent(parent.transform);
         textObj.transform.localPosition = textOffset;
 
-        TextMeshPro tmp = textObj.AddComponent<TextMeshPro>();
-        RectTransform rt = textObj.GetComponent<RectTransform>();
-
-        // Актуальные настройки переноса текста (2023+)
-        tmp.textWrappingMode = TextWrappingModes.Normal; // Замена enableWordWrapping
-        tmp.overflowMode = TextOverflowModes.Truncate; // Или OverflowModes.Ellipsis
-        tmp.wordWrappingRatios = 0.6f;
-
-        // Настройка контейнера
-        rt.sizeDelta = new Vector2(textAreaWidth, 0.5f);
+        RectTransform rt = textObj.AddComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(textAreaWidth / TMP_SCALE_FACTOR, 0);
         rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.localScale = Vector3.one * TMP_SCALE_FACTOR;
 
-        // Автоматическое масштабирование текста
-        if (autoSizeText)
-        {
-            tmp.enableAutoSizing = true;
-            tmp.fontSizeMin = minFontSize;
-            tmp.fontSizeMax = maxFontSize;
-        }
-        else
-        {
-            tmp.fontSize = textSize;
-        }
-
-        // Основные параметры текста
+        TextMeshPro tmp = textObj.AddComponent<TextMeshPro>();
         tmp.font = tmpFontAsset;
         tmp.text = text;
         tmp.color = textColor;
         tmp.alignment = textAlignment;
         tmp.fontStyle = textStyle;
-        tmp.isOrthographic = true;
-        tmp.sortingLayerID = SortingLayer.NameToID("UI");
-        tmp.sortingOrder = 1;
+        tmp.enableWordWrapping = true;
+        tmp.overflowMode = TextOverflowModes.Overflow;
+        tmp.lineSpacing = lineSpacing;
 
-        // Принудительное обновление меша
+        tmp.fontSize = textSize / TMP_SCALE_FACTOR;
+        tmp.enableAutoSizing = autoSizeText;
+
+        if (autoSizeText)
+        {
+            tmp.fontSizeMin = minFontSize / TMP_SCALE_FACTOR;
+            tmp.fontSizeMax = maxFontSize / TMP_SCALE_FACTOR;
+        }
+
+        tmp.isOrthographic = true;
         tmp.ForceMeshUpdate();
 
-        // Подгонка высоты под контент
-        if (tmp.textBounds.size.y > rt.sizeDelta.y)
+        if (tmp.textBounds.size.y > 0)
         {
-            rt.sizeDelta = new Vector2(rt.sizeDelta.x, tmp.textBounds.size.y * 1.1f);
+            rt.sizeDelta = new Vector2(rt.sizeDelta.x, tmp.textBounds.size.y);
         }
-
-        // Создание материала при необходимости
-        if (tmp.fontSharedMaterial == null)
-        {
-            tmp.fontSharedMaterial = new Material(Shader.Find("TextMeshPro/Distance Field"));
-            tmp.fontSharedMaterial.renderQueue = 4000;
-        }
-    }
-
-    private void CreateRegularText(GameObject parent, string text)
-    {
-        GameObject textObj = new GameObject("TextMesh");
-        textObj.transform.SetParent(parent.transform);
-        textObj.transform.localPosition = textOffset;
-
-        TextMesh tm = textObj.AddComponent<TextMesh>();
-        tm.font = Font.CreateDynamicFontFromOSFont("Arial", 16);
-        tm.text = WrapText(text, 20); // 20 chars per line
-        tm.color = textColor;
-        tm.characterSize = autoSizeText ? Mathf.Clamp(textSize, minFontSize, maxFontSize) : textSize;
-        tm.anchor = TextAnchor.MiddleCenter;
-        tm.alignment = TextAlignment.Center;
-        tm.fontSize = 24;
-        tm.fontStyle = FontStyle.Bold;
-        tm.lineSpacing = lineSpacing;
-
-        MeshRenderer mr = textObj.GetComponent<MeshRenderer>();
-        mr.sharedMaterial = tm.font.material;
-        mr.sharedMaterial.shader = Shader.Find("GUI/Text Shader");
-    }
-
-    private string WrapText(string input, int maxCharsPerLine)
-    {
-        if (string.IsNullOrEmpty(input) || maxCharsPerLine <= 0)
-            return input;
-
-        string[] words = input.Split(' ');
-        string result = "";
-        string line = "";
-
-        foreach (string word in words)
-        {
-            if (line.Length > 0 && line.Length + word.Length > maxCharsPerLine)
-            {
-                result += line + "\n";
-                line = "";
-            }
-
-            if (line.Length > 0)
-                line += " " + word;
-            else
-                line = word;
-        }
-
-        if (line.Length > 0)
-            result += line;
-
-        return result;
     }
 
     private string GetAnswerText(bool isCorrect)
@@ -349,16 +265,8 @@ public class BinaryChoiceSystem : MonoBehaviour
         Renderer rend = obj.GetComponent<Renderer>();
         if (rend != null) rend.material.color = color;
 
-        if (useTextMeshPro)
-        {
-            TextMeshPro tmp = obj.GetComponentInChildren<TextMeshPro>();
-            if (tmp != null) tmp.color = color;
-        }
-        else
-        {
-            TextMesh tm = obj.GetComponentInChildren<TextMesh>();
-            if (tm != null) tm.color = color;
-        }
+        TextMeshPro tmp = obj.GetComponentInChildren<TextMeshPro>();
+        if (tmp != null) tmp.color = color;
     }
 
     private IEnumerator AnimateSpawn(Transform target)
@@ -423,4 +331,101 @@ public class BinaryChoiceSystem : MonoBehaviour
         ValidateAnswerLists();
         InitializeSystem();
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (!EditorApplication.isPlaying || activePairs.Count == 0) return;
+
+        EditorApplication.delayCall += () => {
+            if (this != null)
+                UpdateAllPairs();
+        };
+    }
+#endif
+
+    private void UpdateAllPairs()
+    {
+        foreach (var pair in activePairs)
+        {
+            if (pair.pairContainer == null) continue;
+
+            // Update positions
+            pair.leftObject.transform.localPosition = Vector3.left * horizontalDistance * 0.5f;
+            pair.rightObject.transform.localPosition = Vector3.right * horizontalDistance * 0.5f;
+
+            // Update scales
+            pair.pairContainer.localScale = Vector3.one * objectScale;
+            pair.leftObject.transform.localScale = Vector3.one * objectScale;
+            pair.rightObject.transform.localScale = Vector3.one * objectScale;
+
+            // Update visuals
+            UpdateChoiceObjectVisuals(pair.leftObject);
+            UpdateChoiceObjectVisuals(pair.rightObject);
+
+            // Update texts
+            UpdateTextComponent(pair.leftObject);
+            UpdateTextComponent(pair.rightObject);
+
+            // Update colors
+            SetObjectColor(pair.leftObject, neutralColor);
+            SetObjectColor(pair.rightObject, neutralColor);
+        }
+
+        MoveCameraToCurrentPair();
+    }
+
+    private void UpdateChoiceObjectVisuals(GameObject obj)
+    {
+        // Update renderer if exists
+        Renderer rend = obj.GetComponent<Renderer>();
+        if (rend != null)
+        {
+            rend.material.color = neutralColor;
+        }
+    }
+
+    private void UpdateTextComponent(GameObject obj)
+    {
+        TextMeshPro tmp = obj.GetComponentInChildren<TextMeshPro>();
+        if (tmp == null) return;
+
+        tmp.fontSize = textSize / TMP_SCALE_FACTOR;
+        tmp.enableAutoSizing = autoSizeText;
+        tmp.fontSizeMin = minFontSize / TMP_SCALE_FACTOR;
+        tmp.fontSizeMax = maxFontSize / TMP_SCALE_FACTOR;
+        tmp.color = textColor;
+        tmp.fontStyle = textStyle;
+        tmp.alignment = textAlignment;
+        tmp.lineSpacing = lineSpacing;
+
+        RectTransform rt = tmp.GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(textAreaWidth / TMP_SCALE_FACTOR, 0);
+        rt.localPosition = textOffset;
+
+        tmp.ForceMeshUpdate();
+    }
+
+#if UNITY_EDITOR
+    [CustomEditor(typeof(BinaryChoiceSystem))]
+    public class BinaryChoiceSystemEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+
+            BinaryChoiceSystem system = (BinaryChoiceSystem)target;
+
+            if (GUILayout.Button("Force Update All Pairs"))
+            {
+                system.UpdateAllPairs();
+            }
+
+            if (GUILayout.Button("Reset System"))
+            {
+                system.ResetSystem();
+            }
+        }
+    }
+#endif
 }
