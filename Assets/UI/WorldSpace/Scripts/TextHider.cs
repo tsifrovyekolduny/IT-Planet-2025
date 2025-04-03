@@ -8,13 +8,19 @@ public class TextHider : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _targetText;
     [SerializeField] private string _hiddenPattern = "━━━━━";
     [SerializeField] private float _fadeDuration = 0.3f;
+    [SerializeField] private bool _withFade = false;
 
     private string _originalText;
-    private bool _isHidden = true;
+    [SerializeField] private bool _startHidden = true;
+    private bool _isHidden = false;
     private Coroutine _fadeCoroutine;
 
     private void Awake()
     {
+        if (_startHidden)
+        {
+            Hide(true);
+        }
         _originalText = _targetText.text;
     }
 
@@ -28,9 +34,13 @@ public class TextHider : MonoBehaviour
         {
             ApplyVisibility(show);
         }
-        else
+        else if (_withFade)
         {
             _fadeCoroutine = StartCoroutine(AnimateVisibility(show));
+        }
+        else
+        {
+            EncryptText();
         }
     }
 
@@ -39,7 +49,28 @@ public class TextHider : MonoBehaviour
         if (_fadeCoroutine != null)
             StopCoroutine(_fadeCoroutine);
 
-        _fadeCoroutine = StartCoroutine(AnimateVisibility(!_isHidden));
+        if (_withFade)
+        {
+            _fadeCoroutine = StartCoroutine(AnimateVisibility(!_isHidden));
+        }
+        else
+        {
+            EncryptText();
+        }
+    }
+
+    void EncryptText()
+    {
+        if (_isHidden)
+        {
+            _targetText.text = _originalText;
+        }
+        else
+        {
+            _targetText.text = _hiddenPattern;
+        }
+
+        _isHidden = !_isHidden;
     }
 
     // Показать текст (с анимацией)
@@ -68,7 +99,6 @@ public class TextHider : MonoBehaviour
 
     private void ApplyVisibility(bool show)
     {
-        _targetText.text = show ? _originalText : _hiddenPattern;
         _targetText.alpha = show ? 1f : 0f;
     }
 }

@@ -13,7 +13,7 @@ public class TestUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
+        if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Key down");
             unityEvent.Invoke();

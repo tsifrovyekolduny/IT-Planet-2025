@@ -12,9 +12,29 @@ public class WithButtons : AdvancedTMPElement
     [SerializeField] private List<ButtonData> _buttonsData = new List<ButtonData>();
     [SerializeField] private Transform _buttonsContainer;
 
+    [SerializeField] private float _fadeDuration = 0.3f;
+
+    private CanvasGroup _buttonsCanvasGroup;
+
+    [Header("Hider Settings")]
+    [SerializeField] private TextHider _textHider;
+    [SerializeField] private bool _startHidden = true;
+    private bool _isHidden = false;
+
     private void Start()
-    {
+    {       
+        _buttonsCanvasGroup = _buttonsContainer.GetComponent<CanvasGroup>();
+        if (_buttonsCanvasGroup == null)
+            _buttonsCanvasGroup = _buttonsContainer.gameObject.AddComponent<CanvasGroup>();
+
         LinkButtons();
+
+        if (_startHidden)
+        {
+            _isHidden = _startHidden;
+            _textHider.ToggleVisibility(false, true);
+            SetButtonsVisibility(false, true);
+        }
     }
 
     // Связываем данные с реальными кнопками
@@ -54,6 +74,65 @@ public class WithButtons : AdvancedTMPElement
     {
         _buttonsData.Add(data);
         LinkButtons();
+    }
+
+    public void ToggleVisibility()
+    {
+        if (_isHidden)
+        {
+            ShowFullInfo();
+        }
+        else
+        {
+            HideFullInfo();
+        }
+    }
+
+    public void ShowFullInfo()
+    {
+        _isHidden = false;
+
+        _textHider.ToggleVisibility(false);
+        SetButtonsVisibility(true);
+    }
+
+    public void HideFullInfo()
+    {
+        _isHidden = true;
+
+        _textHider.ToggleVisibility(true);
+        SetButtonsVisibility(false);
+    }
+
+    private void SetButtonsVisibility(bool show, bool instant = false)
+    {
+        if (instant)
+        {
+            _buttonsCanvasGroup.alpha = show ? 1 : 0;
+            _buttonsCanvasGroup.blocksRaycasts = show;
+        }
+        else
+        {
+            StartCoroutine(FadeButtons(show));
+        }
+    }
+
+    private IEnumerator FadeButtons(bool show)
+    {
+        float elapsed = 0f;
+        float startAlpha = _buttonsCanvasGroup.alpha;
+        float targetAlpha = show ? 1 : 0;
+
+        _buttonsCanvasGroup.blocksRaycasts = show;
+
+        while (elapsed < _fadeDuration)
+        {
+            _buttonsCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / _fadeDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        _buttonsCanvasGroup.alpha = targetAlpha;
     }
 }
 
