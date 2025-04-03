@@ -11,16 +11,16 @@ public class BrainTaper : MonoBehaviour, IBrainEvent
     private IShakeable _shakleEffect = null;
 
     [SerializeField]
-    [InspectorName("Количество тапов для ивента")]
+    [Rename("Количество тапов для ивента")]
     public int CountTapForEvent;
 
     [SerializeField]
-    [InspectorName("Время ожидания в секундах до тапа")]
-    public float TimeThreshold;
+    [Rename("Время ожидания в секундах нового тапа")]
+    public float TimeThresholdNewTap;
 
     [SerializeField]
-    [InspectorName("Время блокировки после ивента")]
-    public float TimeThresholdEvent;
+    [Rename("Время блокировки после ивента")]
+    public float TimeThresholdBlockTapAfterEvent;
 
 
     bool _isBrainEventRaised = false;
@@ -60,7 +60,7 @@ public class BrainTaper : MonoBehaviour, IBrainEvent
 
         touchInputHandler.OnSingleTap.AddListener(HandleSingleTap);
 
-        _counterClickEvent = new CounterClickEvent(CountTapForEvent, TimeThreshold);
+        _counterClickEvent = new CounterClickEvent(CountTapForEvent, TimeThresholdNewTap);
         _counterClickEvent.OnCountReached.AddListener(RaiseEvent);
     }
 
@@ -89,7 +89,7 @@ public class BrainTaper : MonoBehaviour, IBrainEvent
 
     private IEnumerator ResetBrainEvent()
     {
-        yield return new WaitForSeconds(TimeThresholdEvent); // Ждем указанное время
+        yield return new WaitForSeconds(TimeThresholdBlockTapAfterEvent); // Ждем указанное время
 
         _isBrainEventRaised = false; // Сбрасываем состояние
         Debug.Log("Состояние восстановлено после блокировки.");
