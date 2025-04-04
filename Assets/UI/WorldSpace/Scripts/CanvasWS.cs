@@ -6,26 +6,26 @@ using UnityEngine.UI;
 public class TMPWithImageController : MonoBehaviour
 {
     [Header("Text Settings")]
-    [SerializeField] private TextMeshProUGUI _tmpText;
+    [SerializeField] protected TextMeshProUGUI _tmpText;
     [TextArea(3, 5)]
-    [SerializeField] private string _textContent = "TMP Text";
-    [SerializeField] private Color _textColor = Color.white;
-    [SerializeField] private float _textSize = 14;
-    [SerializeField] private TMP_FontAsset _fontAsset;
-    [SerializeField] private bool _autoSize = true;
+    [SerializeField] protected string _textContent = "TMP Text";
+    [SerializeField] protected Color _textColor = Color.white;
+    [SerializeField] protected float _textSize = 14;
+    [SerializeField] protected TMP_FontAsset _fontAsset;
+    [SerializeField] protected bool _autoSize = true;
 
     [Header("Image Settings")]
     [SerializeField] protected Image _image;
-    [SerializeField] private Sprite _imageSprite;
-    [SerializeField] private Vector2 _imageSize = new Vector2(100, 100);
-    [SerializeField] private bool _preserveAspect = true;
+    [SerializeField] protected Sprite _imageSprite;
+    [SerializeField] protected Vector2 _imageSize = new Vector2(100, 100);
+    [SerializeField] protected bool _preserveAspect = true;
 
     [Header("Fallback Background")]
-    [SerializeField] private bool _useFallbackColor = true;
-    [SerializeField] private Color _fallbackColor = new Color(0.1f, 0.1f, 0.1f, 0.8f);
-    [SerializeField] private Image _backgroundImage;
+    [SerializeField] protected bool _useFallbackColor = true;
+    [SerializeField] protected Color _fallbackColor = new Color(0.1f, 0.1f, 0.1f, 0.8f);
+    [SerializeField] protected Image _backgroundImage;
 
-    private void Start()
+    private void Awake()
     {
         UpdateVisuals();
     }

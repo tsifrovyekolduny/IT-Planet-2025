@@ -2,6 +2,7 @@
 using TMPro;
 using System.Collections;
 
+[ExecuteAlways]
 public class TextHider : HideableUI
 {
     [Header("Настройки")]
@@ -10,31 +11,17 @@ public class TextHider : HideableUI
 
     private string _originalText;    
 
-    protected override void Awake()
-    {
-        base.Awake();        
-
+    protected override void Start()
+    {        
         // Инициализация текста
         _originalText = _targetText.text;
+
+        base.Start();        
     }  
-
-    void EncryptText()
-    {
-        if (_isHidden)
-        {
-            _targetText.text = _originalText;
-        }
-        else
-        {
-            _targetText.text = _hiddenPattern;
-        }
-
-        _isHidden = !_isHidden;
-    }    
    
     public override void ApplyVisibility(bool show)
     {
-        _targetText.alpha = show ? 1f : 0f;        
+        _hidingCanvasGroup.alpha = show ? 1f : 0f;        
     }
 
     public override void ApplyVisibilityWithoutFade(bool show)
@@ -45,7 +32,7 @@ public class TextHider : HideableUI
         }
         else
         {
-            _targetText.text = _hiddenPattern;
+            _targetText.text = _hiddenPattern;            
         }
     }
 }

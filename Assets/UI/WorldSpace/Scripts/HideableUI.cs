@@ -9,14 +9,22 @@ public abstract class HideableUI : MonoBehaviour
     [SerializeField] protected bool _withFade = true;
     [SerializeField] protected CanvasGroup _hidingCanvasGroup;
 
-    protected bool _isHidden;
+    [SerializeField] protected bool _isHidden;
     protected Coroutine _fadeCoroutine;
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
         if (_startHidden)
         {
-            ToggleVisibility(false, true);
+            if (_withFade)
+            {
+                ApplyVisibility(false);
+            }
+            else
+            {
+                ApplyVisibilityWithoutFade(false);
+            }            
+            _isHidden = true;
         }
     }
 
@@ -27,7 +35,7 @@ public abstract class HideableUI : MonoBehaviour
         StopCurrentFade();
         
         // Сразу и без затухания
-        if (instant || !_withFade)
+        if (instant && !_withFade)
         {
             ApplyVisibility(show);
         }

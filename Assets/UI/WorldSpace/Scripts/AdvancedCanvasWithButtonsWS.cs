@@ -18,7 +18,7 @@ public class WithButtons : HideableUI
     [SerializeField] private TextHider _textHider;
     
 
-    protected override void Awake()
+    protected override void Start()
     {            
         _buttonsCanvasGroup = _buttonsContainer.GetComponent<CanvasGroup>();
         if (_buttonsCanvasGroup == null)
@@ -27,7 +27,7 @@ public class WithButtons : HideableUI
         _hidingCanvasGroup = _buttonsCanvasGroup;
 
         LinkButtons();
-        base.Awake();
+        base.Start();
     }
 
     // Связываем данные с реальными кнопками
@@ -105,12 +105,15 @@ public class ButtonData
         if (tmp != null) tmp.text = buttonText;
 
         // Иконка
-        var icon = linkedButton.transform.Find("Icon")?.GetComponent<Image>();
+        var icon = linkedButton.GetComponent<Image>();
         if (icon != null)
-        {
-            icon.sprite = buttonIcon;
-            icon.color = buttonColor;
+        {            
+            icon.sprite = buttonIcon;            
             icon.transform.localScale = Vector3.one * iconScale;
+        }
+        else
+        {
+            icon.color = buttonColor;
         }
 
         // Обработчик клика

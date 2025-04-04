@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 785287301613162057}
   - component: {fileID: 7998812435499912126}
   - component: {fileID: 8576612622108480082}
+  - component: {fileID: 5578959192736997099}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -211,6 +212,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!225 &5578959192736997099
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442305716902710397}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6780884006660003075
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,9 +238,8 @@ GameObject:
   - component: {fileID: 855615631124970839}
   - component: {fileID: 7017193679803531420}
   - component: {fileID: 7632266794172467545}
-  - component: {fileID: 2031311746514118745}
   m_Layer: 5
-  m_Name: HiddableCloud
+  m_Name: HideableCloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,7 +309,8 @@ MonoBehaviour:
   _fadeDuration: 0.3
   _startHidden: 1
   _withFade: 0
-  _hidingCanvasGroup: {fileID: 2031311746514118745}
+  _hidingCanvasGroup: {fileID: 5578959192736997099}
+  _isHidden: 0
   _targetText: {fileID: 8576612622108480082}
   _hiddenPattern: ____________
 --- !u!223 &855615631124970839
@@ -363,15 +376,3 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!225 &2031311746514118745
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780884006660003075}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
