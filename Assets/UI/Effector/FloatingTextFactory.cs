@@ -9,8 +9,11 @@ public class FloatingTextSpawner : Singletone<FloatingTextSpawner>
     [SerializeField] private Transform _worldCanvas;
     [SerializeField] private Transform _screenCanvas;
     [SerializeField] private float _defaultDuration = 1.5f;
+    [SerializeField] private Vector2 _defaultOffset = new Vector2(0, 50f);
 
-    public void SpawnText(string message, Vector3 position, bool isWorldSpace = true, float duration = -1)
+    public void SpawnText(string message, Vector3 position, bool isWorldSpace = true,
+                         float duration = -1, Vector2? offset = null,
+                         TextAnchor anchor = TextAnchor.MiddleCenter)
     {
         if (_prefab == null || _worldCanvas == null || _screenCanvas == null)
         {
@@ -19,16 +22,47 @@ public class FloatingTextSpawner : Singletone<FloatingTextSpawner>
         }
 
         float actualDuration = duration > 0 ? duration : _defaultDuration;
-        var targetCanvas = isWorldSpace ? _worldCanvas : _screenCanvas;
+        Vector2 actualOffset = offset ?? _defaultOffset;
 
-        var instance = Instantiate(_prefab, targetCanvas);
-        instance.Setup(message, position, actualDuration, isWorldSpace);
+        if (isWorldSpace)
+        {
+            SpawnWorldSpaceText(message, position, actualDuration, actualOffset);
+        }
+        else
+        {
+            SpawnScreenSpaceText(message, position, actualDuration, actualOffset, anchor);
+        }
+    }
+
+    private void SpawnWorldSpaceText(string message, Vector3 worldPosition,
+                                   float duration, Vector2 offset)
+    {
+        var instance = Instantiate(_prefab, _worldCanvas);
+        instance.SetupWorldSpace(message, worldPosition, duration, offset);
+    }
+
+    private void SpawnScreenSpaceText(string message, Vector2 screenPosition,
+                                    float duration, Vector2 offset, TextAnchor anchor)
+    {
+        // Создаем только Text из префаба
+        var newObj = new GameObject();
+
+        var temp = newObj.AddComponent<TextMeshProUGUI>();
+        temp = _prefab.TextLabel;
+
+        Instantiate(newObj, _screenCanvas);
+
+        var textInstance = newObj.AddComponent<FloatingText>();
+        textInstance.SetupScreenSpace(message, screenPosition + offset, duration, anchor);
     }
 
     // Удобные врапперы
-    public static void Spawn(string message, Vector3 position, bool isWorldSpace = true)
-        => Instance?.SpawnText(message, position, isWorldSpace);
+    public void Spawn(string message, Vector3 worldPosition,
+                           Vector2? offset = null)
+        => Instance?.SpawnText(message, worldPosition, true, -1, offset);
 
-    public static void Spawn(string message, Vector3 position, float duration, bool isWorldSpace = true)
-        => Instance?.SpawnText(message, position, isWorldSpace, duration);
+    public void SpawnScreen(string message, Vector2 screenPosition,
+                                 TextAnchor anchor = TextAnchor.MiddleCenter,
+                                 Vector2? offset = null)
+        => Instance?.SpawnText(message, screenPosition, false, -1, offset, anchor);
 }

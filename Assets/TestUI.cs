@@ -17,7 +17,13 @@ public class TestUI : MonoBehaviour
         {
             Debug.Log("Key down");
             unityEvent.Invoke();
-            FloatingTextSpawner.Spawn("+1", new Vector3(0, 0), false);
+
+            FloatingTextSpawner.Instance.ToString();
+            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.UpperRight);
+            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.UpperLeft);
+            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.MiddleCenter);
+            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.LowerLeft);
+            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.LowerRight);
         }
     }
 }
