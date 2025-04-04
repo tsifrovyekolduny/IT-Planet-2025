@@ -18,12 +18,12 @@ public class TestUI : MonoBehaviour
             Debug.Log("Key down");
             unityEvent.Invoke();
 
-            FloatingTextSpawner.Instance.ToString();
-            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.UpperRight);
-            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.UpperLeft);
-            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.MiddleCenter);
-            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.LowerLeft);
-            FloatingTextSpawner.Instance.SpawnScreen("+1", Vector2.zero, TextAnchor.LowerRight);
+            UIFloatingLabelSpawner.Instance.SpawnFloatingText(
+                "+1", 
+                Vector2.zero,
+                UIFloatingLabelSpawner.LabelAnchor.TopRight,
+                new Vector2(5, 5), 
+                10f);            
         }
     }
 }
