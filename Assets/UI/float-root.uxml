@@ -1,4 +1,3 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/float-style.uss?fileID=7433441132597879392&amp;guid=308fbe4b8e9a30b44bb53eca5888e300&amp;type=3#float-style" />
-    <engine:Label text="Label" class="floating-label" />
+    <engine:VisualElement style="flex-grow: 1; width: 100%; height: 100%;" />
 </engine:UXML>

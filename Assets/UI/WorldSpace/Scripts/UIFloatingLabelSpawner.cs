@@ -7,94 +7,119 @@ public class UIFloatingLabelSpawner : Singletone<UIFloatingLabelSpawner>
     [SerializeField] private UIDocument _uiDocument;
     [SerializeField] private VisualTreeAsset _labelTemplate;
     [SerializeField] private float _defaultDuration = 2f;
-    [SerializeField] private float _floatSpeed = 50f;
+    [SerializeField] private float _floatSpeed = 50f;    
 
-    private VisualElement _root;
+    private VisualElement _root;    
 
-    // Варианты выравнивания (аналогично TextAnchor)
-    public enum LabelAnchor
-    {
-        TopLeft,
-        TopRight,
-        BottomLeft,
-        BottomRight,
-        Center
-    }
-
-    private void Awake()
+    private void Start()
     {
         _root = _uiDocument.rootVisualElement;
     }
 
-    // Основной метод с поддержкой выравнивания и смещения
+    // Перегрузка 1: Позиция через Anchor + offset
+    public void SpawnFloatingText(
+        string text,
+        LabelAnchor anchor,
+        Vector2 offset = default,
+        float duration = -1
+    )
+    {
+        Vector2 screenPosition = GetAnchorPosition(anchor);
+        SpawnFloatingText(text, screenPosition, anchor, offset, duration);
+    }
+
+    // Перегрузка 2: Позиция через Vector2 (игнорирует Anchor, но учитывает offset)
     public void SpawnFloatingText(
         string text,
         Vector2 screenPosition,
-        LabelAnchor anchor = LabelAnchor.TopLeft,
         Vector2 offset = default,
         float duration = -1
     )
     {
         if (duration <= 0) duration = _defaultDuration;
 
-        // Создаем Label из шаблона
         var labelElement = _labelTemplate.CloneTree().Q<Label>();
         labelElement.text = text;
 
-        // Устанавливаем позицию с учетом выравнивания
+        // Позиция = screenPosition + offset (без привязки к краям)
+        labelElement.style.position = Position.Absolute;
+        labelElement.style.left = screenPosition.x + offset.x;
+        labelElement.style.top = screenPosition.y + offset.y;
+
+        _root.Add(labelElement);
+        StartCoroutine(FloatAndFade(labelElement, duration));
+    }
+
+    // Внутренний метод для расчёта позиции с Anchor
+    private void SpawnFloatingText(
+        string text,
+        Vector2 screenPosition,
+        LabelAnchor anchor,
+        Vector2 offset,
+        float duration
+    )
+    {
+        if (duration <= 0) duration = _defaultDuration;
+
+        var labelElement = _labelTemplate.Instantiate().Q<Label>();
+        labelElement.text = text;
+
         Vector2 finalPosition = CalculatePosition(screenPosition, anchor, offset, labelElement);
         labelElement.style.position = Position.Absolute;
         labelElement.style.left = finalPosition.x;
         labelElement.style.top = finalPosition.y;
 
-        // Добавляем в UI
         _root.Add(labelElement);
-
-        // Запускаем анимацию
         StartCoroutine(FloatAndFade(labelElement, duration));
     }
 
-    // Рассчитываем позицию с учетом выравнивания и смещения
-    private Vector2 CalculatePosition(Vector2 screenPosition, LabelAnchor anchor, Vector2 offset, Label label)
+    // Получаем позицию Anchor относительно корневого элемента (всего экрана)
+    private Vector2 GetAnchorPosition(LabelAnchor anchor)
     {
-        float labelWidth = label.contentRect.width;
-        float labelHeight = label.contentRect.height;
+        float rootWidth = _root.contentRect.width;
+        float rootHeight = _root.contentRect.height;
 
-        switch (anchor)
+        return anchor switch
         {
-            case LabelAnchor.TopLeft:
-                return screenPosition + offset;
-
-            case LabelAnchor.TopRight:
-                return new Vector2(
-                    screenPosition.x - labelWidth + offset.x,
-                    screenPosition.y + offset.y
-                );
-
-            case LabelAnchor.BottomLeft:
-                return new Vector2(
-                    screenPosition.x + offset.x,
-                    screenPosition.y - labelHeight + offset.y
-                );
-
-            case LabelAnchor.BottomRight:
-                return new Vector2(
-                    screenPosition.x - labelWidth + offset.x,
-                    screenPosition.y - labelHeight + offset.y
-                );
-
-            case LabelAnchor.Center:
-                return new Vector2(
-                    screenPosition.x - (labelWidth * 0.5f) + offset.x,
-                    screenPosition.y - (labelHeight * 0.5f) + offset.y
-                );
-
-            default:
-                return screenPosition + offset;
-        }
+            LabelAnchor.TopLeft => new Vector2(0, 0),
+            LabelAnchor.TopRight => new Vector2(rootWidth, 0),
+            LabelAnchor.BottomLeft => new Vector2(0, rootHeight),
+            LabelAnchor.BottomRight => new Vector2(rootWidth, rootHeight),
+            LabelAnchor.Center => new Vector2(rootWidth / 2, rootHeight / 2),
+            _ => Vector2.zero
+        };
     }
 
-    // Анимация движения вверх и исчезновения (без изменений)
+    // Расчёт позиции с учётом Anchor и размера Label
+    private Vector2 CalculatePosition(Vector2 screenPosition, LabelAnchor anchor, Vector2 offset, Label label)
+    {
+        float labelWidth = label.contentRect.width != label.contentRect.width ? 0f : label.contentRect.width;
+        float labelHeight = label.contentRect.height != label.contentRect.height ? 0f : label.contentRect.height;
+
+        return anchor switch
+        {
+            LabelAnchor.TopLeft => screenPosition + offset,
+            LabelAnchor.TopRight => new Vector2(
+                screenPosition.x - labelWidth + offset.x,
+                screenPosition.y + offset.y
+            ),
+            LabelAnchor.BottomLeft => new Vector2(
+                screenPosition.x + offset.x,
+                screenPosition.y - labelHeight + offset.y
+            ),
+            LabelAnchor.BottomRight => new Vector2(
+                screenPosition.x - labelWidth + offset.x,
+                screenPosition.y - labelHeight + offset.y
+            ),
+            LabelAnchor.Center => new Vector2(
+                screenPosition.x - (labelWidth * 0.5f) + offset.x,
+                screenPosition.y - (labelHeight * 0.5f) + offset.y
+            ),
+            _ => screenPosition + offset
+        };
+    }
+
+    // Анимация (без изменений)
     private IEnumerator FloatAndFade(Label label, float duration)
     {
         float elapsed = 0f;
@@ -105,20 +130,24 @@ public class UIFloatingLabelSpawner : Singletone<UIFloatingLabelSpawner>
             elapsed += Time.deltaTime;
             float progress = elapsed / duration;
 
-            // Движение вверх
             float newY = startY - (_floatSpeed * elapsed);
             label.style.top = newY;
 
-            // Плавное исчезновение
             if (progress > 0.7f)
-            {
                 label.AddToClassList("fade-out");
-            }
 
             yield return null;
         }
 
-        // Удаляем элемент после завершения
         label.RemoveFromHierarchy();
     }
+}
+
+public enum LabelAnchor
+{
+    TopLeft,
+    TopRight,
+    BottomLeft,
+    BottomRight,
+    Center
 }
