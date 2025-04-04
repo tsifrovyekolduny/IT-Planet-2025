@@ -1,41 +1,65 @@
 ﻿using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class FloatingText : MonoBehaviour
 {
-    [Header("Components")]
+    [Header("Компоненты")]
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private CanvasGroup _canvasGroup;
 
-    [Header("Animation Settings")]
-    [SerializeField] private float _duration = 1f;
-    [SerializeField] private float _moveHeight = 100f;
-    [SerializeField] private AnimationCurve _fadeCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
-    [SerializeField] private AnimationCurve _moveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    private float _duration;
+    private float _timer;
+    private Vector3 _targetPosition;
+    private bool _isWorldSpace;
+    private Camera _mainCamera;
 
-    private Vector3 _startPosition;
-    private float _progress;
-
-    void Update()
+    private void Awake()
     {
-        _progress += Time.deltaTime / _duration;
+        _mainCamera = Camera.main;
+    }
 
-        // Анимация движения и прозрачности
-        transform.position = _startPosition + Vector3.up * (_moveCurve.Evaluate(_progress) * _moveHeight);
-        _canvasGroup.alpha = _fadeCurve.Evaluate(_progress);
+    public void Setup(string message, Vector3 position, float duration, bool isWorldSpace)
+    {
+        _text.text = message;
+        _duration = duration;
+        _timer = 0f;
+        _canvasGroup.alpha = 1f;
+        _isWorldSpace = isWorldSpace;
 
-        if (_progress >= 1f)
+        if (_isWorldSpace)
         {
-            FloatingTextFactory.Instance.ReturnToPool(this);
+            _targetPosition = position;
+        }
+        else
+        {
+            // Для экранного пространства сразу конвертируем в локальные координаты
+            transform.localPosition = position;
         }
     }
 
-    public void Initialize(string message, Vector3 position)
+    private void Update()
     {
-        _text.text = message;
-        _startPosition = position;
-        _progress = 0f;
-        _canvasGroup.alpha = 1f;
+        // Позиционирование
+        if (_isWorldSpace && _mainCamera != null)
+        {
+            transform.position = _mainCamera.WorldToScreenPoint(_targetPosition);
+            _targetPosition += Vector3.up * Time.deltaTime * 0.5f;
+        }
+        else
+        {
+            // Для экранного пространства просто двигаем вверх
+            transform.localPosition += Vector3.up * Time.deltaTime * 50f;
+        }
+
+        // Анимация исчезновения
+        _timer += Time.deltaTime;
+        float progress = Mathf.Clamp01(_timer / _duration);
+        _canvasGroup.alpha = 1f - progress;
+
+        // Уничтожение по завершении
+        if (_timer >= _duration)
+        {
+            Destroy(gameObject);
+        }
     }
 }
