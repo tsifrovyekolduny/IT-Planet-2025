@@ -1,7 +1,11 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Label text="Label" name="hub-name" style="-unity-text-align: upper-center;" />
-    <engine:Button text="Назад" name="back-btn" />
-    <engine:ScrollView>
-        <engine:VisualElement name="hub-container" style="flex-grow: 1;" />
-    </engine:ScrollView>
+    <engine:VisualElement style="flex-grow: 1; height: auto; border-bottom-width: 3px; border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgb(255, 255, 255); justify-content: space-around;">
+        <engine:Label text="Label" name="hub-name" style="-unity-text-align: upper-center; font-size: 24px; -unity-font-style: bold; color: rgb(255, 255, 255); white-space: pre-wrap; margin-top: 5px; margin-left: 4px; margin-bottom: 5px;" />
+        <engine:Button text="&#10;" name="back-btn" enabled="true" style="margin-top: 2px; -unity-text-align: lower-center; -unity-font-style: bold; font-size: 18px; border-left-color: rgb(116, 170, 212); border-right-color: rgb(116, 170, 212); border-top-color: rgb(116, 170, 212); border-bottom-color: rgb(116, 170, 212); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color: rgba(26, 42, 66, 0); color: rgb(116, 170, 212); position: absolute; background-image: resource(&apos;arrow&apos;); padding-right: 10px; padding-bottom: 10px; margin-left: 15px; padding-left: 10px; top: 30%;" />
+    </engine:VisualElement>
+    <engine:VisualElement style="flex-grow: 1; height: 80%;">
+        <engine:ScrollView style="margin-top: 20px;">
+            <engine:VisualElement name="hub-container" style="flex-grow: 1;" />
+        </engine:ScrollView>
+    </engine:VisualElement>
 </engine:UXML>
