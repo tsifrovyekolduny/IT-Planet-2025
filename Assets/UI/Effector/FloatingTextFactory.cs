@@ -45,15 +45,15 @@ public class FloatingTextSpawner : Singletone<FloatingTextSpawner>
                                     float duration, Vector2 offset, TextAnchor anchor)
     {
         // Создаем только Text из префаба
-        var newObj = new GameObject();
+        var newObj = new GameObject("Floating", typeof(RectTransform));
 
         var temp = newObj.AddComponent<TextMeshProUGUI>();
         temp = _prefab.TextLabel;
-
-        Instantiate(newObj, _screenCanvas);
-
+        var canvasGroup = newObj.AddComponent<CanvasGroup>();
         var textInstance = newObj.AddComponent<FloatingText>();
         textInstance.SetupScreenSpace(message, screenPosition + offset, duration, anchor);
+
+        Instantiate(newObj, _screenCanvas);
     }
 
     // Удобные врапперы
