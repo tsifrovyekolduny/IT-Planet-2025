@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
-using System.Collections;
 
-[ExecuteAlways]
 public class TextHider : HideableUI
 {
     [Header("Настройки")]

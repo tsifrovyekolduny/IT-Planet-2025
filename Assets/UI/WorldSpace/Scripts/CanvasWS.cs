@@ -2,17 +2,11 @@
 using TMPro;
 using UnityEngine.UI;
 
-[ExecuteAlways]
+
 public class TMPWithImageController : MonoBehaviour
 {
     [Header("Text Settings")]
-    [SerializeField] protected TextMeshProUGUI _tmpText;
-    [TextArea(3, 5)]
-    [SerializeField] protected string _textContent = "TMP Text";
-    [SerializeField] protected Color _textColor = Color.white;
-    [SerializeField] protected float _textSize = 14;
-    [SerializeField] protected TMP_FontAsset _fontAsset;
-    [SerializeField] protected bool _autoSize = true;
+    [SerializeField] ConfigurableTMPText _tmpText;    
 
     [Header("Image Settings")]
     [SerializeField] protected Image _image;
@@ -34,11 +28,11 @@ public class TMPWithImageController : MonoBehaviour
     {
         UpdateVisuals();
     }
-
+    
     public virtual void UpdateVisuals()
     {
         // Настройка текста
-        ConfigureText();
+        _tmpText.ConfigureText();
 
         // Настройка изображения или фона
         if (_image != null)
@@ -52,28 +46,11 @@ public class TMPWithImageController : MonoBehaviour
             SetBackgroundVisibility(true);
             if (_image != null) _image.gameObject.SetActive(false);
         }
-    }
-
-    private void ConfigureText()
-    {
-        _tmpText.text = _textContent;
-        _tmpText.color = _textColor;
-        _tmpText.fontSize = _textSize;
-
-        if (_fontAsset != null)
-            _tmpText.font = _fontAsset;
-
-        if (_autoSize)
-        {
-            _tmpText.enableAutoSizing = true;
-            _tmpText.fontSizeMin = 8;
-            _tmpText.fontSizeMax = _textSize;
-        }
-    }
+    }    
 
     public void SetText(string text)
     {
-        _tmpText.text = text;
+        _tmpText.SetText(text);
     }
 
     private void ConfigureImage()

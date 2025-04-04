@@ -9,7 +9,7 @@ public abstract class HideableUI : MonoBehaviour
     [SerializeField] protected bool _withFade = true;
     [SerializeField] protected CanvasGroup _hidingCanvasGroup;
 
-    [SerializeField] protected bool _isHidden;
+    protected bool _isHidden;
     protected Coroutine _fadeCoroutine;
 
     protected virtual void Start()
@@ -25,6 +25,10 @@ public abstract class HideableUI : MonoBehaviour
                 ApplyVisibilityWithoutFade(false);
             }            
             _isHidden = true;
+        }
+        else
+        {
+            _isHidden = false;
         }
     }
 

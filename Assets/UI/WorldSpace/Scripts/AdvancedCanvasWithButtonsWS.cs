@@ -5,30 +5,26 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-[ExecuteAlways]
+
 public class WithButtons : HideableUI
 {
     [Header("Button Settings")]
     [SerializeField] private List<ButtonData> _buttonsData = new List<ButtonData>();
     [SerializeField] private Transform _buttonsContainer;    
 
-    private CanvasGroup _buttonsCanvasGroup;
-
-    [Header("Hider Settings")]
-    [SerializeField] private TextHider _textHider;
+    private CanvasGroup _buttonsCanvasGroup;    
     
-
     protected override void Start()
-    {            
+    {     
         _buttonsCanvasGroup = _buttonsContainer.GetComponent<CanvasGroup>();
         if (_buttonsCanvasGroup == null)
             _buttonsCanvasGroup = _buttonsContainer.gameObject.AddComponent<CanvasGroup>();
 
         _hidingCanvasGroup = _buttonsCanvasGroup;
 
-        LinkButtons();
+        LinkButtons();        
         base.Start();
-    }
+    }    
 
     // Связываем данные с реальными кнопками
     private void LinkButtons()
@@ -73,7 +69,6 @@ public class WithButtons : HideableUI
     {
         _buttonsCanvasGroup.alpha = show ? 1 : 0;
         _buttonsCanvasGroup.blocksRaycasts = show;
-        _textHider.ToggleVisibility(show, true);
     }
 
     public override void ApplyVisibilityWithoutFade(bool show)

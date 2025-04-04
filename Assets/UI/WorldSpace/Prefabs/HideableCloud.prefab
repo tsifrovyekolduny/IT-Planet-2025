@@ -141,7 +141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "TMP \u0442\u0435\u043A\u0441\u0442"
+  m_text: "\u041A\u0430\u043A\u0430\u044F-\u0442\u043E \u043C\u044B\u0441\u043B\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -168,12 +168,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
+  m_fontSize: 16
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 8
-  m_fontSizeMax: 14
+  m_fontSizeMax: 16
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 23.839691, y: -22.667255, z: 23.448883, w: -14.069334}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -273,17 +273,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6780884006660003075}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e84073559633f4e4c8485dcd84689e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tmpText: {fileID: 8576612622108480082}
-  _textContent: "TMP \u0442\u0435\u043A\u0441\u0442"
-  _textColor: {r: 0, g: 0, b: 0, a: 1}
-  _textSize: 14
-  _fontAsset: {fileID: 0}
-  _autoSize: 1
+  _tmpText:
+    _tmpText: {fileID: 8576612622108480082}
+    _textContent: "\u041A\u0430\u043A\u0430\u044F-\u0442\u043E \u043C\u044B\u0441\u043B\u044C"
+    _textColor: {r: 0, g: 0, b: 0, a: 1}
+    _textSize: 16
+    _fontAsset: {fileID: 0}
+    _autoSize: 1
   _image: {fileID: 6156435629339771412}
   _imageSprite: {fileID: -5147572751893483449, guid: ce4565f66df268a41b1f09bd57d089ba, type: 3}
   _imageSize: {x: 100, y: 100}
@@ -310,7 +311,6 @@ MonoBehaviour:
   _startHidden: 1
   _withFade: 0
   _hidingCanvasGroup: {fileID: 5578959192736997099}
-  _isHidden: 0
   _targetText: {fileID: 8576612622108480082}
   _hiddenPattern: ____________
 --- !u!223 &855615631124970839
