@@ -3,14 +3,20 @@ using UnityEngine;
 public class SwipeController : MonoBehaviour
 {
 
-    [Header("Swipe Settings")]
+    [Header("Настройки свайпа")]
+    [Rename("Ограничить по вертикали")]
+    [Tooltip("То, насколько далеко можно свайпнуть по вертикали")]
     public float maxVerticalMovement = 2f;
+    [Rename("Чувствительность свайпа")]
     public float swipeSensitivity = 1f;
+    [Rename("Плавность свайпа")]
     public float swipeSmoothness = 10f;
+    [Rename("Инверсия свайпа")]
     [Tooltip("Если включено, свайпы будут работать в обратном направлении")]
     public bool reverseControls = false; // Новая переменная
 
-    [Header("Camera Reference")]
+    [Header("Настройка камерыe")]
+    [Rename("Камера")]
     public Camera targetCamera;
 
     private Vector3 defaultCameraPosition;
