@@ -2,62 +2,21 @@
 using TMPro;
 using System.Collections;
 
-public class TextHider : MonoBehaviour
+public class TextHider : HideableUI
 {
     [Header("Настройки")]
     [SerializeField] private TextMeshProUGUI _targetText;
-    [SerializeField] private string _hiddenPattern = "━━━━━";
-    [SerializeField] private float _fadeDuration = 0.3f;
-    [SerializeField] private bool _withFade = false;
+    [SerializeField] private string _hiddenPattern = "_____________";    
 
-    private string _originalText;
-    [SerializeField] private bool _startHidden = true;
-    private bool _isHidden = false;
-    private Coroutine _fadeCoroutine;
+    private string _originalText;    
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (_startHidden)
-        {
-            Hide(true);
-        }
+        base.Awake();        
+
+        // Инициализация текста
         _originalText = _targetText.text;
-    }
-
-    // Основной метод переключения
-    public void ToggleVisibility(bool show, bool instant = false)
-    {
-        if (_fadeCoroutine != null)
-            StopCoroutine(_fadeCoroutine);
-
-        if (instant)
-        {
-            ApplyVisibility(show);
-        }
-        else if (_withFade)
-        {
-            _fadeCoroutine = StartCoroutine(AnimateVisibility(show));
-        }
-        else
-        {
-            EncryptText();
-        }
-    }
-
-    public void ToggleVisibility()
-    {
-        if (_fadeCoroutine != null)
-            StopCoroutine(_fadeCoroutine);
-
-        if (_withFade)
-        {
-            _fadeCoroutine = StartCoroutine(AnimateVisibility(!_isHidden));
-        }
-        else
-        {
-            EncryptText();
-        }
-    }
+    }  
 
     void EncryptText()
     {
@@ -71,34 +30,22 @@ public class TextHider : MonoBehaviour
         }
 
         _isHidden = !_isHidden;
+    }    
+   
+    public override void ApplyVisibility(bool show)
+    {
+        _targetText.alpha = show ? 1f : 0f;        
     }
 
-    // Показать текст (с анимацией)
-    public void Show(bool instant = false) => ToggleVisibility(true, instant);
-
-    // Скрыть текст (с анимацией)
-    public void Hide(bool instant = false) => ToggleVisibility(false, instant);
-
-    private IEnumerator AnimateVisibility(bool show)
+    public override void ApplyVisibilityWithoutFade(bool show)
     {
-        _isHidden = show;
-
-        float elapsed = 0f;
-        float startAlpha = _targetText.alpha;
-        float targetAlpha = show ? 1f : 0f;
-
-        while (elapsed < _fadeDuration)
+        if (show)
         {
-            _targetText.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / _fadeDuration);
-            elapsed += Time.deltaTime;
-            yield return null;
+            _targetText.text = _originalText;
         }
-
-        ApplyVisibility(show);
-    }
-
-    private void ApplyVisibility(bool show)
-    {
-        _targetText.alpha = show ? 1f : 0f;
+        else
+        {
+            _targetText.text = _hiddenPattern;
+        }
     }
 }
