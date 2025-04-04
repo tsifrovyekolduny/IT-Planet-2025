@@ -17,6 +17,7 @@ public class TestUI : MonoBehaviour
         {
             Debug.Log("Key down");
             unityEvent.Invoke();
+            FloatingTextFactory.Instance.ShowText("+1", ScreenPosition.MiddleCenter);
         }
     }
 }
