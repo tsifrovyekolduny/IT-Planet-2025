@@ -46,6 +46,7 @@ public class LevelsMenu : MonoBehaviour
         progressBar = root.Q<ProgressBar>("progress-bar");
 
         root.Q<Button>("back-btn").clicked += () => SceneManager.LoadScene("DirectionsHub");
+        root.Q<VisualElement>("icon").style.backgroundImage = GameManager.Instance.CurrentDirection.Icon;
         root.Q<Label>("hub-name").text = GameManager.Instance.CurrentDirection.Name;
         root.Q<Button>("continue-btn").clicked += () => GameManager.Instance.SetLoadedLevel();
     }

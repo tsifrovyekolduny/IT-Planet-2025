@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: "\u041F\u0440\u0438\u043A\u043B\u0430\u0434\u043D\u0430\u044F \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0442\u0438\u043A\u0430
     \u0432 \u044D\u043A\u043E\u043D\u043E\u043C\u0438\u043A\u0435"
-  Icon: {fileID: 0}
+  Icon: {fileID: -1304905567622442630, guid: e27f434b127a6664fb14ecd96006ac09, type: 3}
   Levels:
   - LevelName: "\u0412\u0432\u0435\u0434\u0435\u043D\u0438\u0435"
     Script: {fileID: 4900000, guid: 4fd607b5391cab743897ea85ae4ecfb5, type: 3}
