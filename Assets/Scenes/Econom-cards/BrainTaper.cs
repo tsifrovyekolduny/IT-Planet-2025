@@ -1,5 +1,5 @@
-using Assets.Scenes.Econom_cards.Interfaces;
-using Assets.Scenes.Econom_cards.Interfaces.Events;
+using Assets.Scripts.Core.Interfaces;
+using Assets.Scripts.Core.Interfaces.Events;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -84,7 +84,6 @@ public class BrainTaper : MonoBehaviour, IBrainEvent
         _isBrainEventRaised = true;
         _brainEvent.Invoke();
         StartCoroutine(ResetBrainEvent());
-
     }
 
     private IEnumerator ResetBrainEvent()

@@ -1,5 +1,5 @@
-using Assets.Scenes.Econom_cards.Interfaces.Effects;
-using Assets.Scenes.Econom_cards.Interfaces.Events;
+using Assets.Scripts.Core.Interfaces.Effects;
+using Assets.Scripts.Core.Interfaces.Events;
 using UnityEngine;
 
 public class SceneController : MonoBehaviour

@@ -1,6 +1,5 @@
-﻿using Assets.Scenes.Econom_cards.Interfaces;
-using Assets.Scenes.Econom_cards.Interfaces.Effects;
-using Assets.Scenes.Econom_cards.Interfaces.Models;
+﻿using Assets.Scripts.Core.Interfaces.Effects;
+using Assets.Scripts.Core.Interfaces.Models;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
