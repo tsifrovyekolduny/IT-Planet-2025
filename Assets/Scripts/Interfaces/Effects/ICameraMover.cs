@@ -8,5 +8,6 @@ namespace Assets.Scripts.Interfaces.Effects
 {
     internal interface ICameraMover
     {
+        public bool IsBlockingMoving { get; set; }
     }
 }
