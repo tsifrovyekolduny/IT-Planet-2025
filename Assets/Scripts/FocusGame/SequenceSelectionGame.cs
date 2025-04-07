@@ -17,6 +17,8 @@ public class SequenceSelectionGame : MonoBehaviour
     [SerializeField] private float completionAnimationDuration = 1f;
     [SerializeField] private float distanceFromCamera = 5f; // Дистанция от камеры
 
+    public delegate void GameWonHandler();
+    public static event GameWonHandler OnGameWon;
     private Dictionary<GameObject, Color> originalColors = new Dictionary<GameObject, Color>();
     private Dictionary<GameObject, Vector3> originalPositions = new Dictionary<GameObject, Vector3>();
     private int currentExpectedIndex = 0;
@@ -133,6 +135,12 @@ public class SequenceSelectionGame : MonoBehaviour
             LeanTween.scale(obj, Vector3.one * 1.2f, completionAnimationDuration * 0.5f)
                 .setLoopPingPong(1);
         }
+
+        // Вызываем событие победы после завершения всех анимаций
+        LeanTween.delayedCall(completionAnimationDuration, () =>
+        {
+            OnGameWon?.Invoke();
+        });
     }
 
     private void ResetSelection()
