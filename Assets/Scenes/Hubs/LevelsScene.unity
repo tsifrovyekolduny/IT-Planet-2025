@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b23a479bb7bbd8641a0828ecda2fce39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentDirection: {fileID: 0}
-  CurrentDepartment: {fileID: 0}
+  CurrentDirection: {fileID: 11400000, guid: fa488cfabf688e9428342a03c3442d13, type: 2}
+  CurrentDepartment: {fileID: 11400000, guid: 5f5ea088d30b13d4ca596d62ad632a0e, type: 2}
   _previousScene: 
 --- !u!4 &174213109
 Transform:
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: fc91e4340e6fb4147bdfbc8f64303758, type: 2}
+  m_PanelSettings: {fileID: 11400000, guid: b39223990827b074d98dd9ecb907a4c3, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 19d941e007c986146971dbaf53034019, type: 3}
   m_SortingOrder: 0
@@ -386,7 +386,6 @@ MonoBehaviour:
   _levelScripts: []
   LevelUI: {fileID: 1054882705}
   LevelTemplate: {fileID: 9197481963319205126, guid: 4a4af4580627f3d458b58c1811336009, type: 3}
-  DirectionStringId: PI
 --- !u!4 &1538085147
 Transform:
   m_ObjectHideFlags: 0
