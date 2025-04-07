@@ -48,16 +48,13 @@
 }
 
 .body-text-role1 {
-    background-color: rgb(20,31,45);
     color: rgb(255, 255, 255);
     border-radius: 50px;
 }
 
 .body-text-role2 {
-    background-color: rgb(20,31,45);
     color: rgb(255, 255, 255);
     border-radius: 50px;
-    -unity-text-align: upper-right;
 }
 
 #back-to-levels-btn, #next-button {
@@ -68,5 +65,3 @@
     padding: 10px 20px;
     border-radius: 10px;
 }
-
-
