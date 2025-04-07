@@ -38,7 +38,7 @@ namespace Assets.Scenes.Game4.Scripts
             if (IsFocused) return;
             lastZoomedObject = obj;
 
-            HidableFormVariant variant = lastZoomedObject.GetComponent<HidableFormVariant>();
+            HidableFormVariant variant = lastZoomedObject.GetComponentInParent<HidableFormVariant>();
 
             if (variant != null)
             {
@@ -56,13 +56,13 @@ namespace Assets.Scenes.Game4.Scripts
 
         void OnZoomeEndHidableFormVariantHandler()
         {
-            var obj = lastZoomedObject.GetComponent<HidableFormVariant>();
+            var obj = lastZoomedObject.GetComponentInParent<HidableFormVariant>();
             obj.UpdateShowWithState(false);
         }
 
         void UnSubsrcibeHidableFormVariant()
         {
-            var obj = lastZoomedObject.GetComponent<HidableFormVariant>();
+            var obj = lastZoomedObject.GetComponentInParent<HidableFormVariant>();
             obj.UpdateShowWithState(true);
             OnZoomEnd.RemoveListener(OnZoomeEndHidableFormVariantHandler);
             OnReleaseStart.RemoveListener(UnSubsrcibeHidableFormVariant);
@@ -70,7 +70,7 @@ namespace Assets.Scenes.Game4.Scripts
 
         void OnZoomStartHandler()
         {
-            var mover = GetComponent<ICameraMover>();
+            var mover = GetComponentInParent<ICameraMover>();
             if (mover != null)
             {
                 mover.IsBlockingMoving = true;

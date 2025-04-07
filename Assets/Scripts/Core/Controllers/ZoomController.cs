@@ -88,6 +88,7 @@ namespace Assets.Scripts.Core.Controllers
         protected virtual void ReturnZoom()
         {
             isReturning = true;
+            OnReleaseStart?.Invoke();
             returnStartPosition = targetCamera.transform.position;
             returnStartOrthoSize = targetCamera.orthographicSize;
         }

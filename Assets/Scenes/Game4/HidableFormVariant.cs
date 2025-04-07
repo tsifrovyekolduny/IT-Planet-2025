@@ -6,7 +6,7 @@ public class HidableFormVariant : MonoBehaviour
     public GameObject SpriteMaskFull;
     public WithButtons withButtonsComponent;
     bool _isValid = true;
-    private bool _isHiden = false;
+    private bool _isHiden = true;
 
     public bool IsHiden { get => _isHiden; set => _isHiden = value; }
 
@@ -26,12 +26,14 @@ public class HidableFormVariant : MonoBehaviour
 
         UpdateShowWithState();
     }
+
     public void UpdateShowWithState(bool isHiden)
     {
         if (isHiden == IsHiden) return;
         _isHiden = isHiden;
         UpdateShowWithState();
     }
+
     void UpdateShowWithState()
     {
         if (IsHiden)
