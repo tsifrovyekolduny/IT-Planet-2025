@@ -44,7 +44,7 @@ namespace Assets.Scenes.Econom_cards
         {
             foreach (var obj in _listObjects.GameObjectsList)
             {
-                obj.GetComponent<Renderer>().enabled = false;
+                obj.GetComponent<Canvas>().enabled = false;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Assets.Scenes.Econom_cards
             // Устанавливаем объект поверх текущего, даём пользователю возможность прочитать (включаем рендеринг)
             obj.transform.position = targetPosition;
             obj.SetActive(true); // Убедитесь, что объект активен
-            obj.GetComponent<Renderer>().enabled = true; // Включаем рендеринг
+            obj.GetComponent<Canvas>().enabled = true;
 
             // Запускаем корутину для ожидания и перемещения объекта
             StartCoroutine(MoveAndAnimate(obj, originalPosition));
