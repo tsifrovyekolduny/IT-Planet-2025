@@ -336,7 +336,7 @@ MonoBehaviour:
     _autoSize: 1
   _image: {fileID: 0}
   _imageSprite: {fileID: 0}
-  _imageSize: {x: 100, y: 100}
+  _imageSize: {x: 49.7, y: 100}
   _preserveAspect: 1
   _useFallbackColor: 1
   _fallbackColor: {r: 1, g: 1, b: 1, a: 1}
