@@ -1,0 +1,14 @@
+.floating-label {
+    position: absolute;
+    color: rgb(255, 0, 0);
+    font-size: 16px;
+    opacity: 1;
+    white-space: nowrap;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+}
+
+.floating-label.fade-out {
+    opacity: 0;
+}
