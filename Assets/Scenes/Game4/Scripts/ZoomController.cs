@@ -51,7 +51,7 @@ namespace Assets.Scenes.Game4.Scripts
         void SubsribeHidableFormVariant(HidableFormVariant variant)
         {
             OnZoomEnd.AddListener(OnZoomeEndHidableFormVariantHandler);
-            OnReleaseStart.RemoveListener(UnSubsrcibeHidableFormVariant);
+            OnReleaseStart.AddListener(UnSubsrcibeHidableFormVariant);
         }
 
         void OnZoomeEndHidableFormVariantHandler()
