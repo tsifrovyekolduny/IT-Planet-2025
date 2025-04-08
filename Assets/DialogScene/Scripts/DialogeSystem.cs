@@ -8,8 +8,8 @@ using System.Collections;
 
 public class DialogueSystem : MonoBehaviour
 {
-    const string ROLE_1 = "П";
-    const string ROLE_2 = "Т";
+    [SerializeField] const string ROLE_1 = "П";
+    [SerializeField] const string ROLE_2 = "Т";
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private TextAsset scriptFile;
     [SerializeField] private VisualTreeAsset messageTemplate;
@@ -150,6 +150,7 @@ public class DialogueSystem : MonoBehaviour
     {
         Button button = new Button();
         button.text = "Перейти к игре";
+        button.AddToClassList("action-button");
         button.clicked += () => GoOnGame(gameScene);
         messagesContainer.Add(button);
         StartCoroutine(SmoothScrollToBottom());

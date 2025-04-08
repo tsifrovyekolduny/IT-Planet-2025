@@ -57,11 +57,44 @@
     border-radius: 50px;
 }
 
-#back-to-levels-btn, #next-button {
-    background-color: rgb(26,42,66);
-    border: 5px solid rgb(116,170,212);
-    color: rgb(116,170,212);
+#back-to-levels-btn {
+    background-color: rgb(26, 42, 66);
+    border: 5px solid rgb(116, 170, 212);
+    color: rgb(116, 170, 212);
     font-size: 18px;
     padding: 10px 20px;
     border-radius: 10px;
+}
+
+#next-button {
+    background-color: rgb(26, 42, 66);
+    border: 5px solid rgb(116, 170, 212);
+    color: rgb(116, 170, 212);
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.action-button {
+    align-items: center;
+    align-self: center;
+    width: auto;
+    height: auto;
+    background-color: rgb(26, 42, 66);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    color: rgb(255, 255, 255);
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    font-size: 9px;
+    position: relative;
+    justify-content: space-around;
 }
