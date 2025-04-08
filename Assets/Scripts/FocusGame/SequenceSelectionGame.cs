@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class SequenceSelectionGame : MonoBehaviour
 {
@@ -52,10 +53,16 @@ public class SequenceSelectionGame : MonoBehaviour
             {
                 if (obj.GetComponent<Collider>() == null)
                 {
-                    obj.AddComponent<BoxCollider>();
+                    var box = obj.AddComponent<BoxCollider2D>();
+                    var rect = obj.GetComponent<RectTransform>();
+                    if(rect != null)
+                    {
+                        box.size = new Vector2(rect.rect.width, rect.rect.height);                        
+                    }                    
                 }
 
                 var selectable = obj.GetComponent<SelectableObject>() ?? obj.AddComponent<SelectableObject>();
+                var touchInputHandler = obj.GetComponent<TouchInputHandler>() ?? obj.AddComponent<TouchInputHandler>();
                 selectable.gameManager = this;
             }
         }
@@ -71,6 +78,12 @@ public class SequenceSelectionGame : MonoBehaviour
                 if (renderer != null)
                 {
                     originalColors[obj] = renderer.material.color;
+                }
+
+                var colored = obj.GetComponentInChildren<Image>();
+                if (colored != null)
+                {                  
+                    originalColors[obj] = colored.color;
                 }
 
                 originalPositions[obj] = obj.transform.position;
@@ -91,6 +104,12 @@ public class SequenceSelectionGame : MonoBehaviour
             if (renderer != null)
             {
                 renderer.material.color = selectedColor;
+            }
+
+            var colored = selectedObject.GetComponentInChildren<Image>();
+            if (colored != null)
+            {
+                colored.color = selectedColor;                
             }
 
             currentExpectedIndex++;

@@ -4,28 +4,34 @@ public class SelectableObject : MonoBehaviour
 {
     public SequenceSelectionGame gameManager;
 
-    private void Update()
+    private void Start()
     {
-        // Обработка касаний на мобильных устройствах
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Began)
-            {
-                CheckTouch(touch.position);
-            }
-        }
+        var touchInputHandler = gameObject.GetComponent<TouchInputHandler>() ?? gameObject.AddComponent<TouchInputHandler>();
+        touchInputHandler.OnSingleTap.AddListener(CheckTouch);
     }
 
-    private void OnMouseDown()
-    {
-        // Обработка кликов мышью (для редактора и ПК)
-        if (gameManager != null)
-        {
-            gameManager.OnObjectSelected(gameObject);
-        }
-    }
+    //private void Update()
+    //{
+    //    // Обработка касаний на мобильных устройствах
+    //    if (Input.touchCount > 0)
+    //    {
+    //        Touch touch = Input.GetTouch(0);
+
+    //        if (touch.phase == TouchPhase.Began)
+    //        {
+    //            CheckTouch(touch.position);
+    //        }
+    //    }
+    //}
+
+    //private void OnMouseDown()
+    //{
+    //    // Обработка кликов мышью (для редактора и ПК)
+    //    if (gameManager != null)
+    //    {
+    //        gameManager.OnObjectSelected(gameObject);
+    //    }
+    //}
 
     private void CheckTouch(Vector2 touchPosition)
     {
