@@ -10,6 +10,10 @@ public class DialogueSystem : MonoBehaviour
 {
     [SerializeField] const string ROLE_1 = "П";
     [SerializeField] const string ROLE_2 = "Т";
+
+    [SerializeField] private string role1_name;
+    [SerializeField] private string role2_name;
+
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private TextAsset scriptFile;
     [SerializeField] private VisualTreeAsset messageTemplate;
@@ -125,7 +129,7 @@ public class DialogueSystem : MonoBehaviour
         Label textLabel = messageRoot.Q<Label>("body");
 
         avatar.style.backgroundImage = line.role == ROLE_1 ? teacherSprite : sholarSprite; // Подставляем аватар
-        nameLabel.text = line.role;
+        nameLabel.text = line.role == ROLE_1 ? role1_name : role2_name;
         textLabel.text = line.text;
 
         textLabel.AddToClassList($"body-text-{role}");
@@ -149,13 +153,30 @@ public class DialogueSystem : MonoBehaviour
 
     void CreateGameTransitionButton(string gameScene)
     {
-        Button button = new Button();
-        button.text = "Перейти к игре";
+        Button button = new Button();        
         button.AddToClassList("action-button");
-        button.clicked += () => GoOnGame(gameScene);
+
+        if (gameScene == "dialog")
+        {
+            button.text = "Далее";
+            button.clicked += () => GameManager.Instance.CompleteSettedLevel();
+        }
+        else if (gameScene == "LevelsScene")
+        {
+            button.text = "Завершить";
+            button.clicked += () => GoOnGame(gameScene);
+        }
+        else
+        {
+            button.text = "Перейти к игре";
+            button.clicked += () => GoOnGame(gameScene);
+        }
+
         messagesContainer.Add(button);
         StartCoroutine(SmoothScrollToBottom());
-    }
+
+        
+    }    
 
     IEnumerator TypeText(string text, Label label)
     {
