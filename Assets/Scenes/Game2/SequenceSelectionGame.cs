@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class SequenceSelectionGame : MonoBehaviour
+public class SequenceSelectionGame : MonoBehaviour, IMiniGame
 {
     [Header("Основные настройки")]
     [SerializeField] private List<GameObject> selectableObjects;
@@ -28,6 +28,7 @@ public class SequenceSelectionGame : MonoBehaviour
     private bool isShaking = false;
     private float shakeTimeRemaining = 0f;
     private bool isCompleted = false;
+    private bool _isMiniGameFinished = false;
 
     private void Start()
     {
@@ -158,6 +159,7 @@ public class SequenceSelectionGame : MonoBehaviour
         // Вызываем событие победы после завершения всех анимаций
         LeanTween.delayedCall(completionAnimationDuration, () =>
         {
+            _isMiniGameFinished = true;
             OnGameWon?.Invoke();
         });
     }
@@ -218,5 +220,10 @@ public class SequenceSelectionGame : MonoBehaviour
                 mainCamera.transform.position = originalCameraPosition;
             }
         }
+    }
+
+    public bool CheckForComplete()
+    {
+        return _isMiniGameFinished;
     }
 }
