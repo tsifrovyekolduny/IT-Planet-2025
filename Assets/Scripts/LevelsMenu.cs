@@ -45,15 +45,16 @@ public class LevelsMenu : MonoBehaviour
         levelsHolder = root.Q<VisualElement>("levels-holder");
         progressBar = root.Q<ProgressBar>("progress-bar");
 
-        root.Q<Button>("back-btn").clicked += () => SceneManager.LoadScene("DirectionsHub");
+        root.Q<Button>("back-btn").clicked += () => SceneManager.LoadScene("Hub");
         root.Q<Label>("hub-name").text = GameManager.Instance.CurrentDirection.Name;
         root.Q<Button>("continue-btn").clicked += () => GameManager.Instance.SetLoadedLevel();
+        root.Q<VisualElement>("icon").style.backgroundImage = GameManager.Instance.CurrentDirection.Icon;
     }
 
     void RefreshLevelsDisplay()
     {
         levelsHolder.Clear();
-
+        
         // Получаем текущий прогресс
         var (savedLine, scriptName) = ProgressManager.Instance.GetDirectionProgress(GameManager.Instance.CurrentDirection.name);
         LevelScript currentLevelScript = _levelScripts.Where(d => d.Script.name == scriptName).First();

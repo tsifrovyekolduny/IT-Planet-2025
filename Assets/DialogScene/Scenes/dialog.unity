@@ -151,9 +151,9 @@ MonoBehaviour:
   uiDocument: {fileID: 860182284}
   scriptFile: {fileID: 0}
   messageTemplate: {fileID: 9197481963319205126, guid: aab69f9d7a0446245bf191b071e62cde, type: 3}
-  teacherSprite: {fileID: 2800000, guid: d0adfadf66ebc5f4eb53a937cdaaa5f2, type: 3}
-  sholarSprite: {fileID: 2800000, guid: 37357a82b64df284eae6989763057b4b, type: 3}
-  typingSpeed: 0.05
+  teacherSprite: {fileID: 2800000, guid: fd2d42fd72448d446b047bf800030ca9, type: 3}
+  sholarSprite: {fileID: 2800000, guid: 70bfa56b8b073b24c8b5bde4e38e988c, type: 3}
+  typingSpeed: 0.01
 --- !u!4 &204847022
 Transform:
   m_ObjectHideFlags: 0
@@ -701,7 +701,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0.08627451, g: 0.101960786, b: 0.12941177, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

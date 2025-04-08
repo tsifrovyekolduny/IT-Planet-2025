@@ -1,9 +1,22 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Label text="Label" name="hub-name" />
-    <engine:ProgressBar value="22" title="my-progress" name="progress-bar" />
-    <engine:Button text="Назад в Хаб" name="back-btn" />
-    <engine:Button text="Продолжить" name="continue-btn" />
-    <engine:ScrollView style="background-color: rgba(143, 73, 154, 0.69);">
-        <engine:VisualElement name="levels-holder" style="flex-grow: 1;" />
-    </engine:ScrollView>
+    <Style src="project://database/Assets/UI/LevelHub.uss?fileID=7433441132597879392&amp;guid=260c7912b2427ed42b1442ef659cd1f6&amp;type=3#LevelHub" />
+    <engine:VisualElement name="levelHubScreen" style="flex-grow: 1; margin-left: 5%; margin-right: 5%;">
+        <engine:VisualElement name="header" style="flex-grow: 1; height: 25%; border-bottom-width: 0; border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgb(255, 255, 255); justify-content: flex-start; max-height: none; flex-direction: column; margin-top: 5%; align-items: flex-start; flex-wrap: nowrap; align-self: flex-start; padding-left: 0;">
+            <engine:Button text="&#10;" name="back-btn" enabled="true" style="margin-top: 3%; -unity-text-align: lower-center; -unity-font-style: bold; font-size: 18px; border-left-color: rgb(116, 170, 212); border-right-color: rgb(116, 170, 212); border-top-color: rgb(116, 170, 212); border-bottom-color: rgb(116, 170, 212); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color: rgba(26, 42, 66, 0); color: rgb(116, 170, 212); position: relative; background-image: resource(&apos;arrow&apos;); padding-right: 10px; padding-bottom: 10px; margin-left: 0; padding-left: 10px; top: auto; margin-right: 15px; align-items: flex-start; margin-bottom: 3%;" />
+            <engine:Label text="Информация о разделах" name="title" style="font-size: 25%; color: rgb(255, 255, 255); align-self: flex-start; -unity-text-align: upper-left; white-space: normal; justify-content: flex-start; align-items: flex-start; margin-left: 0; padding-left: 0; -unity-font-style: bold;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="infoCard" style="flex-grow: 1; height: auto; margin-top: 2%; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-left-color: rgb(39, 52, 81); border-right-color: rgb(39, 52, 81); border-top-color: rgb(39, 52, 81); border-bottom-color: rgb(39, 52, 81); padding-top: 5%; padding-right: 5%; padding-bottom: 5%; padding-left: 5%; min-height: 25px; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
+            <engine:VisualElement name="title" style="flex-grow: 1; white-space: normal; flex-direction: row; align-items: center;">
+                <engine:VisualElement name="icon" style="flex-grow: 1; background-image: resource(&apos;digitBlueIcon&apos;); background-size: contain; min-width: 42px; min-height: 42px; width: 42px; height: 42px; max-width: 42px; max-height: 42px;" />
+                <engine:Label text="Label" name="hub-name" style="-unity-text-align: middle-left; font-size: 13%; -unity-font-style: bold; color: rgb(121, 163, 192); white-space: pre-wrap; margin-top: 5px; margin-left: 4px; margin-bottom: 5px; align-items: flex-start; align-self: center;" />
+            </engine:VisualElement>
+            <engine:ProgressBar value="22" title="my-progress" name="progress-bar" focusable="false" class="direction-progress-bar" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0);" />
+            <engine:Button text="Продолжить" name="continue-btn" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; background-color: rgba(188, 188, 188, 0); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(121, 163, 192); align-self: flex-end; border-left-color: rgb(121, 163, 192); border-right-color: rgb(121, 163, 192); border-top-color: rgb(121, 163, 192); border-bottom-color: rgb(121, 163, 192); align-items: flex-end; font-size: 12px;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="units" style="flex-grow: 1; margin-top: 5%; height: 50%;">
+            <engine:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="background-color: rgba(255, 255, 255, 0);">
+                <engine:VisualElement name="levels-holder" style="flex-grow: 1;" />
+            </engine:ScrollView>
+        </engine:VisualElement>
+    </engine:VisualElement>
 </engine:UXML>
