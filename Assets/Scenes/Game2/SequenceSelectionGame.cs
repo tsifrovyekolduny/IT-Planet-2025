@@ -177,6 +177,12 @@ public class SequenceSelectionGame : MonoBehaviour
                     {
                         renderer.material.color = originalColor;
                     }
+
+                    var colored = obj.GetComponentInChildren<Image>();
+                    if (colored != null)
+                    {
+                        colored.color = originalColor;
+                    }
                 }
 
                 if (!isCompleted && originalPositions.TryGetValue(obj, out Vector3 originalPos))
