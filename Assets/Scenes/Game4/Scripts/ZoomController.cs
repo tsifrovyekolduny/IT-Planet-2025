@@ -20,16 +20,15 @@ namespace Assets.Scenes.Game4.Scripts
             OnReleaseEnd.AddListener(OnZoomReturnEndHandler);
         }
 
-        protected override void Update() { 
+        protected override void Update()
+        {
             base.Update();
         }
 
         void OnSelectionEmptyHandler(Vector3 pos)
         {
-            if (IsFocused)
-            {
-                ReturnZoom();
-            }
+
+            ReturnZoom();
         }
 
         void OnObjectSelectedHandler(Vector3 vector3, GameObject obj)
@@ -80,15 +79,18 @@ namespace Assets.Scenes.Game4.Scripts
         void OnZoomReturnEndHandler()
         {
             var mover = GetComponent<ICameraMover>();
-            if(mover != null)
+            if (mover != null)
             {
                 mover.IsBlockingMoving = false;
             }
         }
 
-        public void ReturnZoom()
+        protected override void ReturnZoom()
         {
-            base.ReturnZoom();
+            if (IsFocused)
+            {
+                base.ReturnZoom();
+            }
         }
     }
 }

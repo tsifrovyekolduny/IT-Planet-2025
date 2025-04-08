@@ -39,14 +39,14 @@ public class HidableFormVariant : MonoBehaviour
         if (IsHiden)
         {
             withButtonsComponent.ToggleVisibility(false);
-            SpriteMaskHide.GetComponent<Collider>().enabled = true;
-            SpriteMaskFull.GetComponent<Collider>().enabled = false;
+            SpriteMaskHide.GetComponent<PolygonCollider2D>().enabled = true;
+            SpriteMaskFull.GetComponent<PolygonCollider2D>().enabled = false;
         }
         else
         {
             withButtonsComponent.ToggleVisibility(true);
-            SpriteMaskHide.GetComponent<Collider>().enabled = false;
-            SpriteMaskFull.GetComponent<Collider>().enabled = true;
+            SpriteMaskHide.GetComponent<PolygonCollider2D>().enabled = false;
+            SpriteMaskFull.GetComponent<PolygonCollider2D>().enabled = true;
         }
     }
 
