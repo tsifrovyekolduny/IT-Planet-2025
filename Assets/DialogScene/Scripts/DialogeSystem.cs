@@ -99,6 +99,7 @@ public class DialogueSystem : MonoBehaviour
     void GoOnGame(string gameScene)
     {
         SceneManager.LoadScene(gameScene);
+        GameManager.Instance.PreviousLevel = scriptFile.name;
         GameManager.Instance.SaveProgress(currentLine, parser.scriptFile.name);
     }
 

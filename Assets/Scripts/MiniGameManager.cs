@@ -59,7 +59,7 @@ public class MiniGameManager : MonoBehaviour
         backButton.clicked += () => GameManager.Instance.SetLoadedLevel();
 
         HintPanel.rootVisualElement.visible = false;
-    }
+    }    
 
     private void ShowHint()
     {
