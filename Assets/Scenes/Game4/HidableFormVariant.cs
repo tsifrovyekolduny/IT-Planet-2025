@@ -22,9 +22,7 @@ public class HidableFormVariant : MonoBehaviour
             _isValid = false;
         }
 
-        if (_isValid == false) return;
-
-        UpdateShowWithState();
+        if (_isValid == false) return;                
     }
 
     public void UpdateShowWithState(bool isHiden)
@@ -48,12 +46,5 @@ public class HidableFormVariant : MonoBehaviour
             SpriteMaskHide.GetComponent<PolygonCollider2D>().enabled = false;
             SpriteMaskFull.GetComponent<PolygonCollider2D>().enabled = true;
         }
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

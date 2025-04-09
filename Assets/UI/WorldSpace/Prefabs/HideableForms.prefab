@@ -910,8 +910,8 @@ RectTransform:
   m_LocalScale: {x: 0.020833334, y: 0.020833334, z: 0.020833334}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8477757382459624610}
   - {fileID: 8699567832904903631}
+  - {fileID: 8477757382459624610}
   - {fileID: 8284023877115362791}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -978,10 +978,6 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   _buttonsContainer: {fileID: 8699567832904903631}
-  _name: {fileID: 3133014404830501645}
-  _description: {fileID: 8085713245513338372}
-  _nameContent: gg
-  _descriptionContent: gg
 --- !u!223 &5021358360408111441
 Canvas:
   m_ObjectHideFlags: 0
@@ -1079,8 +1075,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 3.12}
+  m_SizeDelta: {x: 0, y: -6.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3744525081839803477
 CanvasRenderer:
