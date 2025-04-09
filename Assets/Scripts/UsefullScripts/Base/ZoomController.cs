@@ -4,7 +4,6 @@ using UnityEngine.Serialization;
 public class ZoomController : MonoBehaviour
 {
     [Header("Настройки приближения")]
-
     [Rename("Скорость приближения")]
     public float zoomSpeed = 5f;
     [Rename("Степень приближения")]
@@ -20,6 +19,10 @@ public class ZoomController : MonoBehaviour
     public Camera targetCamera;
 
     [Header("Настройки поведения камеры")]
+    [Rename("Зум в центр коллайдера")]
+    [Tooltip("Если включено, зум будет в центр коллайдера вместо точки касания")]
+    public bool zoomToColliderCenter = false;
+
     [Rename("Режим двойного нажатия")]
     [Tooltip("Если настройка включена, то отдаление будет происходить при втором нажатии")]
     public bool useDoubleTapMode = false;
@@ -73,6 +76,7 @@ public class ZoomController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
+            Debug.Log("TY AHUEL MRAZ");
             Vector2 inputPos = GetInputPosition();
             Ray ray = targetCamera.ScreenPointToRay(inputPos);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, interactableLayer);
@@ -129,7 +133,13 @@ public class ZoomController : MonoBehaviour
         isZooming = true;
         isReturning = false;
         lastZoomedObject = targetObject;
-        zoomTargetPosition = new Vector3(worldPosition.x, worldPosition.y, targetCamera.transform.position.z);
+
+        // Изменяем расчет позиции зума в зависимости от настройки
+        Vector3 targetPosition = zoomToColliderCenter ?
+            targetObject.GetComponent<Collider2D>().bounds.center :
+            worldPosition;
+
+        zoomTargetPosition = new Vector3(targetPosition.x, targetPosition.y, targetCamera.transform.position.z);
 
         if (swipeController != null && disableSwipeDuringZoom)
         {
