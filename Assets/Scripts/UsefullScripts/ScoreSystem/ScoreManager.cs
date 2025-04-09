@@ -1,15 +1,19 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : MonoBehaviour, IMiniGame
 {
     public static ScoreManager Instance { get; private set; }
 
     [Header("Настройки")]
+    [Rename("Текущее количество очков")]
     [SerializeField] private int _currentScore = 0;
+    [Rename("Максимальное количество очков")]
+    [SerializeField] private int _maxScore = 0;
 
     [Header("События")]
     public UnityEvent<int> onScoreChanged = new UnityEvent<int>();
+
 
     private void Awake()
     {
@@ -44,7 +48,10 @@ public class ScoreManager : MonoBehaviour
     {
         _currentScore += amount;
         onScoreChanged.Invoke(_currentScore);
-        Debug.Log($"Score updated: {_currentScore} (+{amount})");
+        if (_currentScore >= _maxScore)
+        {
+            CheckForComplete();
+        }
     }
 
     public int GetCurrentScore() => _currentScore;
@@ -53,6 +60,11 @@ public class ScoreManager : MonoBehaviour
     {
         _currentScore = 0;
         onScoreChanged.Invoke(_currentScore);
+    }
+
+    public bool CheckForComplete()
+    {
+        return true;
     }
 
     // Оптимизированный метод поиска для редких случаев
