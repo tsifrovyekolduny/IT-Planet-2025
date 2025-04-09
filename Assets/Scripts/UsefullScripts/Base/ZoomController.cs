@@ -75,8 +75,7 @@ public class ZoomController : MonoBehaviour
     protected virtual void HandleDoubleTapInput()
     {
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
-        {
-            Debug.Log("TY AHUEL MRAZ");
+        {            
             Vector2 inputPos = GetInputPosition();
             Ray ray = targetCamera.ScreenPointToRay(inputPos);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, interactableLayer);

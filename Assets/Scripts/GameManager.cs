@@ -33,7 +33,7 @@ public class GameManager : Singletone<GameManager>
         int line;
         TextAsset script;
 
-        if (PreviousLevel != null)
+        if (!string.IsNullOrEmpty(PreviousLevel))
         {
             scriptFilePath = PreviousLevel;
             script = GetScriptByName(scriptFilePath);
@@ -44,10 +44,14 @@ public class GameManager : Singletone<GameManager>
             var items = ProgressManager.Instance.GetDirectionProgress(CurrentDirection.name);
             if (items.script == null)
             {
-                return;
+                scriptFilePath = "00";
+                line = 0;
             }
-            line = items.level;
-            scriptFilePath = items.script;
+            else
+            {
+                line = items.level;
+                scriptFilePath = items.script;
+            }            
             script = GetScriptByName(scriptFilePath);
         }
 
