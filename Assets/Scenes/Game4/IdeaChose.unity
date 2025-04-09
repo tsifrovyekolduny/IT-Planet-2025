@@ -290,7 +290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -464,6 +464,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: HideableForms Variant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8614354226660764415, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
+      propertyPath: m_text
+      value: "\u0414\u0435\u0448\u0435\u0432\u043B\u0435, \u0447\u0435\u043C \u0432
+        \u0441\u043E\u0446\u0441\u0435\u0442\u044F\u0445, \u043D\u043E \u0430\u0443\u0434\u0438\u0442\u043E\u0440\u0438\u044F
+        \u043C\u043E\u0436\u0435\u0442 \u043E\u043A\u0430\u0437\u0430\u0442\u044C\u0441\u044F
+        \u0441\u043B\u0443\u0447\u0430\u0439\u043D\u043E\u0439."
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -600,11 +607,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -616,12 +623,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1858466407}
+      objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -633,7 +640,7 @@ PrefabInstance:
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1858466407}
+      objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
@@ -644,7 +651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnErrorClick
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -656,11 +663,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnReturnZoonClick
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Scene4Controller, Assembly-CSharp
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -672,11 +679,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Scene4Controller, Assembly-CSharp
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -688,7 +695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6797634475727650807, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: m_Pivot.x
@@ -778,6 +785,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: HideableForms Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8614354226660764415, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
+      propertyPath: m_text
+      value: "\u041F\u0440\u0435\u0441\u0442\u0438\u0436\u043D\u043E. \u041A\u043B\u0438\u0435\u043D\u0442\u044B
+        \u043F\u043E\u0432\u0435\u0440\u044F\u0442 \u0432 \u0442\u0432\u043E\u0439
+        \u0430\u0432\u0442\u043E\u0440\u0438\u0442\u0435\u0442. \u041D\u043E \u043D\u0435
+        \u043A\u043E\u0448\u0435\u043B\u0435\u043A"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -849,7 +863,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnSucceedClick
+      value: OnErrorClick
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -991,6 +1005,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: HideableForms Variant (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8614354226660764415, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
+      propertyPath: m_text
+      value: "\u0411\u0443\u0434\u0435\u0442 \u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C
+        \u0433\u043E\u0434\u0430\u043C\u0438. \u041A\u043B\u0438\u0435\u043D\u0442\u044B
+        \u0441\u0430\u043C\u0438 \u043D\u0430\u0439\u0434\u0443\u0442 \u0442\u0435\u0431\u044F."
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1103,7 +1123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1277,6 +1297,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: HideableForms Variant (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8614354226660764415, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
+      propertyPath: m_text
+      value: "\u042F\u0440\u043A\u043E, \u043D\u0430\u0433\u043B\u044F\u0434\u043D\u043E,
+        \u043D\u043E \u0435\u0441\u043B\u0438 \u0440\u043E\u043B\u0438\u043A \u0441\u043B\u0430\u0431\u044B\u0439
+        \u2014 \u0434\u0435\u043D\u044C\u0433\u0438 \u043D\u0430 \u0432\u0435\u0442\u0435\u0440."
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1321,7 +1347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1495,6 +1521,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: HideableForms Variant (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8614354226660764415, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
+      propertyPath: m_text
+      value: "\u0414\u043E\u043B\u0433\u0438\u0439 \u0441\u043F\u043E\u0441\u043E\u0431.
+        \u0418 \u043D\u0435 \u0444\u0430\u043A\u0442, \u0447\u0442\u043E \u0442\u0432\u043E\u0439
+        \u0431\u043B\u043E\u0433 \u0432\u0437\u043B\u0435\u0442\u0438\u0442 \u0438
+        \u0435\u0433\u043E \u0431\u0443\u0434\u0443\u0442 \u0447\u0438\u0442\u0430\u0442\u044C."
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1604,7 +1637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1777,6 +1810,12 @@ PrefabInstance:
     - target: {fileID: 8478151095927884839, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: m_Name
       value: HideableForms Variant (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614354226660764415, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
+      propertyPath: m_text
+      value: "\u0411\u044B\u0441\u0442\u0440\u043E \u043D\u0430\u0433\u043E\u043D\u0438\u0442
+        \u0442\u0440\u0430\u0444\u0438\u043A. \u0418 \u0431\u044B\u0441\u0442\u0440\u043E
+        \u0440\u0430\u0437\u043E\u0440\u0438\u0442 \u043A\u043E\u0448\u0435\u043B\u0435\u043A."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2112,7 +2151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3463330544630822721, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: _buttonsData.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2285,6 +2324,13 @@ PrefabInstance:
     - target: {fileID: 8478151095927884839, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
       propertyPath: m_Name
       value: HideableForms Variant (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614354226660764415, guid: 091e0ecd54ff349418eb4e3eeb303696, type: 3}
+      propertyPath: m_text
+      value: "\u0421\u0442\u043E\u0438\u0442 300 \u0440\u0443\u0431\u043B\u0435\u0439.
+        \u0415\u0441\u043B\u0438 \u043F\u043E\u043F\u0440\u043E\u0441\u0438\u0442\u044C
+        \u0434\u0440\u0443\u0433\u0430 \u2014 150. \u0422\u0430\u043A\u043E\u0432\u0430
+        \u0446\u0435\u043D\u0430 \u043A\u043B\u0435\u044F."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
