@@ -9,10 +9,12 @@ public class ScoreZoomController : ZoomController
 
     protected override void StartZoom(Vector3 worldPosition, GameObject targetObject)
     {
+        Debug.Log(scoreGiven);
         // Даем очки перед началом зума
         if (enableScoreSystem && !scoreGiven)
         {
             var scoreTrigger = targetObject.GetComponent<ScoreTrigger>();
+            Debug.Log(scoreTrigger);
             if (scoreTrigger != null)
             {
                 scoreTrigger.TryGiveScore();

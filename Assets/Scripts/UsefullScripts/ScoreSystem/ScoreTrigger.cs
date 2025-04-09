@@ -19,7 +19,7 @@ public class ScoreTrigger : MonoBehaviour
     private bool scoreGiven = false;
 
     // Вызывается из ZoomController при приближении
-    public void TryGiveScore()
+    public virtual void TryGiveScore()
     {
         if (giveScoreOnZoom && !scoreGiven)
         {

@@ -1,21 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class СhangedScoreTrigger : MonoBehaviour
-{
-    [Header("Настройки")]
-    [Rename("Давать очки")]
-    public bool giveScoreOnZoom = true;
-    [Rename("Количество очков")]
-    public int scoreValue = 1;
-
+public class СhangedScoreTrigger : ScoreTrigger
+{   
     [Header("Управление текстом")]
     [Rename("Изменять видимость текста")]
     [Tooltip("Если включено, будет вызывать ChangeVisibility у TextHider")]
-    public bool changeTextVisibility = true;
-
-    [Header("События")]
-    public UnityEvent onScoreGiven;
+    public bool changeTextVisibility = true;    
 
     private bool scoreGiven = false;
     private TextHider _textHider;
@@ -26,11 +17,13 @@ public class СhangedScoreTrigger : MonoBehaviour
         _textHider = GetComponentInChildren<TextHider>(true);
     }
 
-    public void TryGiveScore()
+    public override void TryGiveScore()
     {
+        Debug.Log("TryGive");
         if (changeTextVisibility && _textHider != null)
         {
-            _textHider.ToggleVisibility(); // Вызываем метод
+            Debug.Log("Can hide");            
+            _textHider.ToggleVisibility(true); // Вызываем метод
         }
         if (giveScoreOnZoom && !scoreGiven)
         {
