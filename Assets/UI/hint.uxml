@@ -1,5 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/dialog.uss?fileID=7433441132597879392&amp;guid=74140c8b1a9d75540a9cedb46f7c5fd6&amp;type=3#dialog" />
     <engine:VisualElement style="flex-grow: 1; -unity-text-align: upper-left; align-self: auto; justify-content: flex-end; position: absolute; bottom: 0; right: 0; left: 0;">
-        <engine:Label text="Label" name="hint-text" style="-unity-text-align: upper-center; flex-direction: column;" />
+        <engine:Label text="БОЛЬШАЯ ДЛИННАЯ ПОДСКАЗКА КОТОРАЯ ЗАНИМАЕТ ВСЕ ПРОСТРАНСТВО" name="hint-text" class="play-button" style="-unity-text-align: upper-center; flex-direction: column; width: 75%; height: auto; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Examples%20&amp;%20Extras/Fonts/Electronic%20Highway%20Sign.TTF?fileID=12800000&amp;guid=8a2b9e2a607dd2143b58c44bc32410b4&amp;type=3#Electronic Highway Sign&quot;); flex-wrap: nowrap; white-space: normal; margin-bottom: 13px;" />
     </engine:VisualElement>
 </engine:UXML>

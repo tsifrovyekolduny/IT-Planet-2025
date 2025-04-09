@@ -2017,6 +2017,26 @@ PrefabInstance:
       propertyPath: HintPanel
       value: 
       objectReference: {fileID: 2058653907}
+    - target: {fileID: 3547412531268130836, guid: d957dc66778e7fd47a292b7adcb4ac8f, type: 3}
+      propertyPath: HintLifeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547412531268130836, guid: d957dc66778e7fd47a292b7adcb4ac8f, type: 3}
+      propertyPath: Hints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547412531268130836, guid: d957dc66778e7fd47a292b7adcb4ac8f, type: 3}
+      propertyPath: 'Hints.Array.data[1]'
+      value: "\u0410 \u043A\u0442\u043E \u0441\u043A\u0430\u0437\u0430\u043B, \u0447\u0442\u043E
+        \u0442\u0430\u043A \u0431\u0443\u0434\u0435\u0442 \u043B\u0435\u0433\u043A\u043E?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547412531268130836, guid: d957dc66778e7fd47a292b7adcb4ac8f, type: 3}
+      propertyPath: 'Hints.Array.data[2]'
+      value: "\u0412 \u0440\u0435\u0430\u043B\u044C\u043D\u043E\u0441\u0442\u0438
+        \u043E\u043D\u043E \u0442\u0430\u043A \u0438 \u043F\u0440\u043E\u0441\u0445\u043E\u0434\u0438\u0442
+        - \u043C\u044B \u0441\u0443\u0435\u0442\u0438\u043C \u0441\u0432\u043E\u0438
+        \u043C\u043E\u0437\u0433\u0438"
+      objectReference: {fileID: 0}
     - target: {fileID: 5160384375710198343, guid: d957dc66778e7fd47a292b7adcb4ac8f, type: 3}
       propertyPath: m_Name
       value: MiniGameManager
