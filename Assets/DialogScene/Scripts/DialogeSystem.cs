@@ -154,7 +154,7 @@ public class DialogueSystem : MonoBehaviour
     void CreateGameTransitionButton(string gameScene)
     {
         Button button = new Button();        
-        button.AddToClassList("action-button");
+        button.AddToClassList("dialog-next-button");
 
         if (gameScene == "dialog")
         {

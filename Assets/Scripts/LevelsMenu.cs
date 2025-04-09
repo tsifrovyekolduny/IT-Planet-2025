@@ -91,19 +91,19 @@ public class LevelsMenu : MonoBehaviour
             if (i < currentLevel)
             {
                 statusButton.text = "Пройдено";
-                statusButton.AddToClassList("completed");
+                statusButton.AddToClassList("passed");
                 statusButton.clicked += () => LoadLevel(level.Script, 0);
             }
             else if (i == currentLevel)
             {
                 statusButton.text = "Начать";
-                statusButton.AddToClassList("current");
+                statusButton.AddToClassList("actual");
                 statusButton.clicked += () => LoadLevel(level.Script, 0);
             }
             else
             {
                 statusButton.text = "Не пройдено";
-                statusButton.AddToClassList("locked");
+                statusButton.AddToClassList("closed");
                 statusButton.SetEnabled(false);
             }
 
