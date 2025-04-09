@@ -16,7 +16,7 @@ public class ScoreTrigger : MonoBehaviour
     [Tooltip("Вызов дополнительных событий при начислении очков")]
     public UnityEvent onScoreGiven;
 
-    private bool scoreGiven = false;
+    protected bool scoreGiven = false;
 
     // Вызывается из ZoomController при приближении
     public virtual void TryGiveScore()

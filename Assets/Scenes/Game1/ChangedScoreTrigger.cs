@@ -7,8 +7,7 @@ public class СhangedScoreTrigger : ScoreTrigger
     [Rename("Изменять видимость текста")]
     [Tooltip("Если включено, будет вызывать ChangeVisibility у TextHider")]
     public bool changeTextVisibility = true;    
-
-    private bool scoreGiven = false;
+    
     private TextHider _textHider;
 
     private void Start()
@@ -34,11 +33,5 @@ public class СhangedScoreTrigger : ScoreTrigger
 
             // Если включено управление текстом и TextHider найден
         }
-    }
-
-    public void ResetScoreState()
-    {
-        scoreGiven = false;
-        // Дополнительно можно сбросить текст, если нужно
-    }
+    }    
 }
