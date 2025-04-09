@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game3/BrainTaperScene.unity
     guid: 47d6c313f66f52f48921006ee0e98923
+  - enabled: 1
+    path: Assets/Scenes/Game4/IdeaChose.unity
+    guid: 1ceae8d34bba9844cb671945b0f844ee
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 9a55c30a284b7f846a0903296964fb1b, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
