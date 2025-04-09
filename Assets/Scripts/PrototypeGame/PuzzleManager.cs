@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Linq;
 
-public class PuzzleManager : MonoBehaviour
+public class PuzzleManager : MonoBehaviour, IMiniGame
 {
     public static PuzzleManager Instance;
 
@@ -9,6 +9,7 @@ public class PuzzleManager : MonoBehaviour
     [SerializeField] private PuzzlePiece[] pieces;
     [SerializeField] private bool shuffleOnStart = true;
 
+    private bool _isComplete = false;
     private void Awake()
     {
         if (Instance == null)
@@ -19,7 +20,10 @@ public class PuzzleManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
+    private void Start()
+    {
         if (shuffleOnStart)
         {
             ShufflePieces();
@@ -28,6 +32,8 @@ public class PuzzleManager : MonoBehaviour
 
     public void ShufflePieces()
     {
+        if (pieces == null || pieces.Length == 0) return;
+
         // Получаем границы области перемешивания
         Rect canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect;
         Vector2 minPosition = new Vector2(-canvasRect.width / 2 + 100, -canvasRect.height / 2 + 100);
@@ -46,9 +52,11 @@ public class PuzzleManager : MonoBehaviour
                 Random.Range(minPosition.x, maxPosition.x),
                 Random.Range(minPosition.y, maxPosition.y)
             );
+            Debug.Log($"Shuffling pieces. Canvas size: {canvasRect.width}x{canvasRect.height}");
+            Debug.Log($"Random position for piece: {randomPos}");
             piece.GetComponent<RectTransform>().anchoredPosition = randomPos;
-            piece.ResetPiece();
         }
+
     }
 
 
@@ -57,10 +65,7 @@ public class PuzzleManager : MonoBehaviour
         if (pieces.All(p => p.IsInPlace))
         {
             Debug.Log("Пазл собран!");
-            // Дополнительные действия при завершении
-            // Например:
-            // ShowVictoryScreen();
-            // PlayConfettiEffect();
+            _isComplete = true;
         }
     }
 
@@ -68,5 +73,10 @@ public class PuzzleManager : MonoBehaviour
     public void ShufflePiecesButton()
     {
         ShufflePieces();
+    }
+
+    public bool CheckForComplete()
+    {
+        return _isComplete;
     }
 }
