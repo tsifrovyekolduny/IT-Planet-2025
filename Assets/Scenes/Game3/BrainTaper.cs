@@ -43,7 +43,7 @@ public class BrainTaper : MonoBehaviour, IBrainEvent
         }
         else
         {
-            Warning.Info("TouchInputHandler не реализует интерфейс ITouchInputHandler.");
+            Debug.LogWarning("TouchInputHandler не реализует интерфейс ITouchInputHandler.");
             _isValid = false;
         }
 
@@ -53,7 +53,7 @@ public class BrainTaper : MonoBehaviour, IBrainEvent
         }
         else
         {
-            Warning.Info("shakleEffect не реализует интерфейс IShakeable.");
+            Debug.LogWarning("shakleEffect не реализует интерфейс IShakeable.");
             _isValid = false;
         }
         if (_isValid == false) return;

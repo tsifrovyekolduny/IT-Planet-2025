@@ -33,6 +33,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Game5/PrototypeShowCase.unity
     guid: c1bee3ebca0d17b4a99aa97d2d81088d
   m_configObjects:
-    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 9a55c30a284b7f846a0903296964fb1b, type: 2}
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 894314a0df8968542b030fd46e1a0a92, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: d92fba4b9954f284381a2bd83193dbc8, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: df98bbf55f6583f478955ecc417e896c, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

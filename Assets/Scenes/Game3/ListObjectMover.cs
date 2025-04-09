@@ -33,7 +33,7 @@ namespace Assets.Scenes.Econom_cards
             }
             else
             {
-                Warning.Info("_listObjects не реализует интерфейс IListGameObjects.");
+                Debug.LogWarning("_listObjects не реализует интерфейс IListGameObjects.");
                 isValid = false;
             }
 
