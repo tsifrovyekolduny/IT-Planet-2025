@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game4/IdeaChose.unity
     guid: 1ceae8d34bba9844cb671945b0f844ee
+  - enabled: 1
+    path: Assets/Scenes/Game5/PrototypeShowCase.unity
+    guid: c1bee3ebca0d17b4a99aa97d2d81088d
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 9a55c30a284b7f846a0903296964fb1b, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
