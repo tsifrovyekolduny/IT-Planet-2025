@@ -17,12 +17,12 @@ namespace Assets.Scripts.Core.Controllers
 
         private Vector2 touchStartPos;
 
-        public UnityEvent<SwipeOrientation> OnSwipe;
+        public UnityEvent<SwipeOrientation> OnSwipe = new UnityEvent<SwipeOrientation>();
 
         private void Start()
         {
-            OnSwipe = new UnityEvent<SwipeOrientation>();
         }
+
         UnityEvent<SwipeOrientation> ISwipeController.OnSwipe
         {
             get { return this.OnSwipe; }
