@@ -20,16 +20,15 @@ namespace Assets.Scenes.Game4.Scripts
             OnReleaseEnd.AddListener(OnZoomReturnEndHandler);
         }
 
-        protected override void Update() { 
+        protected override void Update()
+        {
             base.Update();
         }
 
         void OnSelectionEmptyHandler(Vector3 pos)
         {
-            if (IsFocused)
-            {
-                ReturnZoom();
-            }
+
+            ReturnZoom();
         }
 
         void OnObjectSelectedHandler(Vector3 vector3, GameObject obj)
@@ -38,7 +37,7 @@ namespace Assets.Scenes.Game4.Scripts
             if (IsFocused) return;
             lastZoomedObject = obj;
 
-            HidableFormVariant variant = lastZoomedObject.GetComponent<HidableFormVariant>();
+            HidableFormVariant variant = lastZoomedObject.GetComponentInParent<HidableFormVariant>();
 
             if (variant != null)
             {
@@ -51,18 +50,18 @@ namespace Assets.Scenes.Game4.Scripts
         void SubsribeHidableFormVariant(HidableFormVariant variant)
         {
             OnZoomEnd.AddListener(OnZoomeEndHidableFormVariantHandler);
-            OnReleaseStart.RemoveListener(UnSubsrcibeHidableFormVariant);
+            OnReleaseStart.AddListener(UnSubsrcibeHidableFormVariant);
         }
 
         void OnZoomeEndHidableFormVariantHandler()
         {
-            var obj = lastZoomedObject.GetComponent<HidableFormVariant>();
+            var obj = lastZoomedObject.GetComponentInParent<HidableFormVariant>();
             obj.UpdateShowWithState(false);
         }
 
         void UnSubsrcibeHidableFormVariant()
         {
-            var obj = lastZoomedObject.GetComponent<HidableFormVariant>();
+            var obj = lastZoomedObject.GetComponentInParent<HidableFormVariant>();
             obj.UpdateShowWithState(true);
             OnZoomEnd.RemoveListener(OnZoomeEndHidableFormVariantHandler);
             OnReleaseStart.RemoveListener(UnSubsrcibeHidableFormVariant);
@@ -70,7 +69,7 @@ namespace Assets.Scenes.Game4.Scripts
 
         void OnZoomStartHandler()
         {
-            var mover = GetComponent<ICameraMover>();
+            var mover = GetComponentInParent<ICameraMover>();
             if (mover != null)
             {
                 mover.IsBlockingMoving = true;
@@ -80,15 +79,18 @@ namespace Assets.Scenes.Game4.Scripts
         void OnZoomReturnEndHandler()
         {
             var mover = GetComponent<ICameraMover>();
-            if(mover != null)
+            if (mover != null)
             {
                 mover.IsBlockingMoving = false;
             }
         }
 
-        public void ReturnZoom()
+        protected override void ReturnZoom()
         {
-            base.ReturnZoom();
+            if (IsFocused)
+            {
+                base.ReturnZoom();
+            }
         }
     }
 }

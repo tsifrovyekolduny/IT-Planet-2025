@@ -4,27 +4,33 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static UnityEngine.UI.Button;
 
 
 public class WithButtons : HideableUI
 {
     [Header("Button Settings")]
     [SerializeField] private List<ButtonData> _buttonsData = new List<ButtonData>();
-    [SerializeField] private Transform _buttonsContainer;    
+    [SerializeField] private Transform _buttonsContainer;
 
-    private CanvasGroup _buttonsCanvasGroup;    
-    
+    private CanvasGroup _buttonsCanvasGroup;
+
+    public bool IsHidden()
+    {
+        return _isHidden;
+    }
+
     protected override void Start()
-    {     
+    {
         _buttonsCanvasGroup = _buttonsContainer.GetComponent<CanvasGroup>();
         if (_buttonsCanvasGroup == null)
             _buttonsCanvasGroup = _buttonsContainer.gameObject.AddComponent<CanvasGroup>();
 
         _hidingCanvasGroup = _buttonsCanvasGroup;
 
-        LinkButtons();        
+        LinkButtons();
         base.Start();
-    }    
+    }
 
     // Связываем данные с реальными кнопками
     private void LinkButtons()
@@ -63,7 +69,7 @@ public class WithButtons : HideableUI
     {
         _buttonsData.Add(data);
         LinkButtons();
-    }        
+    }
 
     public override void ApplyVisibility(bool show)
     {
@@ -77,6 +83,7 @@ public class WithButtons : HideableUI
     }
 }
 
+[ExecuteAlways]
 [System.Serializable]
 public class ButtonData
 {
@@ -88,7 +95,7 @@ public class ButtonData
     public Sprite buttonIcon;
     public Color buttonColor = Color.white;
     [Range(0.5f, 2f)] public float iconScale = 1f;
-    public UnityEvent onClick;
+    public ButtonClickedEvent onClick;
 
     // Метод для синхронизации данных с кнопкой
     public void ApplyToButton()
@@ -102,8 +109,8 @@ public class ButtonData
         // Иконка
         var icon = linkedButton.GetComponent<Image>();
         if (icon != null)
-        {            
-            icon.sprite = buttonIcon;            
+        {
+            icon.sprite = buttonIcon;
             icon.transform.localScale = Vector3.one * iconScale;
         }
         else
@@ -113,6 +120,6 @@ public class ButtonData
 
         // Обработчик клика
         linkedButton.onClick.RemoveAllListeners();
-        linkedButton.onClick.AddListener(() => onClick.Invoke());
+        linkedButton.onClick = onClick;
     }
 }
