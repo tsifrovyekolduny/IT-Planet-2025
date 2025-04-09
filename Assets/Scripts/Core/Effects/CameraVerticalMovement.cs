@@ -15,7 +15,7 @@ namespace Assets.Scripts.Core.Effects
         private Vector3 defaultCameraPosition;
         private float verticalOffset = 0f;
 
-        private bool isBlockingMoving = false;
+        protected bool isBlockingMoving = false;
         bool ICameraMover.IsBlockingMoving { get => isBlockingMoving; set => isBlockingMoving = value; }
 
         private bool isCameraAtTarget = false; // Флаг для отслеживания, достигла ли камера целевой позиции
