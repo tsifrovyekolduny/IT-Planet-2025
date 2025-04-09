@@ -1,5 +1,8 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Button text="Назад в чат" name="back-to-chat-btn" />
-    <engine:Button text="Подсказка" name="hint-btn" />
-    <engine:Button text="Завершить" name="complete-btn" />
+    <Style src="project://database/Assets/UI/dialog.uss?fileID=7433441132597879392&amp;guid=74140c8b1a9d75540a9cedb46f7c5fd6&amp;type=3#dialog" />
+    <engine:VisualElement name="header" style="width: 100%; height: 12%; border-left-color: rgb(116, 170, 212); border-right-color: rgb(116, 170, 212); border-top-color: rgb(116, 170, 212); border-bottom-color: rgb(116, 170, 212); border-bottom-width: 3px; background-color: rgb(18, 20, 27); flex-direction: row; justify-content: space-between; align-items: center; align-content: auto; align-self: auto; white-space: normal; flex-wrap: nowrap; padding-left: 3%; padding-right: 3%;">
+        <engine:Button name="back-to-chat-btn" style="align-self: center; position: relative; top: auto; background-color: rgba(188, 188, 188, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-image: resource(&apos;arrow&apos;); justify-content: flex-start; align-content: flex-start; -unity-background-scale-mode: stretch-to-fill; width: 30px; height: 30px; align-items: center;" />
+        <engine:Button text="Завершить" name="complete-btn" class="play-button" style="justify-content: flex-start;" />
+        <engine:Button name="hint-btn" style="position: relative; align-items: flex-start; align-self: center; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-color: rgba(188, 188, 188, 0); background-image: resource(&apos;Light&apos;); -unity-background-scale-mode: scale-to-fit; width: 30px; height: 30px; justify-content: flex-start; align-content: flex-start; right: 0; -unity-text-align: middle-center; flex-direction: column; top: auto; bottom: auto;" />
+    </engine:VisualElement>
 </engine:UXML>
