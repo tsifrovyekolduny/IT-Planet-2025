@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Core.Data;
+using Assets.Scripts.Interfaces.Effects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,8 +17,8 @@ namespace Assets.Scenes.Game4.Scripts
         
         protected override void HandleSwipe(SwipeOrientation orientation)
         {
+            if (isBlockingMoving) return;
             if (isCooldownActive) return; // Если cooldown активен, игнорируем свайп
-
             base.HandleSwipe(orientation); // Вызов родительского метода для обработки свайпа
 
             // Запускаем корутину для cooldown
@@ -26,6 +27,7 @@ namespace Assets.Scenes.Game4.Scripts
 
         private IEnumerator SwipeCooldown()
         {
+            Debug.Log("SwipeCooldown");
             isCooldownActive = true; // Устанавливаем флаг cooldown
             yield return new WaitForSeconds(swipeCooldown); // Ждем заданное время
             isCooldownActive = false; // Сбрасываем флаг cooldown

@@ -1180,7 +1180,7 @@ GameObject:
   - component: {fileID: 1475471920}
   - component: {fileID: 1475471926}
   - component: {fileID: 1475471925}
-  - component: {fileID: 1475471924}
+  - component: {fileID: 1475471927}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1329,18 +1329,6 @@ MonoBehaviour:
       m_Calls: []
   useDoubleTapMode: 0
   targetCamera: {fileID: 1475471915}
---- !u!114 &1475471924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475471913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5b08bba5ac58a24181c0d3c99b1cf95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1475471925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1387,6 +1375,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetCamera: {fileID: 1475471915}
+--- !u!114 &1475471927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475471913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80817e1c1b3ca504cba5e2d9c0ec573c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swipeCooldown: 0.5
 --- !u!1001 &1653603505
 PrefabInstance:
   m_ObjectHideFlags: 0
