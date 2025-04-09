@@ -6,15 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Game2/FocusGame.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/DialogScene/Scenes/test.unity
-    guid: 142e6a9844c3c154a893b20ed95e84e6
-  - enabled: 1
-    path: Assets/DialogScene/Scenes/dialog.unity
-    guid: 28dbede0e8906ec468208e6c2e2c5810
-  - enabled: 1
     path: Assets/Scenes/Hubs/DepartmentsHub.unity
     guid: 84b6199fb444c1241a8855914511da82
   - enabled: 1
@@ -23,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hubs/LevelsScene.unity
     guid: 18d31c1643704bf45bc17b99f3ad450a
+  - enabled: 1
+    path: Assets/DialogScene/Scenes/dialog.unity
+    guid: 28dbede0e8906ec468208e6c2e2c5810
+  - enabled: 1
+    path: Assets/Scenes/Game2/FocusGame.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Scenes/Game3/BrainTaperScene.unity
     guid: 47d6c313f66f52f48921006ee0e98923
