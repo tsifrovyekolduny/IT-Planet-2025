@@ -9,7 +9,9 @@ namespace Assets.Scenes.Game4.Scripts
     internal class ZoomController : Assets.Scripts.Core.Controllers.ZoomController
     {
         private IInputHandler inputHandler;
-        private GameObject selectedGameObject;
+        private HidableFormVariant newObjectToSelect = null;
+        private GameObject newGameObjectToSelect = null;
+
         protected override void Start()
         {
             base.Start();
@@ -34,7 +36,20 @@ namespace Assets.Scenes.Game4.Scripts
         void OnObjectSelectedHandler(Vector3 vector3, GameObject obj)
         {
             // Блокируем повтороное нажатие фокуса
-            if (IsFocused) return;
+            if (IsFocused)
+            {
+                HidableFormVariant nextObjectToSelect = lastZoomedObject.GetComponentInParent<HidableFormVariant>();
+
+                if (nextObjectToSelect != null)
+                {
+                    newObjectToSelect = nextObjectToSelect;
+                    newGameObjectToSelect = obj;
+
+                    preZoomPosition = new Vector3((transform.position.x + obj.transform.position.x)/2, (transform.position.y + obj.transform.position.y)/2, returnStartPosition.z);
+                    ReturnZoom();
+                    return;
+                }
+            }
             lastZoomedObject = obj;
 
             HidableFormVariant variant = lastZoomedObject.GetComponentInParent<HidableFormVariant>();
@@ -78,7 +93,18 @@ namespace Assets.Scenes.Game4.Scripts
 
         void OnZoomReturnEndHandler()
         {
+
+            if (newObjectToSelect != null)
+            {
+                SubsribeHidableFormVariant(newObjectToSelect);
+                StartZoom(newGameObjectToSelect.transform.position, newGameObjectToSelect);
+                newObjectToSelect = null;
+                newGameObjectToSelect = null;
+                return;
+            }
+
             var mover = GetComponent<ICameraMover>();
+
             if (mover != null)
             {
                 mover.IsBlockingMoving = false;

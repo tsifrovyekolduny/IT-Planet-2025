@@ -9,7 +9,7 @@ using UnityEngine.Events;
 
 namespace Assets.Scripts.Core.Handlers
 {
-    public class InputHandler : MonoBehaviour, IInputHandler
+    public class InputHandler : TouchInputHandler, IInputHandler
     {
         [Rename("Рабочие слои")]
         [Tooltip("Скрипт будет работать на элементах на выбранном слое")]
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Core.Handlers
 
         UnityEvent<Vector3> IInputHandler.OnSelectionEmpty => this.OnSelectionEmpty;
 
-        [Rename("Режим двойного нажатия")]
+        [Rename("Режим двойного нажатия(не работает)")]
         [Tooltip("Если настройка включена, то отдаление будет происходить при втором нажатии")]
         public bool useDoubleTapMode = false;
 
@@ -29,29 +29,41 @@ namespace Assets.Scripts.Core.Handlers
         [Rename("Камера")]
         public Camera targetCamera;
 
+        private bool isWasSwipe = false;
 
         protected virtual void Start()
         {
-            if(targetCamera == null)
+            if (targetCamera == null)
             {
                 targetCamera = Camera.main;
             }
+
+            OnSingleTap.AddListener(HandeSingleTap);
+            OnSwipe.AddListener(HandeSwipeTap);
+            OnTouchEnd.AddListener(HandleInput);
         }
 
-        void Update()
+        private void HandeSingleTap(Vector2 pos)
         {
-            HandleInput();
+            isWasSwipe = false;
+        }
+        private void HandeSwipeTap(Vector2 pos)
+        {
+            isWasSwipe = true;
         }
 
-        protected virtual void HandleInput()
+        protected virtual void HandleInput(Vector2 pos)
         {
-            if (useDoubleTapMode)
+            if (isWasSwipe == false)
             {
-                HandleDoubleTapInput();
-            }
-            else
-            {
-                HandleStandardInput();
+                if (useDoubleTapMode)
+                {
+                    HandleDoubleTapInput();
+                }
+                else
+                {
+                    HandleStandardInput(pos);
+                }
             }
         }
 
@@ -73,11 +85,8 @@ namespace Assets.Scripts.Core.Handlers
             }
         }
 
-        protected virtual void HandleStandardInput()
+        protected virtual void HandleStandardInput(Vector2 inputPos)
         {
-            if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
-            {
-                Vector2 inputPos = GetInputPosition();
                 Ray ray = targetCamera.ScreenPointToRay(inputPos);
                 RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, interactableLayer);
 
@@ -88,7 +97,6 @@ namespace Assets.Scripts.Core.Handlers
                 {
                     OnSelectionEmpty.Invoke(inputPos);
                 }
-            }
         }
 
         private Vector2 GetInputPosition()
