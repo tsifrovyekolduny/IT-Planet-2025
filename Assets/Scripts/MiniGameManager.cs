@@ -61,7 +61,7 @@ public class MiniGameManager : MonoBehaviour
         HintPanel.rootVisualElement.visible = false;
     }    
 
-    private void ShowHint()
+    public void ShowHint()
     {
         _hintsEnum.MoveNext();
         string hint = _hintsEnum.Current;

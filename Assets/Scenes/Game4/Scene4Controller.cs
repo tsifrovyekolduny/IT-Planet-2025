@@ -1,10 +1,11 @@
 using UnityEngine;
 using Assets.Scripts.Interfaces.Controllers;
 using System;
-public class Scene4Controller : MonoBehaviour
+public class Scene4Controller : MonoBehaviour, IMiniGame
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Camera MainCamera = null;
+    private bool _isFinished = false;
     void Start()
     {
         if (MainCamera == null)
@@ -32,5 +33,15 @@ public class Scene4Controller : MonoBehaviour
         IZoomeController zoomeController = MainCamera.GetComponent<IZoomeController>();
         if (zoomeController == null) return;
         zoomeController.ReturnZoom();
+    }
+
+    public void OnSucceedClick()
+    {
+        _isFinished = true;
+    }
+
+    public bool CheckForComplete()
+    {
+        return _isFinished;
     }
 }
