@@ -18,13 +18,6 @@ public class Scene4Controller : MonoBehaviour
     {
         
     }
-    public void OnReturnZoonClick()
-    {
-        Debug.Log("One OnReturnZoonClick");
-        IZoomeController zoomeController = MainCamera.GetComponent<IZoomeController>();
-        if (zoomeController == null) return;
-        zoomeController.ReturnZoom();
-    }
 
     public void OnErrorClick()
     {
@@ -32,5 +25,10 @@ public class Scene4Controller : MonoBehaviour
         IZoomeController zoomeController = MainCamera.GetComponent<IZoomeController>();
         if (zoomeController == null) return;
         zoomeController.ReturnZoom();
+    }
+
+    public void OnSuccsedClick()
+    {
+
     }
 }
