@@ -14,6 +14,8 @@ public class ScoreManager : MonoBehaviour, IMiniGame
     [Header("События")]
     public UnityEvent<int> onScoreChanged = new UnityEvent<int>();
 
+    private bool _gameIsComplete = false;
+
 
     private void Awake()
     {
@@ -50,7 +52,7 @@ public class ScoreManager : MonoBehaviour, IMiniGame
         onScoreChanged.Invoke(_currentScore);
         if (_currentScore >= _maxScore)
         {
-            CheckForComplete();
+            _gameIsComplete = true;            
         }
     }
 
@@ -64,7 +66,7 @@ public class ScoreManager : MonoBehaviour, IMiniGame
 
     public bool CheckForComplete()
     {
-        return true;
+        return _gameIsComplete;
     }
 
     // Оптимизированный метод поиска для редких случаев
