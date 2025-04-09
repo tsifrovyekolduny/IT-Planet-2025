@@ -1372,7 +1372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoomSpeed: 5
-  targetOrthoSize: 2
+  targetOrthoSize: 4
   releaseSpeed: 5
   OnZoomStart:
     m_PersistentCalls:
