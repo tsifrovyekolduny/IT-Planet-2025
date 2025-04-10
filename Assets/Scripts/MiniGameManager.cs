@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -41,6 +42,7 @@ public class MiniGameManager : MonoBehaviour
         {
             _isComplete = true;
             _completeButton.SetEnabled(true);
+            ShowHint("Ликвидировано");
         }
     }
 
@@ -71,6 +73,17 @@ public class MiniGameManager : MonoBehaviour
         }
 
         _hintText.text = hint;
+        HintPanel.rootVisualElement.visible = true;
+
+        if (_hintCoroutine != null)
+            StopCoroutine(_hintCoroutine);
+
+        _hintCoroutine = StartCoroutine(HideHintAfterDelay(HintLifeTime));
+    }
+
+    public void ShowHint(string text)
+    {
+        _hintText.text = text;
         HintPanel.rootVisualElement.visible = true;
 
         if (_hintCoroutine != null)
