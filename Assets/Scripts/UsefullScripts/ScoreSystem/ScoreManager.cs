@@ -23,7 +23,7 @@ public class ScoreManager : MonoBehaviour, IMiniGame
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {

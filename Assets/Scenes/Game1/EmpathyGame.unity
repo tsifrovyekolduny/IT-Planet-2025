@@ -1215,6 +1215,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &429499757
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 429499758}
+  m_Layer: 0
+  m_Name: UpMovementStopper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &429499758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429499757}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.01, y: 0.95, z: -9.575774}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &434983334
 GameObject:
   m_ObjectHideFlags: 0
@@ -3546,11 +3577,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9924adb6b086754384df0810575c011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVerticalMovement: 4
-  swipeSensitivity: 1
+  swipeSensitivity: 0.005
   swipeSmoothness: 10
   reverseControls: 1
+  upperBoundaryObject: {fileID: 429499758}
+  lowerBoundaryObject: {fileID: 1230479989}
   targetCamera: {fileID: 0}
+  swipeSensitivityMultiplier: 0.5
+  swipeSpeedDamping: 0.8
 --- !u!114 &1152408049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3613,9 +3647,10 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 8
+  returnSmoothness: 0.5
   targetCamera: {fileID: 0}
-  zoomToColliderCenter: 1
-  useDoubleTapMode: 1
+  zoomToColliderCenter: 0
+  useDoubleTapMode: 0
   disableSwipeDuringZoom: 1
   enableScoreSystem: 1
 --- !u!1 &1196007995
@@ -3705,6 +3740,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1230479988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1230479989}
+  m_Layer: 0
+  m_Name: DownMovementStopper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1230479989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230479988}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.39, y: -24.17, z: -0.040408984}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1239517719
 GameObject:
   m_ObjectHideFlags: 0
@@ -6576,3 +6642,5 @@ SceneRoots:
   - {fileID: 1803085320}
   - {fileID: 614378267}
   - {fileID: 1990695371}
+  - {fileID: 429499758}
+  - {fileID: 1230479989}

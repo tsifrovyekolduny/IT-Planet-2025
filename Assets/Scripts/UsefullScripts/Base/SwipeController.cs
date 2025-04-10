@@ -2,36 +2,55 @@ using UnityEngine;
 
 public class SwipeController : MonoBehaviour
 {
-
     [Header("Настройки свайпа")]
-    [Rename("Ограничить по вертикали")]
-    [Tooltip("То, насколько далеко можно свайпнуть по вертикали")]
-    public float maxVerticalMovement = 2f;
     [Rename("Чувствительность свайпа")]
     public float swipeSensitivity = 1f;
     [Rename("Плавность свайпа")]
     public float swipeSmoothness = 10f;
     [Rename("Инверсия свайпа")]
     [Tooltip("Если включено, свайпы будут работать в обратном направлении")]
-    public bool reverseControls = false; // Новая переменная
+    public bool reverseControls = false;
 
-    [Header("Настройка камерыe")]
+    [Header("Границы перемещения")]
+    [Rename("Верхняя граница (объект)")]
+    [Tooltip("Объект, выше которого камера не поднимется")]
+    public Transform upperBoundaryObject;
+    [Rename("Нижняя граница (объект)")]
+    [Tooltip("Объект, ниже которого камера не опустится")]
+    public Transform lowerBoundaryObject;
+
+    [Header("Настройка камеры")]
     [Rename("Камера")]
     public Camera targetCamera;
 
-    private Vector3 defaultCameraPosition;
-    private Vector2 touchStartPos;
-    private float verticalOffset = 0f;
-    private float targetVerticalOffset = 0f;
-    private bool isEnabled = true;
+    [Header("Sensitivity Settings")]
+    [Rename("Множитель чувствительности свайпа")]
+    [Range(0.01f, 1f)]
+    public float swipeSensitivityMultiplier = 0.5f; // Уменьшает общую чувствительность
+    [Rename("")]
+    [Range(0.1f, 2f)]
+    public float swipeSpeedDamping = 0.8f;
 
+    protected float returnProgress; // Трекер прогресса возврата
+
+    private float currentYPosition; // Текущая позиция камеры по Y
+    private float targetYPosition; // Целевая позиция после свайпа
+    private Vector2 touchStartPos;
+    private bool isEnabled = true;
 
     private void Start()
     {
         if (targetCamera == null)
             targetCamera = Camera.main;
 
-        defaultCameraPosition = targetCamera.transform.position;
+        // Начальная позиция камеры — текущая, но ограниченная границами
+        currentYPosition = targetCamera.transform.position.y;
+        targetYPosition = currentYPosition;
+
+        if (upperBoundaryObject == null || lowerBoundaryObject == null)
+        {
+            Debug.LogWarning("Границы не назначены! Камера может двигаться без ограничений.");
+        }
     }
 
     private void LateUpdate()
@@ -44,6 +63,7 @@ public class SwipeController : MonoBehaviour
 
     private void HandleInput()
     {
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -55,11 +75,10 @@ public class SwipeController : MonoBehaviour
             else if (touch.phase == TouchPhase.Moved)
             {
                 float deltaY = (touch.position.y - touchStartPos.y) * swipeSensitivity;
-
-                // Реверс направления при необходимости
                 if (reverseControls) deltaY *= -1;
 
-                targetVerticalOffset = Mathf.Clamp(verticalOffset + deltaY, -maxVerticalMovement, maxVerticalMovement);
+                targetYPosition += deltaY;
+                ClampTargetPosition(); // Ограничиваем целевую позицию границами
                 touchStartPos = touch.position;
             }
         }
@@ -72,44 +91,44 @@ public class SwipeController : MonoBehaviour
             else
             {
                 float deltaY = (Input.mousePosition.y - touchStartPos.y) * swipeSensitivity;
-
-                // Реверс направления при необходимости
                 if (reverseControls) deltaY *= -1;
 
-                targetVerticalOffset = Mathf.Clamp(verticalOffset + deltaY, -maxVerticalMovement, maxVerticalMovement);
+                targetYPosition += deltaY;
+                ClampTargetPosition(); // Ограничиваем целевую позицию границами
                 touchStartPos = Input.mousePosition;
             }
         }
     }
 
+    private void ClampTargetPosition()
+    {
+        if (upperBoundaryObject != null && lowerBoundaryObject != null)
+        {
+            targetYPosition = Mathf.Clamp(
+                targetYPosition,
+                lowerBoundaryObject.position.y,
+                upperBoundaryObject.position.y
+            );
+        }
+    }
+
     private void ApplyMovement()
     {
-        verticalOffset = Mathf.Lerp(verticalOffset, targetVerticalOffset, swipeSmoothness * Time.deltaTime);
+        // Плавное перемещение к целевой позиции
+        currentYPosition = Mathf.Lerp(
+            currentYPosition,
+            targetYPosition,
+            swipeSmoothness * Time.deltaTime
+        );
 
-        Vector3 newPos = defaultCameraPosition + Vector3.up * verticalOffset;
-        newPos.z = targetCamera.transform.position.z;
+        // Обновляем позицию камеры (сохраняем X и Z)
+        Vector3 newPos = targetCamera.transform.position;
+        newPos.y = currentYPosition;
         targetCamera.transform.position = newPos;
-    }
-
-    public float GetVerticalOffset()
-    {
-        return verticalOffset;
-    }
-
-    public void UpdateDefaultPosition(Vector3 newPosition)
-    {
-        defaultCameraPosition = newPosition;
-        verticalOffset = 0f;
-        targetVerticalOffset = 0f;
     }
 
     public void SetEnabled(bool enabled)
     {
         isEnabled = enabled;
-        if (!enabled)
-        {
-            verticalOffset = 0f;
-            targetVerticalOffset = 0f;
-        }
     }
 }

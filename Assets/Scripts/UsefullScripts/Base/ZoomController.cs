@@ -3,46 +3,36 @@ using UnityEngine.Serialization;
 
 public class ZoomController : MonoBehaviour
 {
-    [Header("Настройки приближения")]
+    [Header("Настройки зума")]
     [Rename("Скорость приближения")]
-    public float zoomSpeed = 5f;
-    [Rename("Степень приближения")]
-    public float targetOrthoSize = 3f;
+    [SerializeField] protected float zoomSpeed = 5f;
+    [Rename("Уровень приближения")]
+    [SerializeField] protected float targetOrthoSize = 3f;
     [Rename("Скорость отдаления")]
-    public float releaseSpeed = 5f;
-    [Rename("Рабочие слои")]
-    [Tooltip("Скрипт будет работать на элементах на выбранном слое")]
-    public LayerMask interactableLayer;
+    [SerializeField] protected float releaseSpeed = 5f;
+    [Rename("Слой взаимодействия")]
+    [SerializeField] protected LayerMask interactableLayer;
 
-    [Header("Настройка камеры")]
+    [Header("Настройки камеры")]
     [Rename("Камера")]
-    public Camera targetCamera;
+    [SerializeField] protected Camera targetCamera;
 
-    [Header("Настройки поведения камеры")]
-    [Rename("Зум в центр коллайдера")]
-    [Tooltip("Если включено, зум будет в центр коллайдера вместо точки касания")]
-    public bool zoomToColliderCenter = false;
-
+    [Header("Поведение")]
+    [Rename("Зум в центр объекта")]
+    [SerializeField] protected bool zoomToColliderCenter = false;
     [Rename("Режим двойного нажатия")]
-    [Tooltip("Если настройка включена, то отдаление будет происходить при втором нажатии")]
-    public bool useDoubleTapMode = false;
-    [Rename("Запрет свайпа при приближении")]
-    public bool disableSwipeDuringZoom = true;
+    [SerializeField] protected bool useDoubleTapMode = false;
+    [Rename("Отключить свайп при зуме")]
+    [SerializeField] protected bool disableSwipeDuringZoom = true;
 
-    // Защищенные поля для наследования
     protected float defaultOrthoSize;
-    protected Vector3 preZoomPosition;
-    protected float preZoomOrthoSize;
     protected bool isZooming = false;
-    protected Vector3 zoomTargetPosition;
-    protected float returnProgress = 0f;
     protected bool isReturning = false;
+    protected Vector3 zoomTargetPosition;
     protected SwipeController swipeController;
     protected GameObject lastZoomedObject;
-    protected Vector3 returnStartPosition;
-    protected float returnStartOrthoSize;
-    protected float lastTapTime;
-    protected const float doubleTapThreshold = 0.5f;
+    protected Vector3 zoomStartPosition; // Точка начала зума
+    protected float zoomStartSize; // Начальный размер при зуме
 
     protected virtual void Start()
     {
@@ -56,46 +46,36 @@ public class ZoomController : MonoBehaviour
     protected virtual void Update()
     {
         HandleInput();
-        ProcessZoom();
-        ProcessReturn();
+
+        if (isZooming)
+            ProcessZoom();
+
+        if (isReturning)
+            ProcessReturn();
     }
 
     protected virtual void HandleInput()
     {
         if (useDoubleTapMode)
-        {
             HandleDoubleTapInput();
-        }
         else
-        {
             HandleStandardInput();
-        }
     }
 
     protected virtual void HandleDoubleTapInput()
     {
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
-        {            
+        {
             Vector2 inputPos = GetInputPosition();
             Ray ray = targetCamera.ScreenPointToRay(inputPos);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, interactableLayer);
 
             if (hit.collider != null)
             {
-                if (isZooming)
-                {
-                    EndZoom();
-                }
-                else
-                {
-                    StartZoom(hit.point, hit.collider.gameObject);
-                }
-                lastTapTime = Time.time;
+                if (isZooming) EndZoom();
+                else StartZoom(hit.point, hit.collider.gameObject);
             }
-            else if (isZooming)
-            {
-                EndZoom();
-            }
+            else if (isZooming) EndZoom();
         }
     }
 
@@ -108,12 +88,9 @@ public class ZoomController : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, interactableLayer);
 
             if (hit.collider != null && !isZooming)
-            {
                 StartZoom(hit.point, hit.collider.gameObject);
-            }
         }
-        else if ((Input.GetMouseButtonUp(0) ||
-                (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)) && isZooming)
+        else if ((Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)) && isZooming)
         {
             EndZoom();
         }
@@ -126,24 +103,20 @@ public class ZoomController : MonoBehaviour
 
     protected virtual void StartZoom(Vector3 worldPosition, GameObject targetObject)
     {
-        preZoomPosition = targetCamera.transform.position;
-        preZoomOrthoSize = targetCamera.orthographicSize;
+        zoomStartPosition = targetCamera.transform.position;
+        zoomStartSize = targetCamera.orthographicSize;
 
         isZooming = true;
         isReturning = false;
         lastZoomedObject = targetObject;
 
-        // Изменяем расчет позиции зума в зависимости от настройки
-        Vector3 targetPosition = zoomToColliderCenter ?
+        zoomTargetPosition = zoomToColliderCenter ?
             targetObject.GetComponent<Collider2D>().bounds.center :
             worldPosition;
-
-        zoomTargetPosition = new Vector3(targetPosition.x, targetPosition.y, targetCamera.transform.position.z);
+        zoomTargetPosition.z = targetCamera.transform.position.z;
 
         if (swipeController != null && disableSwipeDuringZoom)
-        {
-            swipeController.enabled = false;
-        }
+            swipeController.SetEnabled(false);
     }
 
     protected virtual void EndZoom()
@@ -152,61 +125,47 @@ public class ZoomController : MonoBehaviour
 
         isZooming = false;
         isReturning = true;
-        returnProgress = 0f;
-        returnStartPosition = targetCamera.transform.position;
-        returnStartOrthoSize = targetCamera.orthographicSize;
+
+        if (swipeController != null && disableSwipeDuringZoom)
+            swipeController.SetEnabled(true);
     }
 
     protected virtual void ProcessZoom()
     {
-        if (!isZooming) return;
-
+        // Плавное перемещение к цели
+        float progress = Mathf.Clamp01(zoomSpeed * Time.deltaTime * 2f);
         targetCamera.transform.position = Vector3.Lerp(
             targetCamera.transform.position,
             zoomTargetPosition,
-            zoomSpeed * Time.deltaTime
+            progress
         );
 
+        // Плавное изменение размера
         targetCamera.orthographicSize = Mathf.Lerp(
             targetCamera.orthographicSize,
             targetOrthoSize,
-            zoomSpeed * Time.deltaTime
+            progress
         );
     }
 
     protected virtual void ProcessReturn()
     {
-        if (!isReturning) return;
-
-        returnProgress += releaseSpeed * Time.deltaTime;
-        float t = Mathf.Clamp01(returnProgress);
-
-        Vector3 swipeAdjustedPosition = preZoomPosition;
-        if (swipeController != null && !disableSwipeDuringZoom)
-        {
-            swipeAdjustedPosition += Vector3.up * swipeController.GetVerticalOffset();
-        }
-
-        targetCamera.transform.position = Vector3.Lerp(
-            returnStartPosition,
-            swipeAdjustedPosition,
-            t
-        );
-
+        // Только изменение размера (позиция остается текущей)
         targetCamera.orthographicSize = Mathf.Lerp(
-            returnStartOrthoSize,
-            preZoomOrthoSize,
-            t
+            targetCamera.orthographicSize,
+            defaultOrthoSize,
+            releaseSpeed * Time.deltaTime
         );
 
-        if (t >= 1f)
+        // Автоматическая корректировка позиции для сохранения центра
+        if (zoomStartSize > 0 && defaultOrthoSize > 0)
         {
-            isReturning = false;
-            if (swipeController != null)
-            {
-                swipeController.enabled = true;
-                swipeController.UpdateDefaultPosition(targetCamera.transform.position);
-            }
+            float scaleFactor = targetCamera.orthographicSize / zoomStartSize;
+            Vector3 offset = (zoomStartPosition - zoomTargetPosition) * scaleFactor;
+            targetCamera.transform.position = zoomTargetPosition + offset;
         }
+
+        if (Mathf.Abs(targetCamera.orthographicSize - defaultOrthoSize) < 0.01f)
+            isReturning = false;
     }
 }
