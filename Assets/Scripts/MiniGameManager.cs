@@ -42,7 +42,7 @@ public class MiniGameManager : MonoBehaviour
         {
             _isComplete = true;
             _completeButton.SetEnabled(true);
-            ShowHint("Ликвидировано");
+            ShowHint("ПРОЙДЕНО");
         }
     }
 
@@ -73,6 +73,7 @@ public class MiniGameManager : MonoBehaviour
         }
 
         _hintText.text = hint;
+        _hintText.style.color = Color.black;
         HintPanel.rootVisualElement.visible = true;
 
         if (_hintCoroutine != null)
@@ -84,6 +85,7 @@ public class MiniGameManager : MonoBehaviour
     public void ShowHint(string text)
     {
         _hintText.text = text;
+        _hintText.style.color = new Color(0.003f, 0.196f, 0.125f);
         HintPanel.rootVisualElement.visible = true;
 
         if (_hintCoroutine != null)
