@@ -297,7 +297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8681263569132137506, guid: 940afe5c9167dc140bd481bbf2e426c4, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 10
+      value: 16.21
       objectReference: {fileID: 0}
     - target: {fileID: 8681263569132137506, guid: 940afe5c9167dc140bd481bbf2e426c4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -427,6 +427,7 @@ MonoBehaviour:
   snapAnimationDuration: 0.2
   dragAlpha: 0.8
   scaleDuringDrag: 1.05
+  originalSiblingIndex: 0
 --- !u!225 &436466339
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1029,6 +1030,7 @@ MonoBehaviour:
   snapAnimationDuration: 0.2
   dragAlpha: 0.8
   scaleDuringDrag: 1.05
+  originalSiblingIndex: 0
 --- !u!225 &933875311
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1134,6 +1136,7 @@ MonoBehaviour:
   snapAnimationDuration: 0.2
   dragAlpha: 0.8
   scaleDuringDrag: 1.05
+  originalSiblingIndex: 0
 --- !u!225 &950114429
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1868,6 +1871,7 @@ MonoBehaviour:
   snapAnimationDuration: 0.2
   dragAlpha: 0.8
   scaleDuringDrag: 1.05
+  originalSiblingIndex: 0
 --- !u!225 &1671463458
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1965,6 +1969,7 @@ MonoBehaviour:
   snapAnimationDuration: 0.2
   dragAlpha: 0.8
   scaleDuringDrag: 1.05
+  originalSiblingIndex: 0
 --- !u!225 &1763052121
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2277,6 +2282,7 @@ MonoBehaviour:
   snapAnimationDuration: 0.2
   dragAlpha: 0.8
   scaleDuringDrag: 1.05
+  originalSiblingIndex: 0
 --- !u!225 &2048751988
 CanvasGroup:
   m_ObjectHideFlags: 0

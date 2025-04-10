@@ -3647,10 +3647,9 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 8
-  returnSmoothness: 0.5
   targetCamera: {fileID: 0}
-  zoomToColliderCenter: 0
-  useDoubleTapMode: 0
+  zoomToColliderCenter: 1
+  useDoubleTapMode: 1
   disableSwipeDuringZoom: 1
   enableScoreSystem: 1
 --- !u!1 &1196007995

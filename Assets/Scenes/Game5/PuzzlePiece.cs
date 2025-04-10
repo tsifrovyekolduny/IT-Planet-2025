@@ -16,6 +16,7 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     [SerializeField] private float dragAlpha = 0.8f;
     [SerializeField] private float scaleDuringDrag = 1.05f;
 
+    public int originalSiblingIndex;
     public Vector2 CorrectPosition { get; set; }
     public bool IsInPlace { get; private set; }
 
@@ -32,6 +33,7 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         canvasGroup = GetComponent<CanvasGroup>();
         originalScale = transform.localScale;
         CorrectPosition = rectTransform.anchoredPosition;
+        originalSiblingIndex = transform.GetSiblingIndex();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -43,7 +45,7 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         canvasGroup.alpha = dragAlpha;
         canvasGroup.blocksRaycasts = false;
         transform.localScale = originalScale * scaleDuringDrag;
-        transform.SetAsLastSibling();
+        transform.SetAsLastSibling(); // Только на время перетаскивания
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -101,8 +103,11 @@ public class PuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         }
 
         rectTransform.anchoredPosition = CorrectPosition;
+        transform.SetSiblingIndex(originalSiblingIndex); // Восстанавливаем исходный порядок
+
         PuzzleManager.Instance.CheckPuzzleComplete();
     }
+
 
     public void ResetPiece()
     {

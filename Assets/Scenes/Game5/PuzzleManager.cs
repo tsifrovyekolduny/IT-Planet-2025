@@ -34,10 +34,20 @@ public class PuzzleManager : MonoBehaviour, IMiniGame
     {
         if (pieces == null || pieces.Length == 0) return;
 
-        // Получаем границы области перемешивания
+        // Получаем границы Canvas
         Rect canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect;
-        Vector2 minPosition = new Vector2(-canvasRect.width / 2 + 100, -canvasRect.height / 2 + 100);
-        Vector2 maxPosition = new Vector2(canvasRect.width / 2 - 100, canvasRect.height / 2 - 100);
+
+        // Рассчитываем безопасные зоны
+        float excludedTopPercent = 0.12f; // 12% сверху
+        float excludedTop = canvasRect.height * excludedTopPercent;
+
+        Vector2 minPosition = new Vector2(
+            -canvasRect.width / 2 + 100,
+            -canvasRect.height / 2 + 100);
+
+        Vector2 maxPosition = new Vector2(
+            canvasRect.width / 2 - 100,
+            canvasRect.height / 2 - 100 - excludedTop); // Исключаем верхние 12%
 
         // Сохраняем правильные позиции
         foreach (var piece in pieces)
@@ -45,18 +55,16 @@ public class PuzzleManager : MonoBehaviour, IMiniGame
             piece.CorrectPosition = piece.GetComponent<RectTransform>().anchoredPosition;
         }
 
-        // Перемешиваем с учетом границ экрана
+        // Перемешиваем с учетом новых границ
         foreach (var piece in pieces)
         {
             Vector2 randomPos = new Vector2(
                 Random.Range(minPosition.x, maxPosition.x),
                 Random.Range(minPosition.y, maxPosition.y)
             );
-            Debug.Log($"Shuffling pieces. Canvas size: {canvasRect.width}x{canvasRect.height}");
-            Debug.Log($"Random position for piece: {randomPos}");
+
             piece.GetComponent<RectTransform>().anchoredPosition = randomPos;
         }
-
     }
 
 
